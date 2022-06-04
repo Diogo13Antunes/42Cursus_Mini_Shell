@@ -6,7 +6,7 @@
 /*   By: dsilveri <dsilveri@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 10:57:16 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/05/29 14:43:55 by dsilveri         ###   ########.fr       */
+/*   Updated: 2022/06/04 10:31:03 by dsilveri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@
 # include <readline/history.h>
 # include "../libft/libft.h"
 
-# define WITHE_SPACES " \t\r\n\v"
+# define WITHE_SPACES   " \t\r\n\v"
+# define OPERATORS      "<>|"
 
 char *get_next_token(char *src);
 

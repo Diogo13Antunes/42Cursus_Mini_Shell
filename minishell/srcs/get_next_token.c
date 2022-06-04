@@ -1,20 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.c                                           :+:      :+:    :+:   */
+/*   get_next_token.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsilveri <dsilveri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dsilveri <dsilveri@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 10:57:10 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/05/30 17:44:32 by dsilveri         ###   ########.fr       */
+/*   Updated: 2022/06/04 10:59:23 by dsilveri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static char *get_redir(char *src, int *index);
+static char *get_operators(char *src, int *index);
+static int get_quoted_word_size(char *str, char quote);
 static char *get_word(char *src, int *index);
-static char *get_quoted_word(char *src, int *index);
 
 char *get_next_token(char *src)
 {
@@ -24,10 +24,8 @@ char *get_next_token(char *src)
 	dest = NULL;
 	while (src[i] != '\0')
 	{
-		if (src[i] == '<' || src[i] == '>')
-			dest = get_redir(src, &i);
-		else if (src[i] == '\'' || src[i] == '\"')
-			dest = get_quoted_word(src, &i);
+		if (ft_strchr(OPERATORS, src[i]))
+			dest = get_operators(src, &i);
 		else if (!ft_strchr(WITHE_SPACES, src[i]))
 			dest = get_word(src, &i);
 		if(dest)
@@ -38,11 +36,16 @@ char *get_next_token(char *src)
 	return (0);
 }
 
-static char *get_redir(char *src, int *index)
+static char *get_operators(char *src, int *index)
 {
 	char	*dest;
+	int		src_size;
 
-	if (*index < (int)ft_strlen(src) - 1)
+	if (!src || !index)
+		return (0);
+	src_size = (int)ft_strlen(src);
+
+	if (ft_strchr("<>", src[*index]) && *index < src_size - 1)
 	{
 		if (src[*index] == src[*index + 1])
 		{
@@ -56,6 +59,20 @@ static char *get_redir(char *src, int *index)
 	return (dest);
 }
 
+static int get_quoted_word_size(char *str, char quote)
+{
+	int i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == quote)
+			return (i + 1);
+		i++;
+	}
+	return (0);
+}
+
 static char *get_word(char *src, int *index)
 {
 	char	*dest;
@@ -64,30 +81,15 @@ static char *get_word(char *src, int *index)
 	i = *index;
 	while(src[i])
 	{
-		if (ft_strchr(" \t\r\n\v<>()|", src[i]))
+		if (ft_strchr("\"", src[i]))
+			i += get_quoted_word_size(&src[i + 1], '\"');
+		if (ft_strchr("\'", src[i]))
+			i += get_quoted_word_size(&src[i + 1], '\'');
+		if (ft_strchr(" \t\r\n\v<>|", src[i]))
 			break;
 		i++;
 	}
-	dest = ft_substr(src, *index, i - (*index));
-	*index = i;
-	return (dest);
-}
-
-static char *get_quoted_word(char *src, int *index)
-{
-	char	*dest;
-	int		i;
-
-	i = *index;
-	while(src[i])
-	{
-		if (i > *index && ft_strchr("\'\"", src[i]))
-			break;
-		i++;
-	}
-	i++;
  	dest = ft_substr(src, *index, i - (*index));
 	*index = i;
 	return (dest);
 }
-

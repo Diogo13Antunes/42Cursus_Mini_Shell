@@ -6,13 +6,14 @@
 /*   By: dsilveri <dsilveri@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 19:19:06 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/06/07 19:19:18 by dsilveri         ###   ########.fr       */
+/*   Updated: 2022/06/08 11:25:34 by dsilveri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 void add_new_redir(t_node **tree, t_node *node);
+void add_new_cmd(t_node **tree, t_node *node);
 
 t_node  *create_node(int id)
 {
@@ -33,6 +34,8 @@ void add_new_node(t_node **tree, t_node *node)
 {
     if (is_node_redir(*node))
         add_new_redir(tree, node);
+    else if (is_node_cmd(*node))
+        add_new_cmd(tree, node);
 }
 
 void add_new_redir(t_node **tree, t_node *node)
@@ -45,6 +48,7 @@ void add_new_redir(t_node **tree, t_node *node)
     else if (first && is_node_redir(*first))
     {
         node->left = first;
+        first->prev = node;
         first = node;
     }
     // Se o primeiro for comando: coloca-se a seguir ao comando  
@@ -57,5 +61,13 @@ void add_new_cmd(t_node **tree, t_node *node)
     t_node *first;
     
     first = *tree;
+    if (!first)
+        first = node;
+    else if (first && is_node_redir(*first))
+    {
+        node->left = first;
+        first->prev = node;
+        first = node;
+    }
     *tree = first;
 }

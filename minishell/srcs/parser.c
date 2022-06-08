@@ -6,7 +6,7 @@
 /*   By: dsilveri <dsilveri@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 19:19:12 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/06/07 19:19:13 by dsilveri         ###   ########.fr       */
+/*   Updated: 2022/06/08 11:55:52 by dsilveri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 
 static void	create_ast(t_node **tree, char *token);
 int get_node_id(char *token);
+int get_token_id(char *token);
+t_node *get_node_to_update(t_node *tree);
+t_node *update_node(t_node *node, char *token);
 
 void print_node(t_node *node)
 {
@@ -24,6 +27,7 @@ void print_node(t_node *node)
 	}
 	printf("##########################\n");
 	printf("node id: %i\n", node->id);
+	printf("node data: %s\n", node->data);
 	printf("node prev: %p\n", node->prev);
 	printf("node left: %p\n", node->left);
 	printf("node rigth: %p\n", node->rigth);
@@ -59,35 +63,66 @@ t_node	*parser(char *src)
 
 static void	create_ast(t_node **tree, char *token)
 {
-	int		node_id;
+	int		id;
 	t_node	*node;
 	
-	node_id = get_node_id(token);
-	if (node_id)
-		add_new_node(tree, create_node(node_id));
-}
-
-/*
-static void	create_ast1(t_node **tree, char *token)
-{
-	int		node_id;
-	t_node	*node;
-	
-	node_id = get_node_id(token);
-	if (node_id == ID_WORD)
+	id = get_token_id(token);
+	if (id == ID_WORD)
 	{
-		node = get_node_to_update(tree);
+		node = get_node_to_update(*tree);
 		if (node)
-			update_node(node, token);
-		else 
-			add_new_node(tree, create_node(ID_CMD));
+			update_node(node, token); //vai fazer update de comandos também regra ainda não criada
+		else
+			add_new_node(tree, update_node(create_node(ID_CMD), token));
 	}
 	else 
-		add_new_node(tree, create_node(node_id));
+		add_new_node(tree, create_node(id));
 }
-*/
 
-int get_node_id(char *token)
+t_node *get_node_to_update(t_node *tree)
+{
+	t_node *node;
+
+	if (!tree)
+		return (NULL);
+	if (tree->id != ID_PIPE) // Navega pela esquerda
+	{
+		node = tree;
+		while (node)
+		{
+			if (is_node_redir(*node))
+			{
+				if (!(node->data))
+					return (node);
+				else
+					break;
+			}
+			node = node->left;
+		}
+	}
+	return (NULL);
+}
+
+// apenas resolve strings no futuro terá de ser array de string
+t_node *update_node(t_node *node, char *token)
+{
+	int size;
+
+	if (!node)
+		return (NULL);
+	if (!(node->data))
+	{
+		size = ft_strlen(token);
+		node->data = ft_calloc(size + 1, sizeof(char));
+		if (!(node->data))
+			return (NULL);
+		ft_strlcpy(node->data, token, size + 1);
+	}
+	return (node);
+}
+
+
+int get_token_id(char *token)
 {
 	int size;
 

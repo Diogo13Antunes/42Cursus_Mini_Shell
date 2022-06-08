@@ -6,7 +6,7 @@
 /*   By: dsilveri <dsilveri@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 10:57:16 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/06/07 19:04:33 by dsilveri         ###   ########.fr       */
+/*   Updated: 2022/06/08 11:21:37 by dsilveri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ char *get_next_token(char *src);
 /* parser.c */
 t_node *parser(char *src);
 int is_node_redir(t_node node);
+int is_node_cmd(t_node node);
 
 /* three.c */
 t_node  *create_node(int id);

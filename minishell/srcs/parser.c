@@ -6,7 +6,7 @@
 /*   By: dsilveri <dsilveri@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 19:19:12 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/06/09 15:04:07 by dsilveri         ###   ########.fr       */
+/*   Updated: 2022/06/09 18:02:26 by dsilveri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ t_node	*parser(char *src)
 		}
 	}*/
 
-	print_tree(tree);
+	print2D(tree);
 
 	return (0);
 }

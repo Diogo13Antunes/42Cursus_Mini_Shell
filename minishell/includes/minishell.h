@@ -6,7 +6,7 @@
 /*   By: dsilveri <dsilveri@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 10:57:16 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/06/09 15:03:42 by dsilveri         ###   ########.fr       */
+/*   Updated: 2022/06/09 17:45:08 by dsilveri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,5 +54,6 @@ void add_new_node(t_node **tree, t_node *node);
 
 
 void print_tree(t_node *root);
+void print2D(t_node *root);
 
 #endif

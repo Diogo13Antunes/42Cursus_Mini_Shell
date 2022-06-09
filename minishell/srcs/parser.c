@@ -6,7 +6,7 @@
 /*   By: dsilveri <dsilveri@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 19:19:12 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/06/08 11:55:52 by dsilveri         ###   ########.fr       */
+/*   Updated: 2022/06/09 12:45:37 by dsilveri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void print_node(t_node *node)
 		return ;
 	}
 	printf("##########################\n");
+	printf("node add: %p\n", node);
 	printf("node id: %i\n", node->id);
 	printf("node data: %s\n", node->data);
 	printf("node prev: %p\n", node->prev);
@@ -48,14 +49,21 @@ t_node	*parser(char *src)
 		create_ast(&tree, token);
 		token = get_next_token(src);
 	}
+
+	
 	// Apenas para testes print do brunch da tree
+	int i = 0;
 	if (tree)
 	{
 		tree_b = tree;
 		while (tree_b)
 		{
 			print_node(tree_b);
-			tree_b = tree_b->left;
+			//if (i == 0)
+			//	tree_b = tree_b->rigth;
+			//else 
+				tree_b = tree_b->left;
+			i++;
 		}
 	}
 	return (0);
@@ -79,6 +87,9 @@ static void	create_ast(t_node **tree, char *token)
 		add_new_node(tree, create_node(id));
 }
 
+/*
+	Esta função dever ser melhorada e faze-la de forma mais simple
+*/
 t_node *get_node_to_update(t_node *tree)
 {
 	t_node *node;
@@ -100,6 +111,17 @@ t_node *get_node_to_update(t_node *tree)
 			node = node->left;
 		}
 	}
+	else //navega pela direita
+	{
+		node = tree;
+		if (node->rigth == NULL)
+			return (NULL);
+		else if (node->rigth && is_node_redir(*(node->rigth)) && node->rigth->data == NULL)
+			return(node->rigth);
+		else if (node->rigth->left && is_node_redir(*(node->rigth->left)) && node->rigth->left->data == NULL)
+			return(node->rigth->left);
+
+	}
 	return (NULL);
 }
 
@@ -120,7 +142,6 @@ t_node *update_node(t_node *node, char *token)
 	}
 	return (node);
 }
-
 
 int get_token_id(char *token)
 {

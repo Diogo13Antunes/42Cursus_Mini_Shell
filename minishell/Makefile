@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: dsilveri <dsilveri@student.42.fr>          +#+  +:+       +#+         #
+#    By: dsilveri <dsilveri@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/27 10:55:19 by dsilveri          #+#    #+#              #
-#    Updated: 2022/05/30 10:56:22 by dsilveri         ###   ########.fr        #
+#    Updated: 2022/06/09 10:27:45 by dsilveri         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,7 +43,7 @@ fclean: clean
 	$(FCLEAN_LIBFT)
 	$(RM) $(NAME)
 
-run: all
+r: all
 	./minishell
 
 re:	fclean all

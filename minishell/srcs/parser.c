@@ -6,7 +6,7 @@
 /*   By: dsilveri <dsilveri@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 19:19:12 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/06/09 12:45:37 by dsilveri         ###   ########.fr       */
+/*   Updated: 2022/06/09 15:04:07 by dsilveri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ t_node	*parser(char *src)
 
 	
 	// Apenas para testes print do brunch da tree
-	int i = 0;
+	/*int i = 0;
 	if (tree)
 	{
 		tree_b = tree;
@@ -65,7 +65,10 @@ t_node	*parser(char *src)
 				tree_b = tree_b->left;
 			i++;
 		}
-	}
+	}*/
+
+	print_tree(tree);
+
 	return (0);
 }
 

@@ -39,13 +39,25 @@ static void print2DUtil(t_node *root, int space)
     // Process left child
     print2DUtil(root->left, space);
 }
- 
+
+
+void print_array_string(char **str)
+{
+    int i;
+
+    i = 0;
+    while (str[i])
+    {
+        printf("%s ", str[i]);
+        i++;
+    }
+    printf("\n");
+}
+
 static void print_node(t_node *node)
 {
     if (node->id == ID_PIPE)
         printf("|\n");
-    else if (node->id == ID_CMD)
-        printf("%s\n", node->data);
     else 
     {
         if (node->id == ID_IN_REDIR)
@@ -56,6 +68,6 @@ static void print_node(t_node *node)
            printf(">> ");
         else if (node->id == ID_IN_HERDOC)
            printf("<< ");    
-        printf("%s\n", node->data);
+        print_array_string(node->data);
     }
 }

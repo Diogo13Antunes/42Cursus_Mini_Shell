@@ -6,7 +6,7 @@
 /*   By: dsilveri <dsilveri@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 10:57:16 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/06/09 17:45:08 by dsilveri         ###   ########.fr       */
+/*   Updated: 2022/06/10 16:52:21 by dsilveri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@
 typedef struct s_node
 {
 	int id;
-	char *data;
+	char **data;
 	struct s_node *prev;
 	struct s_node *left;
 	struct s_node *rigth;

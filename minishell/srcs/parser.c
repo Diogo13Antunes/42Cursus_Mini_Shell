@@ -6,7 +6,7 @@
 /*   By: dsilveri <dsilveri@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 19:19:12 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/06/09 18:02:26 by dsilveri         ###   ########.fr       */
+/*   Updated: 2022/06/10 17:59:15 by dsilveri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,15 @@ t_node *get_node_to_update(t_node *tree)
 			}
 			node = node->left;
 		}
+
+
+		node = tree;
+		while (node)
+		{
+			if (is_node_cmd(*node))
+				return (node);
+			node = node->left;
+		}
 	}
 	else //navega pela direita
 	{
@@ -123,13 +132,14 @@ t_node *get_node_to_update(t_node *tree)
 			return(node->rigth);
 		else if (node->rigth->left && is_node_redir(*(node->rigth->left)) && node->rigth->left->data == NULL)
 			return(node->rigth->left);
-
+		else if (node->rigth && is_node_cmd(*(node->rigth)))
+			return(node->rigth);
 	}
 	return (NULL);
 }
 
 // apenas resolve strings no futuro terá de ser array de string
-t_node *update_node(t_node *node, char *token)
+/*t_node *update_node1(t_node *node, char *token)
 {
 	int size;
 
@@ -144,7 +154,66 @@ t_node *update_node(t_node *node, char *token)
 		ft_strlcpy(node->data, token, size + 1);
 	}
 	return (node);
+}*/
+
+
+int get_size_string_array(char **str)
+{
+	int i;
+
+	if (!str)
+		return (0);
+	i = 0;
+	while (str[i])
+		i++;
+	return (i);
 }
+
+char **update_string_array(char **str, char *token)
+{
+	int arr_size;
+	int token_size;
+	char **new_arr;
+	int i;
+
+	
+	arr_size = get_size_string_array(str);
+	new_arr = malloc((arr_size + 2) * sizeof(char**));
+	i = 0;
+	while (str[i])
+	{
+		new_arr[i] = str[i]; 
+		i++;
+	}
+	token_size = ft_strlen(token);
+	new_arr[i] = ft_calloc((token_size + 1), sizeof(char));
+	ft_strlcpy(new_arr[i], token, token_size + 1);
+	free(str);
+	return (new_arr);
+}
+
+
+t_node *update_node(t_node *node, char *token)
+{
+	int size;
+
+	if (!node || !token)
+		return (NULL);
+
+	if(!(node->data))
+	{
+		size = ft_strlen(token);
+		node->data = malloc(2 * sizeof(char**));
+		node->data[0] = ft_calloc(size + 1, sizeof(char));
+		node->data[1] = NULL;
+		ft_strlcpy(node->data[0], token, size + 1);
+	}
+	else 
+		node->data = update_string_array(node->data, token);
+	return (node);
+}
+
+
 
 int get_token_id(char *token)
 {

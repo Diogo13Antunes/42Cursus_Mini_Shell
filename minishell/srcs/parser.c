@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsilveri <dsilveri@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: dcandeia <dcandeia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 19:19:12 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/06/13 16:52:20 by dsilveri         ###   ########.fr       */
+/*   Updated: 2022/06/14 12:10:43 by dcandeia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	print_node(t_node *node)
 	printf("##########################\n");
 	printf("node add: %p\n", node);
 	printf("node id: %i\n", node->id);
-	printf("node data: %s\n", node->data);
+	//printf("node data: %s\n", node->data);
 	printf("node prev: %p\n", node->prev);
 	printf("node left: %p\n", node->left);
 	printf("node rigth: %p\n", node->rigth);
@@ -182,7 +182,7 @@ int	is_node_pipe(t_node node)
 
 int	is_node_cmd(t_node node)
 {
-	if (node.id >= ID_CMD)
+	if (node.id == ID_CMD)
 		return (1);
 	return (0);
 }

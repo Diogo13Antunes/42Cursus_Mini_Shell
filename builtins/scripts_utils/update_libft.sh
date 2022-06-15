@@ -1,0 +1,1 @@
+cd LIBFT_NEW && make && cd ..

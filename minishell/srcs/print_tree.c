@@ -19,55 +19,75 @@ void print2D(t_node *root)
 // It does reverse inorder traversal
 static void print2DUtil(t_node *root, int space)
 {
-    if (root == NULL)
-        return;
+	if (root == NULL)
+		return;
  
-    // Increase distance between levels
-    space += COUNT;
+	// Increase distance between levels
+	space += COUNT;
  
-    // Process right child first
-    print2DUtil(root->rigth, space);
+	// Process right child first
+	print2DUtil(root->rigth, space);
  
-    // Print current node after space
-    // count
-    printf("\n");
-    for (int i = COUNT; i < space; i++)
-        printf(" ");
-    //printf("%s\n", root->data);
-    print_node(root);
+	// Print current node after space
+	// count
+	printf("\n");
+	for (int i = COUNT; i < space; i++)
+		printf(" ");
+	//printf("%s\n", root->data);
+	print_node(root);
 
-    // Process left child
-    print2DUtil(root->left, space);
+	// Process left child
+	print2DUtil(root->left, space);
 }
 
 
 void print_array_string(char **str)
 {
-    int i;
+	int i;
 
-    i = 0;
-    while (str[i])
-    {
-        printf("%s ", str[i]);
-        i++;
-    }
-    printf("\n");
+	i = 0;
+	while (str[i])
+	{
+		printf("%s ", str[i]);
+		i++;
+	}
+	printf("\n");
+}
+
+void print_data(t_node node)
+{
+	t_cmd	*c;
+	t_redir	*r;
+
+	if (node.id == ID_CMD)
+	{
+		c = (t_cmd *) node.data;
+		print_array_string(c->cmd);
+	}
+	else
+	{
+		r = (t_redir *) node.data;
+		printf("%s\n", r->redir);
+
+	}
+		
 }
 
 static void print_node(t_node *node)
 {
-    if (node->id == ID_PIPE)
-        printf("|\n");
-    else 
-    {
-        if (node->id == ID_IN_REDIR)
-           printf("< "); 
-        else if (node->id == ID_OUT_REDIR)
-           printf("> "); 
-        else if (node->id == ID_OUT_HERDOC)
-           printf(">> ");
-        else if (node->id == ID_IN_HERDOC)
-           printf("<< ");    
-        print_array_string(node->data);
-    }
+	if (node->id == ID_PIPE)
+		printf("|\n");
+	else 
+	{
+		if (node->id == ID_IN_REDIR)
+		   printf("< "); 
+		else if (node->id == ID_OUT_REDIR)
+		   printf("> "); 
+		else if (node->id == ID_OUT_HERDOC)
+		   printf(">> ");
+		else if (node->id == ID_IN_HERDOC)
+		   printf("<< ");    
+		//print_array_string(node->data);
+		print_data(*node);
+	}
 }

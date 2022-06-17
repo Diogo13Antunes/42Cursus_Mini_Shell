@@ -6,7 +6,7 @@
 #    By: dsilveri <dsilveri@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/27 10:55:19 by dsilveri          #+#    #+#              #
-#    Updated: 2022/06/09 10:27:45 by dsilveri         ###   ########.fr        #
+#    Updated: 2022/06/15 14:20:36 by dsilveri         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,6 @@ MAKE_LIBFT		= make bonus -C libft/
 CLEAN_LIBFT		= make clean -C libft/
 FCLEAN_LIBFT	= make fclean -C libft/
 
-$(VERBOSE).SILENT:
 
 all: $(NAME)
 
@@ -44,7 +43,7 @@ fclean: clean
 	$(RM) $(NAME)
 
 r: all
-	./minishell
+	clear && ./minishell
 
 re:	fclean all
 

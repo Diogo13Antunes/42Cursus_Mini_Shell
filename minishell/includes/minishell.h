@@ -6,7 +6,7 @@
 /*   By: dsilveri <dsilveri@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 10:57:16 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/06/10 16:52:21 by dsilveri         ###   ########.fr       */
+/*   Updated: 2022/06/17 09:35:42 by dsilveri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include <stdio.h>
 # include <stdlib.h>
+# include <sys/wait.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "../libft/libft.h"
@@ -33,11 +34,27 @@
 typedef struct s_node
 {
 	int id;
-	char **data;
+	void *data;
 	struct s_node *prev;
 	struct s_node *left;
 	struct s_node *rigth;
 }   t_node;
+
+typedef struct s_redir
+{
+	char *redir;
+}	t_redir;
+
+typedef struct s_cmd
+{
+	char **cmd;
+}	t_cmd;
+
+typedef struct s_pipe
+{
+	int r;
+	int w;
+}	t_pipe;
 
 /* get_next_token.c */
 char *get_next_token(char *src);
@@ -55,5 +72,8 @@ void add_new_node(t_node **tree, t_node *node);
 
 void print_tree(t_node *root);
 void print2D(t_node *root);
+
+
+void execution(t_node *tree);
 
 #endif

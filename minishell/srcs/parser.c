@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dcandeia <dcandeia@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dsilveri <dsilveri@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 19:19:12 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/06/14 12:10:43 by dcandeia         ###   ########.fr       */
+/*   Updated: 2022/06/17 12:18:22 by dsilveri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,23 @@ void	print_node(t_node *node)
 	printf("##########################\n");
 }
 
+/*
+void inorderTraversal(t_node *root) {
+	if (root == NULL) 
+		return;
+	inorderTraversal(root->left);
+	if (root->data)
+		printf("%s ", root->data[0]);
+	else 
+  		printf("%s ", "|");
+	inorderTraversal(root->rigth);
+}
+*/
+
 t_node	*parser(char *src)
 {
 	char	*token;
 	t_node	*tree;
-	t_node	*tree_b;
 
 	tree = NULL;
 	token = get_next_token(src);
@@ -49,6 +61,11 @@ t_node	*parser(char *src)
 		token = get_next_token(src);
 	}
 	print2D(tree);
+	//printf("\n\n");
+	//inorderTraversal(tree);
+	//rintf("\n\n");
+
+	//execution(tree);
 	return (0);
 }
 
@@ -132,13 +149,44 @@ char	**update_string_array(char **str, char *token)
 	return (new_arr);
 }
 
+void update_redir(t_node *node, char *token)
+{
+	t_redir *r;
+
+	r = malloc(sizeof(t_redir));
+	if (!r)
+		return ;
+	r->redir = ft_strdup(token);
+	node->data = (void *) r;
+}
+
+void update_cmd(t_node *node, char *token)
+{
+	t_cmd *c;
+
+	if (!(node->data))
+	{
+		c = malloc(sizeof(t_cmd));
+		if (!c)
+			return ;
+		c->cmd = NULL;
+	}
+	else 
+		c = (t_cmd *) node->data;	
+	c->cmd = update_string_array(c->cmd, token);
+	node->data = (void *) c;
+}
+
 t_node	*update_node(t_node *node, char *token)
 {
 	int	size;
 
 	if (!node || !token)
 		return (NULL);
-	node->data = update_string_array(node->data, token);
+	if (is_node_redir(*node))
+		update_redir(node, token);
+	else if (is_node_cmd(*node))
+		update_cmd(node, token);
 	return (node);
 }
 

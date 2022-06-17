@@ -76,7 +76,11 @@ void print_data(t_node node)
 static void print_node(t_node *node)
 {
 	if (node->id == ID_PIPE)
-		printf("|\n");
+	{
+		//printf("|\n");
+		printf("| r: %i w: %i\n", ((t_pipe *) node->data)->r, ((t_pipe *) node->data)->w);
+
+	}
 	else 
 	{
 		if (node->id == ID_IN_REDIR)

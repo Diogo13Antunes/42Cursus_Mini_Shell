@@ -6,7 +6,7 @@
 /*   By: dsilveri <dsilveri@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 19:19:12 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/06/17 12:18:22 by dsilveri         ###   ########.fr       */
+/*   Updated: 2022/06/17 17:58:14 by dsilveri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,12 +60,14 @@ t_node	*parser(char *src)
 		create_ast(&tree, token);
 		token = get_next_token(src);
 	}
-	print2D(tree);
+	open_pipes(tree);
+	//print2D(tree);
 	//printf("\n\n");
 	//inorderTraversal(tree);
 	//rintf("\n\n");
 
-	//execution(tree);
+	printf("number of pipes: %i \n", get_num_of_pipes(tree));
+	execution(tree);
 	return (0);
 }
 

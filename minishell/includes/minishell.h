@@ -6,7 +6,7 @@
 /*   By: dsilveri <dsilveri@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 10:57:16 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/06/17 09:35:42 by dsilveri         ###   ########.fr       */
+/*   Updated: 2022/06/17 17:51:19 by dsilveri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,5 +75,7 @@ void print2D(t_node *root);
 
 
 void execution(t_node *tree);
+void open_pipes(t_node *tree);
+int get_num_of_pipes(t_node *tree);
 
 #endif

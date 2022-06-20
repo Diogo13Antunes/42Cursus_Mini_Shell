@@ -6,73 +6,109 @@
 /*   By: dsilveri <dsilveri@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:52:46 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/06/17 18:09:56 by dsilveri         ###   ########.fr       */
+/*   Updated: 2022/06/20 19:39:34 by dsilveri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void tree_inorder_traversal(t_node *root, int n_pipes);
-void exec(t_node *tree);
-void run_cmd(t_node node);
+void tree_inorder_traversal(t_node *root, char **env);
+void exec(t_node *tree, char **env);
+void run_cmd(t_node node, char **env);
 void make_redir(t_node node);
 void open_pipes(t_node *tree);
+int close_pipes(t_node *tree);
 
-void execution(t_node *tree)
+void make_pipe_redir(t_node *node);
+
+void execution(t_node *tree, char **env)
 {   
 	int pid;
-	int n_pipes;
+	int i;
 
 	pid = fork();
 	if (!pid)
 	{
-		n_pipes = get_num_of_pipes(tree);
-		tree_inorder_traversal(tree, n_pipes);
+        open_pipes(tree);
+		tree_inorder_traversal(tree, env);
+		close_pipes(tree);
+		while ((wait(NULL)) > 0);
 		exit(0);
 	}
-	wait(&pid);
+	waitpid(pid, NULL, 0);
 }
 
-void tree_inorder_traversal(t_node *root, int n_pipes) {
+void tree_inorder_traversal(t_node *root, char **env) 
+{
 	int pid;
 
 	if (root == NULL) 
 		return;
-	tree_inorder_traversal(root->left, n_pipes);
-	if (!n_pipes || (!is_node_pipe(*root) && is_node_pipe(*(root->prev))))
+	tree_inorder_traversal(root->left, env);
+	if (root->left == NULL)
 	{
 		pid = fork();
 		if (!pid)
 		{
-			printf("child\n");
-			exec(root);
+			exec(root, env);
 			exit(0);
 		}
 	}
-	tree_inorder_traversal(root->rigth, n_pipes);
+	tree_inorder_traversal(root->rigth, env);
 }
 
-void exec(t_node *tree)
+void exec(t_node *tree, char **env)
 {
-	if (tree == NULL) 
-		return;
-	exec(tree->left);
-	printf("exec\n");
-	//run_cmd(*tree);
+	t_node *node;
 	
-	//executar o que tiver de executar
+	node = tree; 
+	make_pipe_redir(node);
+	while (node && !is_node_pipe((node)))
+	{
+		if (is_node_cmd(node))
+			run_cmd(*node, env);
+		node = node->prev;
+	}
 }
 
-void run_cmd(t_node node)
+void run_cmd(t_node node, char **env)
 {
-	// Necessita de variáveis de ambiente e verificar se existe comando
-	execve("/usr/bin/cat", ((t_cmd *)(node.data))->cmd, NULL);
+	int path_size;
+	int cmd_path;
+	char *full_path;
+
+	path_size = ft_strlen("/usr/bin/");
+	cmd_path = ft_strlen(((t_cmd *)(node.data))->cmd[0]);
+	full_path = ft_calloc((path_size + cmd_path + 10), sizeof(char));
+	ft_strlcat(full_path, "/usr/bin/", path_size + 1);
+	ft_strlcat(full_path, ((t_cmd *)(node.data))->cmd[0], cmd_path + path_size + 1);
+	execve(full_path, ((t_cmd *)(node.data))->cmd, env);
 }
 
-void make_redir(t_node node)
+void make_pipe_redir(t_node *node)
 {
-	// Vai fazer todas a rediretions antes de correr o commando
+	t_node *buff;
+
+	buff = node;
+	while (node)
+	{
+		if (is_node_pipe(node))
+		{
+			if (node->left == buff)
+				dup2(((t_pipe *)(node->data))->w, STDOUT_FILENO);
+			else if(node->rigth == buff)
+			{
+				dup2(((t_pipe *)(node->data))->r, STDIN_FILENO);
+				if (node->prev)
+					dup2(((t_pipe *)(node->prev->data))->w, STDOUT_FILENO);
+			}
+			close_pipes(node);
+		}
+		buff = node;
+		node = node->prev;
+	}
 }
+
 
 void open_pipes(t_node *tree)
 {
@@ -82,7 +118,7 @@ void open_pipes(t_node *tree)
 	if (tree == NULL) 
 		return;
   	open_pipes(tree->left);
-	if (is_node_pipe(*tree))
+	if (is_node_pipe(tree))
 	{
 		pipe(fd_p);
 		p = malloc(sizeof(t_pipe));
@@ -101,11 +137,53 @@ int get_num_of_pipes(t_node *tree)
 	n_pipes = 0;
 	while (tree)
 	{
-		if (is_node_pipe(*tree))
+		if (is_node_pipe(tree))
 			n_pipes++;
 		tree = tree->left;
 	}
 	return (n_pipes);
+}
+
+int close_pipes(t_node *tree)
+{
+	t_node *node;
+
+	node = tree;
+	while (node)
+	{
+		if (is_node_pipe(node))
+		{
+			if (((t_pipe *)(node->data))->w)
+			{
+				close(((t_pipe *)(node->data))->w);
+				((t_pipe *)(node->data))->w = -1;
+			}
+			if (((t_pipe *)(node->data))->r)
+			{
+				close(((t_pipe *)(node->data))->r);
+				((t_pipe *)(node->data))->r = -1;				
+			}
+		}			
+		node = node->left;
+	}
+	node = tree;
+	while (node)
+	{
+		if (is_node_pipe(node))
+		{
+			if (((t_pipe *)(node->data))->w)
+			{
+				close(((t_pipe *)(node->data))->w);
+				((t_pipe *)(node->data))->w = -1;
+			}
+			if (((t_pipe *)(node->data))->r)
+			{
+				close(((t_pipe *)(node->data))->r);
+				((t_pipe *)(node->data))->r = -1;				
+			}
+		}	
+		node = node->prev;
+	}
 }
 
 

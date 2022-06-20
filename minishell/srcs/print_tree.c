@@ -4,7 +4,6 @@
 
 //cat <in >out | ls <in2 >out2 | <<in3 >>out3 grep | <<in4 less >out4
 
-static void print_node(t_node *node);
 static void print2DUtil(t_node *root, int space);
 
 /*
@@ -34,7 +33,7 @@ static void print2DUtil(t_node *root, int space)
 	for (int i = COUNT; i < space; i++)
 		printf(" ");
 	//printf("%s\n", root->data);
-	print_node(root);
+	print_node1(root);
 
 	// Process left child
 	print2DUtil(root->left, space);
@@ -68,12 +67,11 @@ void print_data(t_node node)
 	{
 		r = (t_redir *) node.data;
 		printf("%s\n", r->redir);
-
 	}
 		
 }
 
-static void print_node(t_node *node)
+void print_node1(t_node *node)
 {
 	if (node->id == ID_PIPE)
 	{

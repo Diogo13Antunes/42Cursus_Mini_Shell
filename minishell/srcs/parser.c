@@ -6,7 +6,7 @@
 /*   By: dsilveri <dsilveri@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 19:19:12 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/06/17 17:58:14 by dsilveri         ###   ########.fr       */
+/*   Updated: 2022/06/20 12:36:45 by dsilveri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,15 +60,16 @@ t_node	*parser(char *src)
 		create_ast(&tree, token);
 		token = get_next_token(src);
 	}
-	open_pipes(tree);
+	//open_pipes(tree);
 	//print2D(tree);
 	//printf("\n\n");
 	//inorderTraversal(tree);
 	//rintf("\n\n");
 
-	printf("number of pipes: %i \n", get_num_of_pipes(tree));
-	execution(tree);
-	return (0);
+	//printf("number of pipes: %i \n", get_num_of_pipes(tree));
+	//open_pipes(tree);
+	//execution(tree);
+	return (tree);
 }
 
 static void	create_ast(t_node **tree, char *token)
@@ -96,18 +97,18 @@ t_node	*get_node_to_update(t_node *tree)
 
 	if (!tree)
 		return (NULL);
-	if (is_node_pipe(*tree))
+	if (is_node_pipe(tree))
 		node = tree->rigth;
 	else
 		node = tree;
 	if (!node)
 		return (NULL);
 	next = node->left;
-	if ((is_node_redir(*node) && !(node->data)))
+	if ((is_node_redir(node) && !(node->data)))
 		return (node);
-	else if (next && is_node_redir(*next) && !(next->data))
+	else if (next && is_node_redir(next) && !(next->data))
 		return (next);
-	else if (is_node_cmd(*node))
+	else if (is_node_cmd(node))
 		return (node);
 	return (NULL);
 }
@@ -185,9 +186,9 @@ t_node	*update_node(t_node *node, char *token)
 
 	if (!node || !token)
 		return (NULL);
-	if (is_node_redir(*node))
+	if (is_node_redir(node))
 		update_redir(node, token);
-	else if (is_node_cmd(*node))
+	else if (is_node_cmd(node))
 		update_cmd(node, token);
 	return (node);
 }
@@ -216,23 +217,29 @@ int	get_token_id(char *token)
 	return (ID_WORD);
 }
 
-int	is_node_redir(t_node node)
+int	is_node_redir(t_node *node)
 {
-	if (node.id >= ID_IN_REDIR && node.id <= ID_OUT_HERDOC)
+	if (!node)
+		return (0);
+	if (node->id >= ID_IN_REDIR && node->id <= ID_OUT_HERDOC)
 		return (1);
 	return (0);
 }
 
-int	is_node_pipe(t_node node)
+int	is_node_pipe(t_node *node)
 {
-	if (node.id == ID_PIPE)
+	if (!node)
+		return (0);
+	if (node->id == ID_PIPE)
 		return (1);
 	return (0);
 }
 
-int	is_node_cmd(t_node node)
+int	is_node_cmd(t_node *node)
 {
-	if (node.id == ID_CMD)
+	if (!node)
+		return (0);
+	if (node->id == ID_CMD)
 		return (1);
 	return (0);
 }

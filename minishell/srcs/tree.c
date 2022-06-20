@@ -6,7 +6,7 @@
 /*   By: dsilveri <dsilveri@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 19:19:06 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/06/17 09:40:14 by dsilveri         ###   ########.fr       */
+/*   Updated: 2022/06/18 21:38:01 by dsilveri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,11 +76,11 @@ void	add_node_on_top(t_node **tree, t_node *node)
 
 void	add_new_node(t_node **tree, t_node *node)
 {
-	if (is_node_redir(*node))
+	if (is_node_redir(node))
 		add_new_redir(tree, node);
-	else if (is_node_cmd(*node))
+	else if (is_node_cmd(node))
 		add_new_cmd(tree, node);
-	else if (is_node_pipe(*node))
+	else if (is_node_pipe(node))
 		add_node_on_top(tree, node);
 }
 
@@ -92,14 +92,14 @@ void	add_new_redir(t_node **tree, t_node *node)
 	if (!tree)
 		return ;
 	first = *tree;
-	if (!first || is_node_redir(*first))
+	if (!first || is_node_redir(first))
 		add_node_on_top(tree, node);
-	else if (is_node_cmd(*first))
+	else if (is_node_cmd(first))
 		add_node_after(first, node, LEFT);
-	else if (is_node_pipe(*first))
+	else if (is_node_pipe(first))
 	{
 		next = first->rigth;
-		if (!next || is_node_redir(*next))
+		if (!next || is_node_redir(next))
 			add_node_after(first, node, RIGHT);
 		else
 			add_node_after(next, node, LEFT);
@@ -111,8 +111,8 @@ void	add_new_cmd(t_node **tree, t_node *node)
 	t_node	*first;
 
 	first = *tree;
-	if (!first || is_node_redir(*first))
+	if (!first || is_node_redir(first))
 		add_node_on_top(tree, node);
-	else if (is_node_pipe(*first))
+	else if (is_node_pipe(first))
 		add_node_after(first, node, RIGHT);
 }

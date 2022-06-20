@@ -6,7 +6,7 @@
 /*   By: dsilveri <dsilveri@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/29 18:42:18 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/06/15 09:50:14 by dsilveri         ###   ########.fr       */
+/*   Updated: 2022/06/20 18:55:46 by dsilveri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,19 @@
 
 static void test_parser(char *src);
 
-int main (void)
+int main (int argc, char **argv, char **env)
 {
     char *str;
-    
+    t_node *tree;
     while (1)
     {
         str = readline("minishell > ");
         //test_parser(str);
-        parser(str);
+        tree = parser(str);
+        
+        //open_pipes(tree);
+	    execution(tree, env);
+        //print2D(tree);
         free(str);
     }
     return (0);

@@ -6,7 +6,7 @@
 /*   By: dsilveri <dsilveri@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:52:46 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/06/20 19:39:34 by dsilveri         ###   ########.fr       */
+/*   Updated: 2022/06/21 11:13:23 by dsilveri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ void make_pipe_redir(t_node *node);
 void execution(t_node *tree, char **env)
 {   
 	int pid;
-	int i;
 
 	pid = fork();
 	if (!pid)
@@ -65,6 +64,8 @@ void exec(t_node *tree, char **env)
 	make_pipe_redir(node);
 	while (node && !is_node_pipe((node)))
 	{
+		if (is_node_redir(node))
+			make_redir(*node);
 		if (is_node_cmd(node))
 			run_cmd(*node, env);
 		node = node->prev;
@@ -83,6 +84,26 @@ void run_cmd(t_node node, char **env)
 	ft_strlcat(full_path, "/usr/bin/", path_size + 1);
 	ft_strlcat(full_path, ((t_cmd *)(node.data))->cmd[0], cmd_path + path_size + 1);
 	execve(full_path, ((t_cmd *)(node.data))->cmd, env);
+}
+
+void make_redir(t_node node)
+{
+	int fd;
+	char *file;
+
+	file = ((t_redir *)(node.data))->redir;
+	if (node.id == ID_IN_REDIR)
+	{
+		fd = open(file, O_RDONLY);
+		dup2(fd, STDIN_FILENO);
+		close(fd);
+	}
+	else if (node.id == ID_OUT_REDIR)
+	{
+		fd = open(file, O_CREAT | O_WRONLY | O_TRUNC, 0644);
+		dup2(fd, STDOUT_FILENO);
+		close(fd);
+	}
 }
 
 void make_pipe_redir(t_node *node)
@@ -108,7 +129,6 @@ void make_pipe_redir(t_node *node)
 		node = node->prev;
 	}
 }
-
 
 void open_pipes(t_node *tree)
 {
@@ -185,6 +205,3 @@ int close_pipes(t_node *tree)
 		node = node->prev;
 	}
 }
-
-
-

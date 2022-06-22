@@ -6,7 +6,7 @@
 /*   By: dcandeia <dcandeia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/29 18:42:18 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/06/22 12:47:23 by dcandeia         ###   ########.fr       */
+/*   Updated: 2022/06/22 14:51:59 by dcandeia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,15 @@ int main (int argc, char **argv, char **env)
     char *str;
     t_node *tree;
 	t_env	*env_lst;
+	char *prompt;
 
 	env_lst = get_env_list(env);
-	//builtin_env(*env_lst, STDOUT_FILENO);
     while (1)
     {
-        str = readline("minishell > ");
+		prompt = get_prompt_str(env_lst);
+        str = readline(prompt);
+		free(prompt);
+		
         //test_parser(str);
         tree = parser(str);
         

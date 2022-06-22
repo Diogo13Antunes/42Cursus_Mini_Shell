@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsilveri <dsilveri@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: dcandeia <dcandeia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:52:46 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/06/21 11:13:23 by dsilveri         ###   ########.fr       */
+/*   Updated: 2022/06/22 11:10:24 by dcandeia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void exec(t_node *tree, char **env);
 void run_cmd(t_node node, char **env);
 void make_redir(t_node node);
 void open_pipes(t_node *tree);
-int close_pipes(t_node *tree);
+void close_pipes(t_node *tree);
 
 void make_pipe_redir(t_node *node);
 
@@ -60,7 +60,7 @@ void exec(t_node *tree, char **env)
 {
 	t_node *node;
 	
-	node = tree; 
+	node = tree;
 	make_pipe_redir(node);
 	while (node && !is_node_pipe((node)))
 	{
@@ -164,7 +164,7 @@ int get_num_of_pipes(t_node *tree)
 	return (n_pipes);
 }
 
-int close_pipes(t_node *tree)
+void close_pipes(t_node *tree)
 {
 	t_node *node;
 

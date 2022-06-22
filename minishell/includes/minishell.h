@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsilveri <dsilveri@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: dcandeia <dcandeia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 10:57:16 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/06/21 15:33:18 by dsilveri         ###   ########.fr       */
+/*   Updated: 2022/06/22 11:32:26 by dcandeia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,14 @@ typedef struct s_pipe
 	int w;
 }	t_pipe;
 
+typedef struct s_env
+{
+	char			*variable;
+	char			*content;
+	char			*full;
+	struct s_env	*next;
+}				t_env;
+
 /* get_next_token.c */
 char	*get_next_token(char *src);
 
@@ -88,4 +96,9 @@ char	**update_string_array(char **str, char *token);
 int		is_node_redir(t_node *node);
 int		is_node_pipe(t_node *node);
 int		is_node_cmd(t_node *node);
+
+/* env_vars.c */
+t_env	*get_env_list(char **env);
+void	builtin_env(t_env firt_elem, int fd);
+
 #endif

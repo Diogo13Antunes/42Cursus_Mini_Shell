@@ -75,9 +75,8 @@ void print_node1(t_node *node)
 {
 	if (node->id == ID_PIPE)
 	{
-		//printf("|\n");
-		printf("| r: %i w: %i\n", ((t_pipe *) node->data)->r, ((t_pipe *) node->data)->w);
-
+		printf("|\n");
+		//printf("| r: %i w: %i\n", ((t_pipe *) node->data)->r, ((t_pipe *) node->data)->w);
 	}
 	else 
 	{
@@ -88,8 +87,7 @@ void print_node1(t_node *node)
 		else if (node->id == ID_OUT_HERDOC)
 		   printf(">> ");
 		else if (node->id == ID_IN_HERDOC)
-		   printf("<< ");    
-		//print_array_string(node->data);
+		   printf("<< ");
 		print_data(*node);
 	}
 }

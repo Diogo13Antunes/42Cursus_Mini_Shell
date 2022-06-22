@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsilveri <dsilveri@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: dcandeia <dcandeia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/29 18:42:18 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/06/20 18:55:46 by dsilveri         ###   ########.fr       */
+/*   Updated: 2022/06/22 11:53:21 by dcandeia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,10 @@ int main (int argc, char **argv, char **env)
 {
     char *str;
     t_node *tree;
+	t_env	*env_lst;
+
+	env_lst = get_env_list(env);
+	//builtin_env(*env_lst, STDOUT_FILENO);
     while (1)
     {
         str = readline("minishell > ");
@@ -25,8 +29,8 @@ int main (int argc, char **argv, char **env)
         tree = parser(str);
         
         //open_pipes(tree);
-	    execution(tree, env);
-        //print2D(tree);
+	    //execution(tree, env);
+        print2D(tree);
         free(str);
     }
     return (0);

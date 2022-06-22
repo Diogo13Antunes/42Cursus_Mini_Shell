@@ -6,11 +6,47 @@
 /*   By: dcandeia <dcandeia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 11:23:03 by dcandeia          #+#    #+#             */
-/*   Updated: 2022/06/22 11:52:14 by dcandeia         ###   ########.fr       */
+/*   Updated: 2022/06/22 12:52:31 by dcandeia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	env_lst_size(t_env *env)
+{
+	t_env	*elem;
+	int		counter;
+
+	elem = env;
+	counter = 0;
+	while (elem)
+	{
+		if (elem->content)
+			counter++;
+		elem = elem->next;
+	}
+	return (counter);
+}
+
+char	**get_env_matrix(t_env *list)
+{
+	int		lst_size;
+	char	**matrix;
+	t_env	*temp;
+	int		i;
+
+	i = 0;
+	temp = list;
+	lst_size = env_lst_size(list);
+	matrix = ft_calloc(sizeof(char *), lst_size + 1);
+	while (temp)
+	{
+		matrix[i] = temp->full;
+		i++;
+		temp = temp->next;
+	}
+	return (matrix);
+}
 
 void	ft_lstadd_back_env(t_env **lst, t_env *new)
 {

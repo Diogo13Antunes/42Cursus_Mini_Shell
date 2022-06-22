@@ -6,23 +6,23 @@
 /*   By: dcandeia <dcandeia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:52:46 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/06/22 11:10:24 by dcandeia         ###   ########.fr       */
+/*   Updated: 2022/06/22 12:50:49 by dcandeia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void tree_inorder_traversal(t_node *root, char **env);
-void exec(t_node *tree, char **env);
-void run_cmd(t_node node, char **env);
+void tree_inorder_traversal(t_node *root, t_env *env);
+void exec(t_node *tree, t_env *env);
+void run_cmd(t_node node, t_env *env);
 void make_redir(t_node node);
 void open_pipes(t_node *tree);
 void close_pipes(t_node *tree);
 
 void make_pipe_redir(t_node *node);
 
-void execution(t_node *tree, char **env)
-{   
+void execution(t_node *tree, t_env *env)
+{
 	int pid;
 
 	pid = fork();
@@ -37,7 +37,7 @@ void execution(t_node *tree, char **env)
 	waitpid(pid, NULL, 0);
 }
 
-void tree_inorder_traversal(t_node *root, char **env) 
+void tree_inorder_traversal(t_node *root, t_env *env) 
 {
 	int pid;
 
@@ -56,7 +56,7 @@ void tree_inorder_traversal(t_node *root, char **env)
 	tree_inorder_traversal(root->rigth, env);
 }
 
-void exec(t_node *tree, char **env)
+void exec(t_node *tree, t_env *env)
 {
 	t_node *node;
 	
@@ -72,9 +72,62 @@ void exec(t_node *tree, char **env)
 	}
 }
 
-void run_cmd(t_node node, char **env)
+char **get_paths(t_env *path)
 {
-	int path_size;
+	char **paths;
+
+	if (!path)
+		return (NULL);
+	paths = ft_split(path->content, ':');
+	return(paths);	
+}
+
+static int	is_cmd_path(char *cmd)
+{
+	int	i;
+
+	i = 0;
+	while (cmd[i] != '\0')
+	{
+		if (cmd[i] == '/')
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+static char	*get_cmd_path(char *cmd, char **paths)
+{
+	char	*path;
+	int		size;
+	int		i;
+
+	i = 0;
+	while (paths[i])
+	{
+		size = ft_strlen(paths[i]) + ft_strlen(cmd) + 1;
+		path = ft_calloc(size + 1, sizeof(char));
+		if (is_cmd_path(cmd))
+			ft_strcat(path, cmd);
+		else
+		{
+			ft_strcat(path, paths[i]);
+			ft_strcat(path, "/");
+			ft_strcat(path, cmd);
+		}
+		if (!access(path, F_OK | X_OK))
+			return (path);
+		else
+			free(path);
+		i++;
+	}
+	return (0);
+}
+
+void run_cmd(t_node node, t_env *env)
+{
+	char *full_path;
+	/*int path_size;
 	int cmd_path;
 	char *full_path;
 
@@ -82,8 +135,11 @@ void run_cmd(t_node node, char **env)
 	cmd_path = ft_strlen(((t_cmd *)(node.data))->cmd[0]);
 	full_path = ft_calloc((path_size + cmd_path + 10), sizeof(char));
 	ft_strlcat(full_path, "/usr/bin/", path_size + 1);
-	ft_strlcat(full_path, ((t_cmd *)(node.data))->cmd[0], cmd_path + path_size + 1);
-	execve(full_path, ((t_cmd *)(node.data))->cmd, env);
+	ft_strlcat(full_path, ((t_cmd *)(node.data))->cmd[0], cmd_path + path_size + 1);*/
+
+	full_path = get_cmd_path(((t_cmd *)(node.data))->cmd[0], get_paths(exist_env_elem(env, "PATH")));
+	
+	execve(full_path, ((t_cmd *)(node.data))->cmd, get_env_matrix(env));
 }
 
 void make_redir(t_node node)

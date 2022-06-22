@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: dsilveri <dsilveri@student.42.fr>          +#+  +:+       +#+         #
+#    By: dcandeia <dcandeia@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/03 11:34:51 by dsilveri          #+#    #+#              #
-#    Updated: 2021/11/09 12:31:16 by dsilveri         ###   ########.fr        #
+#    Updated: 2022/06/22 12:23:03 by dcandeia         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,7 +45,8 @@ SRCS 	= ft_isalpha.c \
 		  ft_putchar_fd.c \
 		  ft_putstr_fd.c \
 		  ft_putendl_fd.c \
-		  ft_putnbr_fd.c
+		  ft_putnbr_fd.c \
+		  ft_strcat.c
 
 OBJS		= $(SRCS:.c=.o)
 

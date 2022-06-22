@@ -6,7 +6,7 @@
 /*   By: dcandeia <dcandeia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 10:57:16 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/06/22 11:32:26 by dcandeia         ###   ########.fr       */
+/*   Updated: 2022/06/22 12:50:10 by dcandeia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void	print_tree(t_node *root);
 void	print2D(t_node *root);
 
 
-void	execution(t_node *tree, char **env);
+void	execution(t_node *tree, t_env *env);
 void	open_pipes(t_node *tree);
 int		get_num_of_pipes(t_node *tree);
 
@@ -100,5 +100,7 @@ int		is_node_cmd(t_node *node);
 /* env_vars.c */
 t_env	*get_env_list(char **env);
 void	builtin_env(t_env firt_elem, int fd);
+t_env	*exist_env_elem(t_env *env, const char *elem_name);
+char	**get_env_matrix(t_env *list);
 
 #endif

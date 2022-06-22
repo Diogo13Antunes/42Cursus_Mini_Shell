@@ -6,7 +6,7 @@
 /*   By: dcandeia <dcandeia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/29 18:42:18 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/06/22 11:53:21 by dcandeia         ###   ########.fr       */
+/*   Updated: 2022/06/22 12:47:23 by dcandeia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ int main (int argc, char **argv, char **env)
         tree = parser(str);
         
         //open_pipes(tree);
-	    //execution(tree, env);
-        print2D(tree);
+	    execution(tree, env_lst);
+        //print2D(tree);
         free(str);
     }
     return (0);

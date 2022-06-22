@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsilveri <dsilveri@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: dsilveri <dsilveri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 12:39:55 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/06/21 12:42:09 by dsilveri         ###   ########.fr       */
+/*   Updated: 2022/06/22 16:27:21 by dsilveri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,3 +38,9 @@ int	is_node_cmd(t_node *node)
 		return (1);
 	return (0);
 }
+
+char *get_token_str(int id)
+{
+	
+}
+

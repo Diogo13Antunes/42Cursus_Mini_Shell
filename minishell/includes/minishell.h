@@ -6,7 +6,7 @@
 /*   By: dcandeia <dcandeia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 10:57:16 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/06/22 14:50:37 by dcandeia         ###   ########.fr       */
+/*   Updated: 2022/06/23 10:43:33 by dcandeia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,7 @@ t_env	*get_env_list(char **env);
 void	builtin_env(t_env firt_elem, int fd);
 t_env	*exist_env_elem(t_env *env, const char *elem_name);
 char	**get_env_matrix(t_env *list);
+char	*create_full_env(char *var, char *cont);
 
 /* get_prompt.c */
 char	*get_prompt_str(t_env *env);

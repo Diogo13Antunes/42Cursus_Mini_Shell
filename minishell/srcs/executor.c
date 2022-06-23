@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsilveri <dsilveri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dcandeia <dcandeia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:52:46 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/06/23 12:24:51 by dsilveri         ###   ########.fr       */
+/*   Updated: 2022/06/23 13:17:44 by dcandeia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,8 +140,17 @@ void run_cmd(t_node node, t_env *env)
 	char **cmd;
 	
 	cmd = ((t_cmd *)(node.data))->cmd;
-	full_path = get_cmd_path(cmd[0], get_paths(exist_env_elem(env, "PATH")));
-	execve(full_path, cmd, get_env_matrix(env));
+	if (!ft_memcmp(cmd[0], "echo", ft_strlen("echo") + 1))
+		builtin_echo(cmd, STDOUT_FILENO);
+	else if (!ft_memcmp(cmd[0], "env", ft_strlen("env") + 1))
+		builtin_env(*env, STDOUT_FILENO);
+	else if (!ft_memcmp(cmd[0], "pwd", ft_strlen("pwd") + 1))
+		builtin_pwd(STDOUT_FILENO);
+	else
+	{
+		full_path = get_cmd_path(cmd[0], get_paths(exist_env_elem(env, "PATH")));
+		execve(full_path, cmd, get_env_matrix(env));
+	}
 }
 
 void make_redir(t_node node)

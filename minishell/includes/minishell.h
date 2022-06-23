@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsilveri <dsilveri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dcandeia <dcandeia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 10:57:16 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/06/23 11:26:42 by dsilveri         ###   ########.fr       */
+/*   Updated: 2022/06/23 13:03:13 by dcandeia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,6 @@ int		is_node_cmd(t_node *node);
 
 /* env_vars.c */
 t_env	*get_env_list(char **env);
-void	builtin_env(t_env firt_elem, int fd);
 t_env	*exist_env_elem(t_env *env, const char *elem_name);
 char	**get_env_matrix(t_env *list);
 char	*create_full_env(char *var, char *cont);
@@ -112,6 +111,15 @@ char	*create_full_env(char *var, char *cont);
 char	*get_prompt_str(t_env *env);
 
 /* builtins/cmd_cd.c */
-int	builtin_cd(char **args, t_env *env);
+int		builtin_cd(char **args, t_env *env);
+
+/* builtins/cmd_echo.c */
+void	builtin_echo(char **matriz, int fd);
+
+/* builtins/cmd_env.c */
+void	builtin_env(t_env firt_elem, int fd);
+
+/* builtins/cmd_pwd.c */
+int		builtin_pwd(int fd);
 
 #endif

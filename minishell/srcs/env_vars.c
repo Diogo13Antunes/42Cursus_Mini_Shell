@@ -6,7 +6,7 @@
 /*   By: dcandeia <dcandeia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 11:23:03 by dcandeia          #+#    #+#             */
-/*   Updated: 2022/06/22 12:52:31 by dcandeia         ###   ########.fr       */
+/*   Updated: 2022/06/23 12:58:18 by dcandeia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,25 +176,4 @@ t_env	*get_env_list(char **env)
 	if (!exist_env_elem(list, "OLDPWD"))
 		ft_lstadd_back_env(&list, create_new_env_elem("OLDPWD", 0));
 	return (list);
-}
-
-void	builtin_env(t_env firt_elem, int fd)
-{
-	t_env	elem;
-
-	elem = firt_elem;
-	while (elem.next != NULL)
-	{
-		if (elem.content)
-		{
-			ft_putstr_fd(elem.full, fd);
-			ft_putstr_fd("\n", fd);
-		}
-		elem = *(elem.next);
-	}
-	if (elem.content)
-	{
-		ft_putstr_fd(elem.full, fd);
-		ft_putstr_fd("\n", fd);
-	}
 }

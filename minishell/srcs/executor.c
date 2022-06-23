@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dcandeia <dcandeia@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dsilveri <dsilveri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:52:46 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/06/22 12:50:49 by dcandeia         ###   ########.fr       */
+/*   Updated: 2022/06/23 12:24:51 by dsilveri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,15 +24,25 @@ void make_pipe_redir(t_node *node);
 void execution(t_node *tree, t_env *env)
 {
 	int pid;
+	char **cmd;
 
 	pid = fork();
 	if (!pid)
 	{
-        open_pipes(tree);
-		tree_inorder_traversal(tree, env);
-		close_pipes(tree);
-		while ((wait(NULL)) > 0);
-		exit(0);
+		// TESTE CD
+		if (is_node_cmd(tree) && !ft_memcmp(((t_cmd *)(tree->data))->cmd[0], "cd", 3))
+		{
+			cmd = ((t_cmd *)(tree->data))->cmd;
+			builtin_cd(cmd, env);
+		}
+		else 
+		{
+			open_pipes(tree);
+			tree_inorder_traversal(tree, env);
+			close_pipes(tree);
+			while ((wait(NULL)) > 0);
+			exit(0);		
+		}
 	}
 	waitpid(pid, NULL, 0);
 }
@@ -127,19 +137,11 @@ static char	*get_cmd_path(char *cmd, char **paths)
 void run_cmd(t_node node, t_env *env)
 {
 	char *full_path;
-	/*int path_size;
-	int cmd_path;
-	char *full_path;
-
-	path_size = ft_strlen("/usr/bin/");
-	cmd_path = ft_strlen(((t_cmd *)(node.data))->cmd[0]);
-	full_path = ft_calloc((path_size + cmd_path + 10), sizeof(char));
-	ft_strlcat(full_path, "/usr/bin/", path_size + 1);
-	ft_strlcat(full_path, ((t_cmd *)(node.data))->cmd[0], cmd_path + path_size + 1);*/
-
-	full_path = get_cmd_path(((t_cmd *)(node.data))->cmd[0], get_paths(exist_env_elem(env, "PATH")));
+	char **cmd;
 	
-	execve(full_path, ((t_cmd *)(node.data))->cmd, get_env_matrix(env));
+	cmd = ((t_cmd *)(node.data))->cmd;
+	full_path = get_cmd_path(cmd[0], get_paths(exist_env_elem(env, "PATH")));
+	execve(full_path, cmd, get_env_matrix(env));
 }
 
 void make_redir(t_node node)

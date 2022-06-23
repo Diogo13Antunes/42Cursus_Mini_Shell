@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dcandeia <dcandeia@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dsilveri <dsilveri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 10:57:16 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/06/23 10:43:33 by dcandeia         ###   ########.fr       */
+/*   Updated: 2022/06/23 11:26:42 by dsilveri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,5 +110,8 @@ char	*create_full_env(char *var, char *cont);
 
 /* get_prompt.c */
 char	*get_prompt_str(t_env *env);
+
+/* builtins/cmd_cd.c */
+int	builtin_cd(char **args, t_env *env);
 
 #endif

@@ -3,16 +3,18 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: dsilveri <dsilveri@student.42lisboa.com    +#+  +:+       +#+         #
+#    By: dsilveri <dsilveri@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/27 10:55:19 by dsilveri          #+#    #+#              #
-#    Updated: 2022/06/15 14:20:36 by dsilveri         ###   ########.fr        #
+#    Updated: 2022/06/23 11:34:17 by dsilveri         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME			= minishell
 
-SRCS			= $(wildcard srcs/*.c)
+SRCS			= $(wildcard srcs/*.c) \
+				  $(wildcard srcs/builtins/*.c)
+
 LIBFT			= libft/libft.a
 
 SRCS_OBJS		= $(SRCS:.c=.o)

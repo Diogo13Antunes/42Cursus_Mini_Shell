@@ -6,7 +6,7 @@
 /*   By: dcandeia <dcandeia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 10:57:16 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/06/23 13:03:13 by dcandeia         ###   ########.fr       */
+/*   Updated: 2022/06/23 16:11:52 by dcandeia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,11 @@ int		is_node_cmd(t_node *node);
 t_env	*get_env_list(char **env);
 t_env	*exist_env_elem(t_env *env, const char *elem_name);
 char	**get_env_matrix(t_env *list);
+t_env	*get_new_env_elem(char *env_str);
 char	*create_full_env(char *var, char *cont);
+int		env_lst_size(t_env *env);
+int		find_char(char *str, char c);
+void	ft_lstadd_back_env(t_env **lst, t_env *new);
 
 /* get_prompt.c */
 char	*get_prompt_str(t_env *env);
@@ -121,5 +125,18 @@ void	builtin_env(t_env firt_elem, int fd);
 
 /* builtins/cmd_pwd.c */
 int		builtin_pwd(int fd);
+
+/* builtins/builtin_print_export.c */
+void	print_export(t_env *env, int fd);
+
+/* builtins/builtin_check_export_elements.c */
+int	check_element(char *element);
+int	check_element_name(char *element);
+
+/* builtins/cmd_export.c */
+void	builtin_export(t_env *env, char **elems, int fd);
+
+/* builtins/cmd_unset.c */
+void	builtin_unset(t_env **env, char **elem);
 
 #endif

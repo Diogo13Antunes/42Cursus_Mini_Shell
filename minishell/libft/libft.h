@@ -6,7 +6,7 @@
 /*   By: dcandeia <dcandeia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 11:34:45 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/06/22 12:23:51 by dcandeia         ###   ########.fr       */
+/*   Updated: 2022/06/23 14:43:04 by dcandeia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,5 +66,6 @@ void	ft_lstclear(t_list **lst, void (*del)(void*));
 void	ft_lstiter(t_list *lst, void (*f)(void *));
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 char	*ft_strcat(char *dst, const char *src);
+int		ft_strcmp(const char *s1, const char *s2);
 
 #endif

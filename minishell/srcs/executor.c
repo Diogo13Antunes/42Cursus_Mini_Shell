@@ -6,7 +6,7 @@
 /*   By: dcandeia <dcandeia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:52:46 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/06/23 13:17:44 by dcandeia         ###   ########.fr       */
+/*   Updated: 2022/06/23 16:11:23 by dcandeia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,17 @@ void execution(t_node *tree, t_env *env)
 			cmd = ((t_cmd *)(tree->data))->cmd;
 			builtin_cd(cmd, env);
 		}
-		else 
+		else if (is_node_cmd(tree) && !ft_memcmp(((t_cmd *)(tree->data))->cmd[0], "export", 7))
+		{
+			cmd = ((t_cmd *)(tree->data))->cmd;
+			builtin_export(env, cmd, STDOUT_FILENO);
+		}
+		else if (is_node_cmd(tree) && !ft_memcmp(((t_cmd *)(tree->data))->cmd[0], "unset", 6))
+		{
+			cmd = ((t_cmd *)(tree->data))->cmd;
+			builtin_unset(&env, cmd);
+		}
+		else
 		{
 			open_pipes(tree);
 			tree_inorder_traversal(tree, env);

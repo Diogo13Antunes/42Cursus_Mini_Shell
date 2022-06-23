@@ -6,7 +6,7 @@
 /*   By: dcandeia <dcandeia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 11:23:03 by dcandeia          #+#    #+#             */
-/*   Updated: 2022/06/23 12:58:18 by dcandeia         ###   ########.fr       */
+/*   Updated: 2022/06/23 16:04:41 by dcandeia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,7 @@ int	env_lst_size(t_env *env)
 	counter = 0;
 	while (elem)
 	{
-		if (elem->content)
-			counter++;
+		counter++;
 		elem = elem->next;
 	}
 	return (counter);

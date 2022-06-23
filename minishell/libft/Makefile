@@ -6,7 +6,7 @@
 #    By: dcandeia <dcandeia@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/03 11:34:51 by dsilveri          #+#    #+#              #
-#    Updated: 2022/06/22 12:23:03 by dcandeia         ###   ########.fr        #
+#    Updated: 2022/06/23 14:43:20 by dcandeia         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,6 +46,7 @@ SRCS 	= ft_isalpha.c \
 		  ft_putstr_fd.c \
 		  ft_putendl_fd.c \
 		  ft_putnbr_fd.c \
+		  ft_strcmp.c \
 		  ft_strcat.c
 
 OBJS		= $(SRCS:.c=.o)

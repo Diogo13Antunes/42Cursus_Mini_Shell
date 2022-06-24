@@ -31,7 +31,7 @@ int	get_token_id(char *token)
 		if (token[0] == '<' && token[1] == '<')
 			return (ID_IN_HERDOC);
 		else if (token[0] == '>' && token[1] == '>')
-			return (ID_OUT_HERDOC);
+			return (ID_OUT_APPEND);
 	}
 	return (ID_WORD);
 }

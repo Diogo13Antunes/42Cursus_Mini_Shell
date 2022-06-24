@@ -20,7 +20,7 @@ void print_token(t_node *node)
 	    ft_putstr_fd("\'<\'\n", STDERR_FILENO); 
 	else if (node->id == ID_OUT_REDIR)
 	    ft_putstr_fd("\'>\'\n", STDERR_FILENO);
-	else if (node->id == ID_OUT_HERDOC)
+	else if (node->id == ID_OUT_APPEND)
 	    ft_putstr_fd("\'>>\'\n", STDERR_FILENO);
 	else if (node->id == ID_IN_HERDOC)
 	    ft_putstr_fd("\'<<\'\n", STDERR_FILENO);

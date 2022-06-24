@@ -16,7 +16,7 @@ int	is_node_redir(t_node *node)
 {
 	if (!node)
 		return (0);
-	if (node->id >= ID_IN_REDIR && node->id <= ID_OUT_HERDOC)
+	if (node->id >= ID_IN_REDIR && node->id <= ID_OUT_APPEND)
 		return (1);
 	return (0);
 }
@@ -39,8 +39,22 @@ int	is_node_cmd(t_node *node)
 	return (0);
 }
 
-// char *get_token_str(int id)
-// {
-	
-// }
+int is_node_in(t_node *node)
+{
+	if (!node)
+		return (0);
+	if (node->id == ID_IN_REDIR || node->id == ID_IN_HERDOC)
+		return (1);
+	return (0);	
+}
+
+int is_node_out(t_node *node)
+{
+	if (!node)
+		return (0);
+	if (node->id == ID_OUT_REDIR || node->id == ID_OUT_APPEND)
+		return (1);
+	return (0);		
+}
+
 

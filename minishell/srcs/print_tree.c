@@ -84,7 +84,7 @@ void print_node1(t_node *node)
 		   printf("< "); 
 		else if (node->id == ID_OUT_REDIR)
 		   printf("> "); 
-		else if (node->id == ID_OUT_HERDOC)
+		else if (node->id == ID_OUT_APPEND)
 		   printf(">> ");
 		else if (node->id == ID_IN_HERDOC)
 		   printf("<< ");

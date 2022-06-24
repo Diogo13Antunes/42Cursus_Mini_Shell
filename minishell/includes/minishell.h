@@ -31,7 +31,7 @@
 # define ID_IN_REDIR	1
 # define ID_OUT_REDIR	2
 # define ID_IN_HERDOC	3
-# define ID_OUT_HERDOC	4
+# define ID_OUT_APPEND	4
 # define ID_PIPE		5
 # define ID_CMD			6
 
@@ -103,6 +103,8 @@ char	**update_string_array(char **str, char *token);
 int		is_node_redir(t_node *node);
 int		is_node_pipe(t_node *node);
 int		is_node_cmd(t_node *node);
+int		is_node_in(t_node *node);
+int		is_node_out(t_node *node);
 
 /* env_vars.c */
 t_env	*get_env_list(char **env);
@@ -133,8 +135,8 @@ int		builtin_pwd(int fd);
 void	print_export(t_env *env, int fd);
 
 /* builtins/builtin_check_export_elements.c */
-int	check_element(char *element);
-int	check_element_name(char *element);
+int		check_element(char *element);
+int		check_element_name(char *element);
 
 /* builtins/cmd_export.c */
 void	builtin_export(t_env *env, char **elems, int fd);
@@ -145,7 +147,7 @@ void	builtin_unset(t_env **env, char **elem);
 /* error_handler.c */
 void	*oom_guard(void *p);
 void	cmd_not_found_error(char *cmd_path, char *cmd);
-int	file_error(int err, char *file);
+int		file_error(int err, char *file);
 
 /* print_error.c */
 void	print_msg_error(char *error, char *str);

@@ -16,7 +16,8 @@ void	*oom_guard(void *p)
 {
 	if (!p)
 	{
-		write(2, "pipex: Out of memory!\n", strlen("pipex: Out of memory!\n"));
+		ft_putstr_fd(PROGRAM_NAME, STDERR_FILENO);
+		ft_putstr_fd(": Out of memory!\n", STDERR_FILENO);
 		exit(EXIT_FAILURE);
 	}
 	return (p);

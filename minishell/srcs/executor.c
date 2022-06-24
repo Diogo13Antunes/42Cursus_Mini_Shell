@@ -167,21 +167,24 @@ void run_cmd(t_node node, t_env *env)
 void make_redir(t_node node)
 {
 	int fd;
+	int fd2;
+	int flag;
 	char *file;
 
 	file = ((t_redir *)(node.data))->redir;
-	if (node.id == ID_IN_REDIR)
-	{
-		fd = file_error(open(file, O_RDONLY), file);
-		dup2(fd, STDIN_FILENO);
-		close(fd);
-	}
-	else if (node.id == ID_OUT_REDIR)
-	{
-		fd = file_error(open(file, O_CREAT | O_WRONLY | O_TRUNC, 0644), file);
-		dup2(fd, STDOUT_FILENO);
-		close(fd);
-	}
+	if (is_node_in(&node))
+		fd2 = STDIN_FILENO;
+	else 
+		fd2 = STDOUT_FILENO;
+	if (node.id == ID_OUT_REDIR)
+		flag = O_CREAT | O_WRONLY | O_TRUNC;
+	else if (node.id == ID_OUT_APPEND)
+		flag = O_CREAT | O_WRONLY | O_APPEND;
+	else 
+		flag = O_RDONLY;
+	fd = file_error(open(file, flag, 0644), file);
+	dup2(fd, fd2);
+	close(fd);
 }
 
 void make_pipe_redir(t_node *node)

@@ -18,8 +18,8 @@ void run_cmd(t_node node, t_env *env);
 void make_redir(t_node node);
 void open_pipes(t_node *tree);
 void close_pipes(t_node *tree);
-
 void make_pipe_redir(t_node *node);
+void make_herdoc_redir(t_node node);
 
 void execution(t_node *tree, t_env *env)
 {
@@ -84,9 +84,11 @@ void exec(t_node *tree, t_env *env)
 	make_pipe_redir(node);
 	while (node && !is_node_pipe((node)))
 	{
-		if (is_node_redir(node))
+		if (node->id == ID_IN_HERDOC)
+			make_herdoc_redir(*node);
+		else if (is_node_redir(node))
 			make_redir(*node);
-		if (is_node_cmd(node))
+		else if (is_node_cmd(node))
 			run_cmd(*node, env);
 		node = node->prev;
 	}
@@ -185,6 +187,34 @@ void make_redir(t_node node)
 	fd = file_error(open(file, flag, 0644), file);
 	dup2(fd, fd2);
 	close(fd);
+}
+
+void make_herdoc_redir(t_node node)
+{
+	int	fd_p[2];
+	int r;
+	int w;
+	char *str;
+	t_redir *redir;
+
+	redir = ((t_redir *)(node.data));
+	
+	pipe(fd_p);	
+	r = fd_p[0];
+	w = fd_p[1];
+	while (1)
+	{
+		str = readline("heredoc> ");
+		if (!ft_strncmp(redir->redir, str, 1 + ft_strlen(str)))
+			break;
+		ft_putstr_fd(str,w);
+		ft_putstr_fd("\n",w);
+		free(str);
+	}
+	free(str);
+	dup2(r, STDIN_FILENO);
+	close(r);
+	close(w);
 }
 
 void make_pipe_redir(t_node *node)

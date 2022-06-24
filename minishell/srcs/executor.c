@@ -159,6 +159,7 @@ void run_cmd(t_node node, t_env *env)
 	else
 	{
 		full_path = get_cmd_path(cmd[0], get_paths(exist_env_elem(env, "PATH")));
+		cmd_not_found_error(full_path, cmd[0]);
 		execve(full_path, cmd, get_env_matrix(env));
 	}
 }
@@ -171,13 +172,13 @@ void make_redir(t_node node)
 	file = ((t_redir *)(node.data))->redir;
 	if (node.id == ID_IN_REDIR)
 	{
-		fd = open(file, O_RDONLY);
+		fd = file_error(open(file, O_RDONLY), file);
 		dup2(fd, STDIN_FILENO);
 		close(fd);
 	}
 	else if (node.id == ID_OUT_REDIR)
 	{
-		fd = open(file, O_CREAT | O_WRONLY | O_TRUNC, 0644);
+		fd = file_error(open(file, O_CREAT | O_WRONLY | O_TRUNC, 0644), file);
 		dup2(fd, STDOUT_FILENO);
 		close(fd);
 	}

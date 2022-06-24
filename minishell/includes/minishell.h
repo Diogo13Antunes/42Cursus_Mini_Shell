@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dcandeia <dcandeia@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dsilveri <dsilveri@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 10:57:16 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/06/23 16:11:52 by dcandeia         ###   ########.fr       */
+/*   Updated: 2022/06/24 10:24:05 by dsilveri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,12 @@
 # include <stdlib.h>
 # include <fcntl.h>
 # include <sys/wait.h>
+# include <errno.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "../libft/libft.h"
+
+# define PROGRAM_NAME "minish"
 
 # define WITHE_SPACES   " \t\r\n\v"
 # define OPERATORS      "<>|"
@@ -138,5 +141,13 @@ void	builtin_export(t_env *env, char **elems, int fd);
 
 /* builtins/cmd_unset.c */
 void	builtin_unset(t_env **env, char **elem);
+
+/* error_handler.c */
+void	*oom_guard(void *p);
+void	cmd_not_found_error(char *cmd_path, char *cmd);
+int	file_error(int err, char *file);
+
+/* print_error.c */
+void	print_msg_error(char *error, char *str);
 
 #endif

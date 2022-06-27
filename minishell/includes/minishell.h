@@ -89,8 +89,6 @@ void	print2D(t_node *root);
 
 
 void	execution(t_node *tree, t_env *env);
-void	open_pipes(t_node *tree);
-int		get_num_of_pipes(t_node *tree);
 
 void	print_node1(t_node *node);
 
@@ -151,5 +149,16 @@ int		file_error(int err, char *file);
 
 /* print_error.c */
 void	print_msg_error(char *error, char *str);
+
+/* pipe.c */
+t_pipe	open_pipe(void);
+void	close_pipe(t_pipe pipe);
+void	open_pipes_of_tree(t_node *tree);
+void	close_pipes_of_tree(t_node *tree);
+
+/* redirections.c */
+void file_redir(t_node node);
+void heredoc_redir(t_node node);
+void pipe_redir(t_node *node);
 
 #endif

@@ -15,11 +15,8 @@
 void tree_inorder_traversal(t_node *root, t_env *env);
 void exec(t_node *tree, t_env *env);
 void run_cmd(t_node node, t_env *env);
-void make_redir(t_node node);
-void open_pipes(t_node *tree);
-void close_pipes(t_node *tree);
-void make_pipe_redir(t_node *node);
-void make_herdoc_redir(t_node node);
+//void pipe_redir(t_node *node);
+//void make_herdoc_redir(t_node node);
 
 void execution(t_node *tree, t_env *env)
 {
@@ -47,9 +44,9 @@ void execution(t_node *tree, t_env *env)
 		}
 		else
 		{
-			open_pipes(tree);
+			open_pipes_of_tree(tree);
 			tree_inorder_traversal(tree, env);
-			close_pipes(tree);
+			close_pipes_of_tree(tree);
 			while ((wait(NULL)) > 0);
 			exit(0);		
 		}
@@ -81,13 +78,13 @@ void exec(t_node *tree, t_env *env)
 	t_node *node;
 	
 	node = tree;
-	make_pipe_redir(node);
+	pipe_redir(node);
 	while (node && !is_node_pipe((node)))
 	{
 		if (node->id == ID_IN_HERDOC)
-			make_herdoc_redir(*node);
+			heredoc_redir(*node);
 		else if (is_node_redir(node))
-			make_redir(*node);
+			file_redir(*node);
 		else if (is_node_cmd(node))
 			run_cmd(*node, env);
 		node = node->prev;
@@ -166,153 +163,5 @@ void run_cmd(t_node node, t_env *env)
 	}
 }
 
-void make_redir(t_node node)
-{
-	int fd;
-	int fd2;
-	int flag;
-	char *file;
 
-	file = ((t_redir *)(node.data))->redir;
-	if (is_node_in(&node))
-		fd2 = STDIN_FILENO;
-	else 
-		fd2 = STDOUT_FILENO;
-	if (node.id == ID_OUT_REDIR)
-		flag = O_CREAT | O_WRONLY | O_TRUNC;
-	else if (node.id == ID_OUT_APPEND)
-		flag = O_CREAT | O_WRONLY | O_APPEND;
-	else 
-		flag = O_RDONLY;
-	fd = file_error(open(file, flag, 0644), file);
-	dup2(fd, fd2);
-	close(fd);
-}
 
-void make_herdoc_redir(t_node node)
-{
-	int	fd_p[2];
-	int r;
-	int w;
-	char *str;
-	t_redir *redir;
-
-	redir = ((t_redir *)(node.data));
-	
-	pipe(fd_p);	
-	r = fd_p[0];
-	w = fd_p[1];
-	while (1)
-	{
-		str = readline("heredoc> ");
-		if (!ft_strncmp(redir->redir, str, 1 + ft_strlen(str)))
-			break;
-		ft_putstr_fd(str,w);
-		ft_putstr_fd("\n",w);
-		free(str);
-	}
-	free(str);
-	dup2(r, STDIN_FILENO);
-	close(r);
-	close(w);
-}
-
-void make_pipe_redir(t_node *node)
-{
-	t_node *buff;
-
-	buff = node;
-	while (node)
-	{
-		if (is_node_pipe(node))
-		{
-			if (node->left == buff)
-				dup2(((t_pipe *)(node->data))->w, STDOUT_FILENO);
-			else if(node->rigth == buff)
-			{
-				dup2(((t_pipe *)(node->data))->r, STDIN_FILENO);
-				if (node->prev)
-					dup2(((t_pipe *)(node->prev->data))->w, STDOUT_FILENO);
-			}
-			close_pipes(node);
-		}
-		buff = node;
-		node = node->prev;
-	}
-}
-
-void open_pipes(t_node *tree)
-{
-	t_pipe *p;
-	int	fd_p[2];
-
-	if (tree == NULL) 
-		return;
-  	open_pipes(tree->left);
-	if (is_node_pipe(tree))
-	{
-		pipe(fd_p);
-		p = malloc(sizeof(t_pipe));
-		if (!p)
-			return ;
-		p->r = fd_p[0];
-		p->w = fd_p[1];
-		tree->data = (void *) p;
-	}
-}
-
-int get_num_of_pipes(t_node *tree)
-{
-	int n_pipes;
-
-	n_pipes = 0;
-	while (tree)
-	{
-		if (is_node_pipe(tree))
-			n_pipes++;
-		tree = tree->left;
-	}
-	return (n_pipes);
-}
-
-void close_pipes(t_node *tree)
-{
-	t_node *node;
-
-	node = tree;
-	while (node)
-	{
-		if (is_node_pipe(node))
-		{
-			if (((t_pipe *)(node->data))->w)
-			{
-				close(((t_pipe *)(node->data))->w);
-				((t_pipe *)(node->data))->w = -1;
-			}
-			if (((t_pipe *)(node->data))->r)
-			{
-				close(((t_pipe *)(node->data))->r);
-				((t_pipe *)(node->data))->r = -1;				
-			}
-		}			
-		node = node->left;
-	}
-	node = tree;
-	while (node)
-	{
-		if (is_node_pipe(node))
-		{
-			if (((t_pipe *)(node->data))->w)
-			{
-				close(((t_pipe *)(node->data))->w);
-				((t_pipe *)(node->data))->w = -1;
-			}
-			if (((t_pipe *)(node->data))->r)
-			{
-				close(((t_pipe *)(node->data))->r);
-				((t_pipe *)(node->data))->r = -1;				
-			}
-		}	
-		node = node->prev;
-	}
-}

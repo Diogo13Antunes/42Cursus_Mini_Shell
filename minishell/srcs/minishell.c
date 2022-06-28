@@ -65,6 +65,7 @@ int is_syntax_error(t_node *tree)
     return (0);
 }
 
+
 int main (int argc, char **argv, char **env)
 {
     char *str;
@@ -72,18 +73,22 @@ int main (int argc, char **argv, char **env)
 	t_env	*env_lst;
 	char *prompt;
 
+    int i = 0;
+
 	env_lst = get_env_list(env);
     while (1)
     {
 		prompt = get_prompt_str(env_lst);
         str = readline(prompt);
-		free(prompt);
-		
+        if (str)
+            add_history(str);
+
+		free(prompt);		
         tree = parser(str);
+        free(str);
         if(!is_syntax_error(tree))
             execution(tree, env_lst);
-        //print2D(tree);
-        free(str);
+        //print2D(tree);   
     }
     return (0);
 }

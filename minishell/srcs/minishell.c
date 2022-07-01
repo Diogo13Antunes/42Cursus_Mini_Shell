@@ -80,15 +80,24 @@ int main (int argc, char **argv, char **env)
     {
 		prompt = get_prompt_str(env_lst);
         str = readline(prompt);
+        
+       
+        /*if (str)
+            add_history(str);
+        tree = parser(str, env_lst);
+        print2D(tree);*/
+    
+
         if (str)
             add_history(str);
 
 		free(prompt);		
-        tree = parser(str);
+        tree = parser(str, env_lst);
         free(str);
         if(!is_syntax_error(tree))
             execution(tree, env_lst);
         //print2D(tree);   
+        
     }
     return (0);
 }

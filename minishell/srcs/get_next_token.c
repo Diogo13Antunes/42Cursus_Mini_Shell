@@ -12,11 +12,11 @@
 
 #include "../includes/minishell.h"
 
-static char *get_operators(char *src, int *index);
-static int get_quoted_word_size(char *str, char quote);
-static char *get_word(char *src, int *index);
+static char	*get_operators(char *src, int *index);
+static char	*get_word(char *src, int *index);
+static int	get_quoted_word_size(char *str, char quote);
 
-char *get_next_token(char *src)
+char	*get_next_token(char *src)
 {
 	static int	i = 0;
 	char		*dest;
@@ -36,7 +36,7 @@ char *get_next_token(char *src)
 	return (0);
 }
 
-static char *get_operators(char *src, int *index)
+static char	*get_operators(char *src, int *index)
 {
 	char	*dest;
 	int		src_size;
@@ -44,7 +44,6 @@ static char *get_operators(char *src, int *index)
 	if (!src || !index)
 		return (0);
 	src_size = (int)ft_strlen(src);
-
 	if (ft_strchr("<>", src[*index]) && *index < src_size - 1)
 	{
 		if (src[*index] == src[*index + 1])
@@ -59,21 +58,7 @@ static char *get_operators(char *src, int *index)
 	return (dest);
 }
 
-static int get_quoted_word_size(char *str, char quote)
-{
-	int i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] == quote)
-			return (i + 1);
-		i++;
-	}
-	return (0);
-}
-
-static char *get_word(char *src, int *index)
+static char	*get_word(char *src, int *index)
 {
 	char	*dest;
 	int		i;
@@ -93,3 +78,18 @@ static char *get_word(char *src, int *index)
 	*index = i;
 	return (dest);
 }
+
+static int	get_quoted_word_size(char *str, char quote)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == quote)
+			return (i + 1);
+		i++;
+	}
+	return (0);
+}
+

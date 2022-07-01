@@ -76,7 +76,8 @@ typedef struct s_env
 char	*get_next_token(char *src);
 
 /* parser.c */
-t_node	*parser(char *src);
+//t_node	*parser(char *src);
+t_node	*parser(char *src, t_env *env);
 
 
 /* three.c */

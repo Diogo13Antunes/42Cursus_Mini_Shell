@@ -29,14 +29,14 @@ void	close_pipe(t_pipe pipe)
 	close(pipe.w);
 }
 
-void	open_pipes_of_tree(t_node *tree)
+void	open_pipes(t_node *tree)
 {
 	t_pipe	*p;
 	int		fd_p[2];
 
 	if (tree == NULL)
 		return ;
-	open_pipes_of_tree(tree->left);
+	open_pipes(tree->left);
 	if (is_node_pipe(tree))
 	{
 		pipe(fd_p);
@@ -49,7 +49,7 @@ void	open_pipes_of_tree(t_node *tree)
 	}
 }
 
-void	close_pipes_of_tree(t_node *tree)
+void	close_pipes(t_node *tree)
 {
 	t_node	*node;
 

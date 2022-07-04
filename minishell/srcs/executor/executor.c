@@ -15,8 +15,6 @@
 void tree_inorder_traversal(t_node *root, t_env *env);
 void exec(t_node *tree, t_env *env);
 void run_cmd(t_node node, t_env *env);
-//void pipe_redir(t_node *node);
-//void make_herdoc_redir(t_node node);
 
 void execution(t_node *tree, t_env *env)
 {
@@ -44,9 +42,10 @@ void execution(t_node *tree, t_env *env)
 		}
 		else
 		{
-			open_pipes_of_tree(tree);
+			open_pipes(tree);
+			// percorre toda a tree para depois executar os comandos fazer diferente
 			tree_inorder_traversal(tree, env);
-			close_pipes_of_tree(tree);
+			close_pipes(tree);
 			while ((wait(NULL)) > 0);
 			exit(0);		
 		}
@@ -162,6 +161,3 @@ void run_cmd(t_node node, t_env *env)
 		execve(full_path, cmd, get_env_matrix(env));
 	}
 }
-
-
-

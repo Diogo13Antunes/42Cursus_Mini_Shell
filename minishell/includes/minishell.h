@@ -110,8 +110,6 @@ int		is_word_sequence(char *s);
 int		is_node_redir(t_node *node);
 int		is_node_pipe(t_node *node);
 int		is_node_cmd(t_node *node);
-int		is_node_in(t_node *node);
-int		is_node_out(t_node *node);
 int		get_size_string_array(char **str);
 
 /* env_vars.c */
@@ -163,8 +161,8 @@ void	print_msg_error(char *error, char *str);
 /* pipe.c */
 t_pipe	open_pipe(void);
 void	close_pipe(t_pipe pipe);
-void	open_pipes_of_tree(t_node *tree);
-void	close_pipes_of_tree(t_node *tree);
+void	open_pipes(t_node *tree);
+void	close_pipes(t_node *tree);
 
 /* redirections.c */
 void file_redir(t_node node);

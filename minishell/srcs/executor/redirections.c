@@ -20,17 +20,19 @@ void	file_redir(t_node node)
 	char	*file;
 
 	file = ((t_redir *)(node.data))->redir;
-	//mudar nome das função (is_redir_input)
-	if (is_node_in(&node))
+	if (node.id == ID_IN_REDIR)
+	{
 		fd2 = STDIN_FILENO;
-	else
-		fd2 = STDOUT_FILENO;
-	if (node.id == ID_OUT_REDIR)
-		flag = O_CREAT | O_WRONLY | O_TRUNC;
-	else if (node.id == ID_OUT_APPEND)
-		flag = O_CREAT | O_WRONLY | O_APPEND;
-	else
 		flag = O_RDONLY;
+	}
+	else
+	{
+		fd2 = STDOUT_FILENO;
+		if (node.id == ID_OUT_REDIR)
+			flag = O_CREAT | O_WRONLY | O_TRUNC;
+		else if (node.id == ID_OUT_APPEND)
+			flag = O_CREAT | O_WRONLY | O_APPEND;
+	}
 	fd = file_error(open(file, flag, 0644), file);
 	dup2(fd, fd2);
 	close(fd);
@@ -80,7 +82,7 @@ void	pipe_redir(t_node *node)
 					dup2(p->w, STDOUT_FILENO);
 				}
 			}
-			close_pipes_of_tree(node);
+			close_pipes(node);
 		}
 		buff = node;
 		node = node->prev;

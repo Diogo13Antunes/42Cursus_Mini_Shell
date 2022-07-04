@@ -36,41 +36,53 @@ int	get_token_id(char *token)
 	return (ID_WORD);
 }
 
-int	get_size_string_array(char **str)
+char	*token_join_str(char *s1, char *s2)
+{
+	char	*dst;
+
+	if (!s1 || !s2)
+		return (0);
+	dst = ft_strjoin(s1, s2);
+	free(s1);
+	free(s2);
+	return (dst);
+}
+
+char	*token_join_char(char *s, char c)
+{
+	char	*dst;
+	char	src[2];
+
+	if (!s)
+		return (0);
+	src[0] = c;
+	src[1] = '\0';
+	dst = ft_strjoin(s, src);
+	free(s);
+	return (dst);
+}
+
+// esta  função talvés devesse fazer parte na bultin e ser usada no export
+int	is_permited_char_env_name(char c, int i)
+{
+	if (i == 0 && (ft_isalpha(c) || c == '_'))
+		return (1);
+	else if (i > 0 && (ft_isalnum(c) || c == '_'))
+		return (1);
+	else
+		return (0);
+}
+
+int	get_env_size(char *s)
 {
 	int	i;
 
-	if (!str)
-		return (0);
 	i = 0;
-	while (str[i])
+	while (s[i])
+	{
+		if (!is_permited_char_env_name(s[i], i))
+			return (i);
 		i++;
+	}
 	return (i);
-}
-
-char	**update_string_array(char **str, char *token)
-{
-	char	**new_arr;
-	char	**buff;
-	int		arr_size;
-	int		i;
-
-	if (!str)
-	{
-		new_arr = malloc(2 * sizeof(char *));
-		new_arr[0] = ft_strdup(token);
-		new_arr[1] = NULL;
-	}
-	else
-	{
-		arr_size = get_size_string_array(str);
-		new_arr = malloc((arr_size + 2) * sizeof(char *));
-		i = -1;
-		while (str[++i])
-			new_arr[i] = str[i];
-		new_arr[i] = ft_strdup(token);
-		new_arr[i + 1] = 0;
-		free(str);
-	}
-	return (new_arr);
 }

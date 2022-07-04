@@ -20,7 +20,7 @@ char	*get_next_token(char *src)
 {
 	static int	i = 0;
 	char		*dest;
-	
+
 	dest = NULL;
 	while (src[i] != '\0')
 	{
@@ -28,7 +28,7 @@ char	*get_next_token(char *src)
 			dest = get_operators(src, &i);
 		else if (!ft_strchr(WITHE_SPACES, src[i]))
 			dest = get_word(src, &i);
-		if(dest)
+		if (dest)
 			return (dest);
 		i++;
 	}
@@ -48,7 +48,7 @@ static char	*get_operators(char *src, int *index)
 	{
 		if (src[*index] == src[*index + 1])
 		{
-			dest = ft_substr(src, *index, 2);	
+			dest = ft_substr(src, *index, 2);
 			*index += 2;
 			return (dest);
 		}
@@ -64,17 +64,17 @@ static char	*get_word(char *src, int *index)
 	int		i;
 
 	i = *index;
-	while(src[i])
+	while (src[i])
 	{
 		if (ft_strchr("\"", src[i]))
 			i += get_quoted_word_size(&src[i + 1], '\"');
 		if (ft_strchr("\'", src[i]))
 			i += get_quoted_word_size(&src[i + 1], '\'');
 		if (ft_strchr(" \t\r\n\v<>|", src[i]))
-			break;
+			break ;
 		i++;
 	}
- 	dest = ft_substr(src, *index, i - (*index));
+	dest = ft_substr(src, *index, i - (*index));
 	*index = i;
 	return (dest);
 }
@@ -92,4 +92,3 @@ static int	get_quoted_word_size(char *str, char quote)
 	}
 	return (0);
 }
-

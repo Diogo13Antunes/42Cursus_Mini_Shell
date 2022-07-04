@@ -6,7 +6,7 @@
 /*   By: dsilveri <dsilveri@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 10:57:16 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/06/24 10:24:05 by dsilveri         ###   ########.fr       */
+/*   Updated: 2022/07/04 12:54:23 by dsilveri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,8 +95,16 @@ void	print_node1(t_node *node);
 
 /* utils_parser.c */
 int		get_token_id(char *token);
-int		get_size_string_array(char **str);
-char	**update_string_array(char **str, char *token);
+char	*token_join_str(char *s1, char *s2);
+char	*token_join_char(char *s, char c);
+int		is_permited_char_env_name(char c, int i);
+int		get_env_size(char *s);
+
+/* utils_parser2.c */
+int		get_quoted_seq_size(char *s);
+int		get_not_quoted_seq_size(char *s);
+int		get_seq_size(char *s);
+int		is_word_sequence(char *s);
 
 /* utils.c */
 int		is_node_redir(t_node *node);
@@ -104,6 +112,7 @@ int		is_node_pipe(t_node *node);
 int		is_node_cmd(t_node *node);
 int		is_node_in(t_node *node);
 int		is_node_out(t_node *node);
+int		get_size_string_array(char **str);
 
 /* env_vars.c */
 t_env	*get_env_list(char **env);

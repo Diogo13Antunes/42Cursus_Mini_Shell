@@ -57,4 +57,14 @@ int is_node_out(t_node *node)
 	return (0);		
 }
 
+int	get_size_string_array(char **str)
+{
+	int	i;
 
+	if (!str)
+		return (0);
+	i = 0;
+	while (str[i])
+		i++;
+	return (i);
+}

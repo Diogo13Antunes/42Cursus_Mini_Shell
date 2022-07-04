@@ -82,12 +82,13 @@ int main (int argc, char **argv, char **env)
         str = readline(prompt);
         
        
-        /*if (str)
+       /*
+        if (str)
             add_history(str);
         tree = parser(str, env_lst);
-        print2D(tree);*/
-    
-
+        print2D(tree);
+        */
+        
         if (str)
             add_history(str);
 
@@ -96,6 +97,7 @@ int main (int argc, char **argv, char **env)
         free(str);
         if(!is_syntax_error(tree))
             execution(tree, env_lst);
+        
         //print2D(tree);   
         
     }

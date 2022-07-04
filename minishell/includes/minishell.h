@@ -162,4 +162,8 @@ void file_redir(t_node node);
 void heredoc_redir(t_node node);
 void pipe_redir(t_node *node);
 
+
+/* parser/words_parser.c */
+char *token_parser(char *token, t_env *env);
+
 #endif

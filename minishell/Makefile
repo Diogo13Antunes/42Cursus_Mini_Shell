@@ -13,7 +13,8 @@
 NAME			= minishell
 
 SRCS			= $(wildcard srcs/*.c) \
-				  $(wildcard srcs/builtins/*.c)
+				  $(wildcard srcs/builtins/*.c) \
+				  $(wildcard srcs/parser/*.c)
 
 LIBFT			= libft/libft.a
 

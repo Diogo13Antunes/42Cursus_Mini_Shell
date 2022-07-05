@@ -14,58 +14,6 @@
 
 static void test_parser(char *src);
 
-void print_token(t_node *node)
-{
-	if (node->id == ID_IN_REDIR)
-	    ft_putstr_fd("\'<\'\n", STDERR_FILENO); 
-	else if (node->id == ID_OUT_REDIR)
-	    ft_putstr_fd("\'>\'\n", STDERR_FILENO);
-	else if (node->id == ID_OUT_APPEND)
-	    ft_putstr_fd("\'>>\'\n", STDERR_FILENO);
-	else if (node->id == ID_IN_HERDOC)
-	    ft_putstr_fd("\'<<\'\n", STDERR_FILENO);
-    else if (node->id == ID_PIPE)
-	    ft_putstr_fd("\'|\'\n", STDERR_FILENO);
-}
-
-void tree_traversal(t_node *node, t_node **node_err, int *error) 
-{
-	if (node == NULL) 
-		return ;
-	tree_traversal(node->left, node_err, error);
-    if (is_node_redir(node))
-    {
-        if (!(node->data))
-        {
-            *error = 1;
-            if (!(*node_err))
-                *node_err = node;
-        }
-    }
-	tree_traversal(node->rigth, node_err, error);
-}
-
-int is_syntax_error(t_node *tree)
-{
-    t_node *node_err;
-    int error;
-
-    error = 0;
-    node_err = NULL;
-    tree_traversal(tree, &node_err, &error);
-    if (error)
-    {
-        // ls > | neste caso assume o pipe como comando 'e um erro no parse.
-        printf("id:  %i \n", node_err->prev->id); 
-        ft_putstr_fd("syntax error near unexpected token ", STDERR_FILENO);
-        if (node_err->prev) 
-            print_token(node_err->prev);
-        return (1);
-    }
-    return (0);
-}
-
-
 int main (int argc, char **argv, char **env)
 {
     char *str;
@@ -95,7 +43,12 @@ int main (int argc, char **argv, char **env)
 		free(prompt);		
         tree = parser(str, env_lst);
         free(str);
-        if(!is_syntax_error(tree))
+
+        // is_syntax_error tem de ser colocado no parser
+        // Aqui a verificação tem de ser se a tree é !NULL então executa os comandos
+        /*if(!is_syntax_error(tree))
+            execution(tree, env_lst);*/
+        if (tree)
             execution(tree, env_lst);
         
         //print2D(tree);   
@@ -104,6 +57,7 @@ int main (int argc, char **argv, char **env)
     return (0);
 }
 
+/*
 static void test_parser(char *src)
 {
     char *str;
@@ -121,3 +75,4 @@ static void test_parser(char *src)
     }
 	return ;
 }
+*/

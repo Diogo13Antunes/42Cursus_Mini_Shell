@@ -16,24 +16,26 @@ static char	*get_operators(char *src, int *index);
 static char	*get_word(char *src, int *index);
 static int	get_quoted_word_size(char *str, char quote);
 
-char	*get_next_token(char *src)
+char	*get_next_token(char *src, int reset)
 {
 	static int	i = 0;
 	char		*dest;
 
+	if (reset)
+		i = 0;
 	dest = NULL;
-	while (src[i] != '\0')
+	while (src[i])
 	{
 		if (ft_strchr(OPERATORS, src[i]))
 			dest = get_operators(src, &i);
-		else if (!ft_strchr(WITHE_SPACES, src[i]))
+		else if (!ft_strchr(WHITE_SPACES, src[i]))
 			dest = get_word(src, &i);
 		if (dest)
 			return (dest);
 		i++;
 	}
 	i = 0;
-	return (0);
+	return (dest);
 }
 
 static char	*get_operators(char *src, int *index)

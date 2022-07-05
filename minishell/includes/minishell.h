@@ -25,7 +25,7 @@
 
 # define PROGRAM_NAME "minish"
 
-# define WITHE_SPACES   " \t\r\n\v"
+# define WHITE_SPACES   " \t\r\n\v"
 # define OPERATORS      "<>|"
 
 # define ID_WORD		0
@@ -82,7 +82,7 @@ typedef struct s_env
 }				t_env;
 
 /* get_next_token.c */
-char	*get_next_token(char *src);
+char	*get_next_token(char *src, int reset);
 
 /* parser.c */
 //t_node	*parser(char *src);
@@ -176,7 +176,6 @@ void	close_pipes(t_node *tree);
 
 /* redirections.c */
 void file_redir(t_node node);
-void heredoc_redir(t_node node);
 void pipe_redir(t_node *node);
 
 
@@ -188,5 +187,10 @@ void	hdoc_exec(t_node *tree);
 void	hdoc_close(t_node *tree);
 void	hdoc_redir(t_node *node);
 
+/* parser/update_node.c */
+t_node	*update_node(t_node *node, char *token);
+
+/* parser/syntax_error.c */
+int is_syntax_error(t_node *tree, char *token);
 
 #endif

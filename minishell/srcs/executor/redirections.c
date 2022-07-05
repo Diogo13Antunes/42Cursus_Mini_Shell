@@ -38,30 +38,6 @@ void	file_redir(t_node node)
 	close(fd);
 }
 
-/*
-void	heredoc_redir(t_node node)
-{
-	t_redir	*redir;
-	t_pipe	p;
-	char	*str;
-
-	p = open_pipe();
-	redir = ((t_redir *)(node.data));
-	while (1)
-	{
-		str = readline("heredoc> ");
-		if (!ft_strcmp(redir->redir, str))
-			break ;
-		ft_putstr_fd(str, p.w);
-		ft_putstr_fd("\n", p.w);
-		free(str);
-	}
-	free(str);
-	dup2(p.r, STDIN_FILENO);
-	close_pipe(p);
-}
-*/
-
 void	pipe_redir(t_node *node)
 {
 	t_node	*buff;

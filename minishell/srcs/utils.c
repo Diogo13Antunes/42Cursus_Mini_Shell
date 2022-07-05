@@ -39,6 +39,15 @@ int	is_node_cmd(t_node *node)
 	return (0);
 }
 
+int is_node_hdoc(t_node *node)
+{
+	if (!node)
+		return (0);
+	if (node->id == ID_IN_HERDOC)
+		return (1);
+	return (0);
+}
+
 int	get_size_string_array(char **str)
 {
 	int	i;

@@ -38,6 +38,7 @@ void	file_redir(t_node node)
 	close(fd);
 }
 
+/*
 void	heredoc_redir(t_node node)
 {
 	t_redir	*redir;
@@ -59,6 +60,7 @@ void	heredoc_redir(t_node node)
 	dup2(p.r, STDIN_FILENO);
 	close_pipe(p);
 }
+*/
 
 void	pipe_redir(t_node *node)
 {

@@ -43,11 +43,13 @@ void execution(t_node *tree, t_env *env)
 		else
 		{
 			open_pipes(tree);
+			hdoc_exec(tree);
 			// percorre toda a tree para depois executar os comandos fazer diferente
 			tree_inorder_traversal(tree, env);
 			close_pipes(tree);
+			hdoc_close(tree);
 			while ((wait(NULL)) > 0);
-			exit(0);		
+			exit(0);	
 		}
 	}
 	waitpid(pid, NULL, 0);
@@ -81,7 +83,7 @@ void exec(t_node *tree, t_env *env)
 	while (node && !is_node_pipe((node)))
 	{
 		if (node->id == ID_IN_HERDOC)
-			heredoc_redir(*node);
+			hdoc_redir(node);
 		else if (is_node_redir(node))
 			file_redir(*node);
 		else if (is_node_cmd(node))

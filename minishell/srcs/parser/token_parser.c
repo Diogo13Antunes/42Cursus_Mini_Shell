@@ -91,7 +91,6 @@ static char	*update_token_env_var(char *s, t_env *env)
 static char	*add_env_var_to_token(t_env *env, char *s, char *dst, int *i)
 {
 	t_env	*elm;
-	char	*str;
 	char	*env_name;
 	int		size;
 
@@ -103,10 +102,7 @@ static char	*add_env_var_to_token(t_env *env, char *s, char *dst, int *i)
 		env_name = ft_substr(&s[*i + 1], 0, size);
 		elm = exist_env_elem(env, env_name);
 		if (elm && elm->content)
-		{
-			str = ft_substr(elm->content, 0, ft_strlen(elm->content));
-			dst = token_join_str(dst, str);
-		}
+			dst = token_join_str(dst, ft_strdup(elm->content));
 		free(env_name);
 		*i += size;
 	}

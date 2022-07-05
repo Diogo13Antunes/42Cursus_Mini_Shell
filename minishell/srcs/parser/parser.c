@@ -76,6 +76,49 @@ static t_node	*get_node_to_update(t_node *tree)
 	return (NULL);
 }
 
+
+
+//De mode a comportar o heredoc é necessário criar novas funções e mandar isto para novo ficheiro
+
+static void update_node_cmd(t_node *node, char *token)
+{
+	t_cmd	*c;
+
+	if (!node && !token)
+		return ;
+	if (!(node->data))
+	{
+		c = malloc(sizeof(t_cmd));
+		c->cmd = NULL;
+	}
+	else
+		c = (t_cmd *) node->data;
+	c->cmd = update_string_array(c->cmd, token);
+	node->data = (void *) c;
+}
+
+static void update_node_redir(t_node *node, char *token)
+{
+	t_redir	*r;
+
+	if (!node && !token)
+		return ;
+	r = malloc(sizeof(t_redir));
+	r->redir = ft_strdup(token);
+	node->data = (void *) r;
+}
+
+static void update_node_heredoc(t_node *node, char *token)
+{
+	t_hdoc *h;
+
+	if (!node && !token)
+		return ;
+	h = malloc(sizeof(t_hdoc));
+	h->end = ft_strdup(token);
+	node->data = (void *) h;
+}
+
 static t_node	*update_node(t_node *node, char *token)
 {
 	int		size;
@@ -84,24 +127,12 @@ static t_node	*update_node(t_node *node, char *token)
 
 	if (!node || !token)
 		return (NULL);
-	if (is_node_redir(node))
-	{
-		r = malloc(sizeof(t_redir));
-		r->redir = ft_strdup(token);
-		node->data = (void *) r;
-	}
+	if (is_node_hdoc(node))
+		update_node_heredoc(node, token);
+	else if (is_node_redir(node))
+		update_node_redir(node, token);
 	else if (is_node_cmd(node))
-	{
-		if (!(node->data))
-		{
-			c = malloc(sizeof(t_cmd));
-			c->cmd = NULL;
-		}
-		else
-			c = (t_cmd *) node->data;
-		c->cmd = update_string_array(c->cmd, token);
-		node->data = (void *) c;
-	}
+		update_node_cmd(node, token);
 	return (node);
 }
 

@@ -18,6 +18,7 @@
 # include <fcntl.h>
 # include <sys/wait.h>
 # include <errno.h>
+# include <string.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "../libft/libft.h"
@@ -63,6 +64,14 @@ typedef struct s_pipe
 	int r;
 	int w;
 }	t_pipe;
+
+typedef struct s_hdoc
+{
+	//int		r;
+	//int		w;
+	t_pipe	p;
+	char	*end;
+}	t_hdoc;
 
 typedef struct s_env
 {
@@ -110,6 +119,7 @@ int		is_word_sequence(char *s);
 int		is_node_redir(t_node *node);
 int		is_node_pipe(t_node *node);
 int		is_node_cmd(t_node *node);
+int		is_node_hdoc(t_node *node);
 int		get_size_string_array(char **str);
 
 /* env_vars.c */
@@ -172,5 +182,11 @@ void pipe_redir(t_node *node);
 
 /* parser/words_parser.c */
 char *token_parser(char *token, t_env *env);
+
+/* executor/hdoc.c */
+void	hdoc_exec(t_node *tree);
+void	hdoc_close(t_node *tree);
+void	hdoc_redir(t_node *node);
+
 
 #endif

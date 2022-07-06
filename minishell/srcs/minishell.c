@@ -28,8 +28,6 @@ int main (int argc, char **argv, char **env)
     {
 		prompt = get_prompt_str(env_lst);
         str = readline(prompt);
-        
-       
        /*
         if (str)
             add_history(str);

@@ -99,7 +99,7 @@ char **get_paths(t_env *path)
 	if (!path)
 		return (NULL);
 	paths = ft_split(path->content, ':');
-	return(paths);	
+	return(paths);
 }
 
 static int	is_cmd_path(char *cmd)
@@ -122,26 +122,69 @@ static char	*get_cmd_path(char *cmd, char **paths)
 	int		size;
 	int		i;
 
+	struct stat path_stat;
+
 	i = 0;
 	while (paths[i])
 	{
 		size = ft_strlen(paths[i]) + ft_strlen(cmd) + 1;
 		path = ft_calloc(size + 1, sizeof(char));
 		if (is_cmd_path(cmd))
+		{
+			
 			ft_strcat(path, cmd);
+			//ft_putstr_fd("DEVIA DAR ERRO EXECUÇAO\n", STDERR_FILENO);
+			//file_error(access(path, X_OK), cmd);
+			//file_error(stat(path, &path_stat), cmd);
+			//S_ISREG(path_stat.st_mode)
+		}
 		else
 		{
 			ft_strcat(path, paths[i]);
 			ft_strcat(path, "/");
 			ft_strcat(path, cmd);
 		}
-		if (!access(path, F_OK | X_OK))
+		/*if (!access(path, F_OK | X_OK))
 			return (path);
+		else
+			free(path);*/
+		if (!access(path, F_OK))
+		{
+			//file_error(access(path, X_OK), cmd);
+				//file_error(int err, char *file)
+			return (path);
+		}
 		else
 			free(path);
 		i++;
 	}
 	return (0);
+}
+
+static void check_path(char *path, char *cmd)
+{
+	struct stat path_stat;
+	int err;
+
+	cmd_not_found_error(path, cmd);
+	err = access(path, X_OK);
+	if(err)
+	{
+		free(path);
+		file_error(err, cmd);
+	}
+	err = stat(path, &path_stat);
+	if(err)
+	{
+		free(path);
+		file_error(err, cmd);
+	}
+	err = S_ISREG(path_stat.st_mode);
+	if (!err)
+	{
+		free(path);
+		print_msg_error("Is a directory", cmd);
+	}
 }
 
 void run_cmd(t_node node, t_env *env)
@@ -159,7 +202,8 @@ void run_cmd(t_node node, t_env *env)
 	else
 	{
 		full_path = get_cmd_path(cmd[0], get_paths(exist_env_elem(env, "PATH")));
-		cmd_not_found_error(full_path, cmd[0]);
+		//cmd_not_found_error(full_path, cmd[0]);
+		check_path(full_path, cmd[0]);
 		execve(full_path, cmd, get_env_matrix(env));
 	}
 }

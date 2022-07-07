@@ -44,4 +44,14 @@ int	file_error(int err, char *file)
 	return (err);
 }
 
+int	file_error2(int err, char *file)
+{
+	if (err == -1)
+	{
+		print_msg_error(strerror(errno), file);
+		//free_alloc_mem();
+		//exit(EXIT_FAILURE);
+	}
+	return (err);
+}
 

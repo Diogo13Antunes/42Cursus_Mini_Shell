@@ -49,9 +49,9 @@ void hdoc_close(t_node *tree)
 {
     t_pipe p;
 
-    p = ((t_hdoc *)(tree->data))->p;
 	if (tree == NULL) 
 		return;
+	p = ((t_hdoc *)(tree->data))->p;
 	hdoc_close(tree->left);
     if (is_node_hdoc(tree))
         close_pipe(p);   

@@ -38,6 +38,35 @@ void	file_redir(t_node node)
 	close(fd);
 }
 
+int	file_redir2(t_node node)
+{
+	int		fd;
+	int		fd2;
+	int		flag;
+	char	*file;
+
+	fd = -1;
+	file = ((t_redir *)(node.data))->redir;
+	if (node.id == ID_IN_REDIR)
+	{
+		fd2 = STDIN_FILENO;
+		flag = O_RDONLY;
+	}
+	else
+	{
+		fd2 = STDOUT_FILENO;
+		if (node.id == ID_OUT_REDIR)
+			flag = O_CREAT | O_WRONLY | O_TRUNC;
+		else if (node.id == ID_OUT_APPEND)
+			flag = O_CREAT | O_WRONLY | O_APPEND;
+	}
+	fd = file_error2(open(file, flag, 0644), file);
+	if (fd < 0)
+		return (-1);
+	close(fd);
+	return (0);
+}
+
 void	pipe_redir(t_node *node)
 {
 	t_node	*buff;

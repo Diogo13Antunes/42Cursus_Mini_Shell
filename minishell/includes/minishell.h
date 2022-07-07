@@ -167,6 +167,7 @@ void	builtin_unset(t_env **env, char **elem);
 void	*oom_guard(void *p);
 void	cmd_not_found_error(char *cmd_path, char *cmd);
 int		file_error(int err, char *file);
+int		file_error2(int err, char *file);
 
 /* print_error.c */
 void	print_msg_error(char *error, char *str);
@@ -180,6 +181,7 @@ void	close_pipes(t_node *tree);
 /* redirections.c */
 void file_redir(t_node node);
 void pipe_redir(t_node *node);
+int	file_redir2(t_node node);
 
 
 /* parser/words_parser.c */

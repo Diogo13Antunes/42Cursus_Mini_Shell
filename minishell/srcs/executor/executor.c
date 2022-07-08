@@ -20,6 +20,10 @@ void run_cmd(t_node node, t_env *env);
 int is_builtin_to_run(t_node *tree);
 void exec_builtins3(t_node *tree, t_env *env);
 
+
+
+
+
 void execution(t_node *tree, t_env *env)
 {
 	char **cmd;
@@ -41,7 +45,7 @@ void execution(t_node *tree, t_env *env)
 	while ((wait(NULL)) > 0);
 }
 
-void tree_inorder_traversal(t_node *root, t_env *env) 
+void tree_inorder_traversal(t_node *root, t_env *env)
 {
 	int pid;
 
@@ -78,85 +82,8 @@ void exec(t_node *tree, t_env *env)
 	}
 }
 
-char **get_paths(t_env *path)
-{
-	char **paths;
 
-	if (!path)
-		return (NULL);
-	paths = ft_split(path->content, ':');
-	return(paths);
-}
 
-static int	is_cmd_path(char *cmd)
-{
-	int	i;
-
-	i = 0;
-	while (cmd[i] != '\0')
-	{
-		if (cmd[i] == '/')
-			return (1);
-		i++;
-	}
-	return (0);
-}
-
-static char	*get_cmd_path(char *cmd, char **paths)
-{
-	char	*path;
-	int		size;
-	int		i;
-
-	struct stat path_stat;
-
-	i = 0;
-	while (paths[i])
-	{
-		size = ft_strlen(paths[i]) + ft_strlen(cmd) + 1;
-		path = ft_calloc(size + 1, sizeof(char));
-		if (is_cmd_path(cmd))
-			ft_strcat(path, cmd);
-		else
-		{
-			ft_strcat(path, paths[i]);
-			ft_strcat(path, "/");
-			ft_strcat(path, cmd);
-		}
-		if (!access(path, F_OK))
-			return (path);
-		else
-			free(path);
-		i++;
-	}
-	return (0);
-}
-
-static void check_path(char *path, char *cmd)
-{
-	struct stat path_stat;
-	int err;
-
-	cmd_not_found_error(path, cmd);
-	err = access(path, X_OK);
-	if(err)
-	{
-		free(path);
-		file_error(err, cmd);
-	}
-	err = stat(path, &path_stat);
-	if(err)
-	{
-		free(path);
-		file_error(err, cmd);
-	}
-	err = S_ISREG(path_stat.st_mode);
-	if (!err)
-	{
-		free(path);
-		print_msg_error("Is a directory", cmd);
-	}
-}
 
 int is_builtins(char *cmd)
 {
@@ -272,10 +199,13 @@ void run_cmd(t_node node, t_env *env)
 		exec_builtins(cmd, env);
 	else 
 	{
-		full_path = get_cmd_path(cmd[0], get_paths(exist_env_elem(env, "PATH")));
-		check_path(full_path, cmd[0]);
+
+		// usar apenas a função get_cmd_path.
+		// tudo o resto deve ser funções estáticas. o check_path pode ser verificado dentro da própria get_cmd_path
+
+		//full_path = get_cmd_path(cmd[0], get_paths(exist_env_elem(env, "PATH")));
+		full_path = get_cmd_path(cmd[0], env);
+		//check_path(full_path, cmd[0]);
 		execve(full_path, cmd, get_env_matrix(env));		
 	}
 }
-
-

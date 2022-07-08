@@ -22,7 +22,6 @@ int main (int argc, char **argv, char **env)
 	char *prompt;
 
     int i = 0;
-
 	env_lst = get_env_list(env);
     while (1)
     {

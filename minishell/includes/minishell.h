@@ -165,9 +165,18 @@ void	builtin_unset(t_env **env, char **elem);
 
 /* error_handler.c */
 void	*oom_guard(void *p);
+/*
 void	cmd_not_found_error(char *cmd_path, char *cmd);
+void	cmd_not_found_error2(int err, char *cmd, char *str);
 int		file_error(int err, char *file);
 int		file_error2(int err, char *file);
+int	file_error3(int err, char *file, char *str);
+void	directory_error(char *path, char *file);*/
+void	cmd_not_found_error(char *cmd_path, char *cmd);
+void	directory_error(char *path, char *file);
+int		sys_error(int err, char *file);
+int	sys_error2(int err, char *msg, char *file);
+int	file_error(int err, char *file);
 
 /* print_error.c */
 void	print_msg_error(char *error, char *str);
@@ -197,5 +206,8 @@ t_node	*update_node(t_node *node, char *token);
 
 /* parser/syntax_error.c */
 int is_syntax_error(t_node *tree, char *token);
+
+
+char	*get_cmd_path(char *cmd, t_env *env);
 
 #endif

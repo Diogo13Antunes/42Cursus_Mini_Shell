@@ -3,16 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsilveri <dsilveri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dsilveri <dsilveri@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/29 18:42:18 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/06/22 17:10:07 by dsilveri         ###   ########.fr       */
+/*   Updated: 2022/07/09 20:11:18 by dsilveri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include <signal.h> 
 
 static void test_parser(char *src);
+
+
+/*void control_c(int sig)
+{
+   // printf("enviado sinal control C\n");
+}*/
 
 int main (int argc, char **argv, char **env)
 {
@@ -20,6 +27,13 @@ int main (int argc, char **argv, char **env)
     t_node *tree;
 	t_env	*env_lst;
 	char *prompt;
+
+    /*struct sigaction sa;
+    sa.sa_handler = &control_c;
+    //sa.sa_flags = SA_RESTART;
+
+    sigaction(SIGINT, &sa, NULL);*/
+
 
     int i = 0;
 	env_lst = get_env_list(env);

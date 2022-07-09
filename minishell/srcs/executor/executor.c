@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dcandeia <dcandeia@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dsilveri <dsilveri@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:52:46 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/06/23 16:11:23 by dcandeia         ###   ########.fr       */
+/*   Updated: 2022/07/09 20:10:24 by dsilveri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,6 @@ void run_cmd(t_node node, t_env *env);
 
 int is_builtin_to_run(t_node *tree);
 void exec_builtins3(t_node *tree, t_env *env);
-
-
-
-
 
 void execution(t_node *tree, t_env *env)
 {
@@ -92,7 +88,8 @@ int is_builtins(char *cmd)
 		|| !ft_strcmp("pwd", cmd)
 		|| !ft_strcmp("cd", cmd)
 		|| !ft_strcmp("export", cmd)
-		|| !ft_strcmp("unset", cmd))
+		|| !ft_strcmp("unset", cmd)
+		|| !ft_strcmp("exit", cmd))
 		return(1);
 	return (0);
 }
@@ -101,7 +98,8 @@ int is_builtins2(char *cmd)
 {
 	if (!ft_strcmp("cd", cmd)
 		|| !ft_strcmp("export", cmd)
-		|| !ft_strcmp("unset", cmd))
+		|| !ft_strcmp("unset", cmd)
+		|| !ft_strcmp("exit", cmd))
 		return(1);
 	return (0);
 }
@@ -124,6 +122,8 @@ void exec_builtins2(char **cmd, t_env *env)
 		builtin_export(env, cmd, STDOUT_FILENO);
 	else if (!ft_strcmp("unset", cmd[0]))
 		builtin_unset(&env, cmd);
+	else if (!ft_strcmp("exit", cmd[0]))
+		builtin_exit();
 }
 
 void exec_builtins4(t_node *tree, t_env *env)

@@ -6,7 +6,7 @@
 /*   By: dsilveri <dsilveri@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 10:57:16 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/07/04 12:54:23 by dsilveri         ###   ########.fr       */
+/*   Updated: 2022/07/09 20:11:15 by dsilveri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,6 +162,9 @@ void	builtin_export(t_env *env, char **elems, int fd);
 
 /* builtins/cmd_unset.c */
 void	builtin_unset(t_env **env, char **elem);
+
+/* builtins/cmd_exit.c */
+void	builtin_exit(void);
 
 /* error_handler.c */
 void	*oom_guard(void *p);

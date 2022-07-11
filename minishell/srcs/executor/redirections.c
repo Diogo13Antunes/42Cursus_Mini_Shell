@@ -60,12 +60,14 @@ int	file_redir2(t_node node)
 		else if (node.id == ID_OUT_APPEND)
 			flag = O_CREAT | O_WRONLY | O_APPEND;
 	}
-	fd = file_error(open(file, flag, 0644), file);
+	fd = file_error3(open(file, flag, 0644), file);
 	if (fd < 0)
 		return (-1);
-	close(fd);
-	return (0);
+	//close(fd);
+	return (fd);
 }
+
+
 
 void	pipe_redir(t_node *node)
 {

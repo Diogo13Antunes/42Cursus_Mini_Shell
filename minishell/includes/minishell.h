@@ -180,6 +180,7 @@ void	directory_error(char *path, char *file);
 int		sys_error(int err, char *file);
 int	sys_error2(int err, char *msg, char *file);
 int	file_error(int err, char *file);
+int	file_error3(int err, char *file);
 
 /* print_error.c */
 void	print_msg_error(char *error, char *str);
@@ -203,6 +204,15 @@ char *token_parser(char *token, t_env *env);
 void	hdoc_exec(t_node *tree);
 void	hdoc_close(t_node *tree);
 void	hdoc_redir(t_node *node);
+
+/* executor/exec_builtins.c*/
+int is_builtin(char *cmd);
+int is_builtin_without_pipe(t_node *tree);
+void exec_builtin(char **cmd, t_env *env, int fd);
+void run_builtin_branch(t_node *tree, t_env *env);
+
+/* executor/utils_executor.c */
+void close_fd(int fd);
 
 /* parser/update_node.c */
 t_node	*update_node(t_node *node, char *token);

@@ -16,18 +16,14 @@ void tree_inorder_traversal(t_node *root, t_env *env);
 void exec(t_node *tree, t_env *env);
 void run_cmd(t_node node, t_env *env);
 
-
-int is_builtin_to_run(t_node *tree);
-void exec_builtins3(t_node *tree, t_env *env);
-
 void execution(t_node *tree, t_env *env)
 {
 	char **cmd;
 
-	if(is_builtin_to_run(tree))
+	if(is_builtin_without_pipe(tree))
 	{
 		hdoc_exec(tree);
-		exec_builtins3(tree, env);
+		run_builtin_branch(tree, env);
 		hdoc_close(tree);
 	}
 	else
@@ -78,134 +74,17 @@ void exec(t_node *tree, t_env *env)
 	}
 }
 
-
-
-
-int is_builtins(char *cmd)
-{
-	if (!ft_strcmp("echo", cmd)
-		|| !ft_strcmp("env", cmd)
-		|| !ft_strcmp("pwd", cmd)
-		|| !ft_strcmp("cd", cmd)
-		|| !ft_strcmp("export", cmd)
-		|| !ft_strcmp("unset", cmd)
-		|| !ft_strcmp("exit", cmd))
-		return(1);
-	return (0);
-}
-
-int is_builtins2(char *cmd)
-{
-	if (!ft_strcmp("cd", cmd)
-		|| !ft_strcmp("export", cmd)
-		|| !ft_strcmp("unset", cmd)
-		|| !ft_strcmp("exit", cmd))
-		return(1);
-	return (0);
-}
-
-void exec_builtins(char **cmd, t_env *env)
-{
-	if (!ft_strcmp("echo", cmd[0]))
-		builtin_echo(cmd, STDOUT_FILENO);
-	else if (!ft_strcmp("env", cmd[0]))
-		builtin_env(*env, STDOUT_FILENO);
-	else if (!ft_strcmp("pwd", cmd[0]))
-		builtin_pwd(STDOUT_FILENO);
-}
-
-void exec_builtins2(char **cmd, t_env *env)
-{
-	if (!ft_strcmp("cd", cmd[0]))
-		builtin_cd(cmd, env);
-	else if (!ft_strcmp("export", cmd[0]))
-		builtin_export(env, cmd, STDOUT_FILENO);
-	else if (!ft_strcmp("unset", cmd[0]))
-		builtin_unset(&env, cmd);
-	else if (!ft_strcmp("exit", cmd[0]))
-		builtin_exit();
-}
-
-void exec_builtins4(t_node *tree, t_env *env)
-{
-	int err;
-	t_node *node;
-
-	node = tree;
-
-	while (node)
-	{
-		if (is_node_cmd(node))
-		{
-			exec_builtins2(((t_cmd *)node->data)->cmd, env);
-		}
-		else if (is_node_redir(node) && !is_node_hdoc(node))
-		{
-			if (file_redir2(*node) < 0)
-				return ;
-		}
-		node = node->prev;
-	}
-}
-
-
-void exec_builtins3(t_node *tree, t_env *env)
-{
-	if (tree == NULL) 
-		return ;
-	exec_builtins3(tree->left, env);
-	if (tree->left == NULL)
-	{
-		exec_builtins4(tree, env);
-	}
-
-	/*
-	if (is_node_cmd(tree))
-		exec_builtins2(((t_cmd *)tree->data)->cmd, env);
-	else if (is_node_redir(tree) && !is_node_hdoc(tree))
-		file_redir2(*tree);
-	*/
-}
-
-// verifica se tem o comando pretendido para correr
-int is_builtin_to_run(t_node *tree)
-{
-	t_node *node;
-	char	**cmd;
-
-	if (is_node_pipe(tree))
-		return (0);
-	node = tree;
-	while (node)
-	{
-		if (is_node_cmd(node))
-		{
-			cmd = ((t_cmd *) node->data)->cmd;
-			if (is_builtins2(cmd[0]))
-				return (1);
-		}	
-		node = node->left;
-	}
-	return (0);
-}
-
 void run_cmd(t_node node, t_env *env)
 {
 	char *full_path;
 	char **cmd;
 	
 	cmd = ((t_cmd *)(node.data))->cmd;
-	if (is_builtins(cmd[0]))
-		exec_builtins(cmd, env);
+	if (is_builtin(cmd[0]))
+		exec_builtin(cmd, env, STDOUT_FILENO);
 	else 
 	{
-
-		// usar apenas a função get_cmd_path.
-		// tudo o resto deve ser funções estáticas. o check_path pode ser verificado dentro da própria get_cmd_path
-
-		//full_path = get_cmd_path(cmd[0], get_paths(exist_env_elem(env, "PATH")));
 		full_path = get_cmd_path(cmd[0], env);
-		//check_path(full_path, cmd[0]);
 		execve(full_path, cmd, get_env_matrix(env));		
 	}
 }

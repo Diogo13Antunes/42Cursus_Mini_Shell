@@ -27,6 +27,7 @@ int main (int argc, char **argv, char **env)
     t_node *tree;
 	t_env	*env_lst;
 	char *prompt;
+    int exit_code;
 
     /*struct sigaction sa;
     sa.sa_handler = &control_c;
@@ -36,6 +37,7 @@ int main (int argc, char **argv, char **env)
 
 
     int i = 0;
+    exit_code = 0;
 	env_lst = get_env_list(env);
     while (1)
     {
@@ -52,7 +54,7 @@ int main (int argc, char **argv, char **env)
             add_history(str);
 
 		free(prompt);		
-        tree = parser(str, env_lst);
+        tree = parser(str, env_lst, exit_code);
         free(str);
 
         // is_syntax_error tem de ser colocado no parser
@@ -60,7 +62,7 @@ int main (int argc, char **argv, char **env)
         /*if(!is_syntax_error(tree))
             execution(tree, env_lst);*/
         if (tree)
-            execution(tree, env_lst);
+           exit_code = execution(tree, env_lst);
         
         //print2D(tree);   
         

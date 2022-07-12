@@ -18,7 +18,7 @@ static char	*add_env_var_to_token(t_env *env, char *s, char *dst, int *i);
 static int	token_needs_parse(char *token);
 
 //teste strimg: tes"te"-aa$bb"'cc$dd''
-char	*token_parser(char *token, t_env *env)
+char	*token_parser(char *token, t_env *env, int exit_code)
 {
 	char	*dst;
 	char	*s;
@@ -28,6 +28,7 @@ char	*token_parser(char *token, t_env *env)
 		return (0);
 	if (!token_needs_parse(token))
 		return (token);
+	ft_exit_code(exit_code);
 	i = 0;
 	dst = ft_calloc(1, sizeof(char));
 	while (token[i])
@@ -80,6 +81,11 @@ static char	*update_token_env_var(char *s, t_env *env)
 			size = is_word_sequence(&s[i]);
 			dst = token_join_str(dst, ft_substr(&s[i], 0, size));
 			i += size - 1;
+		}
+		else if (s[i] == '$' && s[i + 1] == '?')
+		{
+			dst = token_join_str(dst, ft_itoa(ft_exit_code(-1)));
+			i += 1;
 		}
 		else if (s[i] == '$')
 			dst = add_env_var_to_token(env, s, dst, &i);

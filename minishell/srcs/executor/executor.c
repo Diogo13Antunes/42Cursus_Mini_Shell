@@ -16,10 +16,11 @@ void tree_inorder_traversal(t_node *root, t_env *env);
 void exec(t_node *tree, t_env *env);
 void run_cmd(t_node node, t_env *env);
 
-void execution(t_node *tree, t_env *env)
+int execution(t_node *tree, t_env *env)
 {
 	char **cmd;
-
+	int status;
+	
 	if(is_builtin_without_pipe(tree))
 	{
 		hdoc_exec(tree);
@@ -34,7 +35,16 @@ void execution(t_node *tree, t_env *env)
 		close_pipes(tree);
 		hdoc_close(tree);
 	}
+
+
 	while ((wait(NULL)) > 0);
+	/*wait(&status);
+	if (WIFEXITED(status))
+	{
+		printf("wait status: %i\n", WEXITSTATUS(status));
+
+	}*/
+	return (127);
 }
 
 void tree_inorder_traversal(t_node *root, t_env *env)

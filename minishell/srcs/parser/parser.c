@@ -15,7 +15,7 @@
 static void		create_ast(t_node **tree, char *token, t_env *env);
 static t_node	*get_node_to_update(t_node *tree);
 
-t_node	*parser(char *src, t_env *env)
+t_node	*parser(char *src, t_env *env, int exit_code)
 {
 	char	*token;
 	t_node	*tree;
@@ -25,7 +25,7 @@ t_node	*parser(char *src, t_env *env)
 	while (token)
 	{
 		if (get_token_id(token) == ID_WORD)
-			token = token_parser(token, env);
+			token = token_parser(token, env, exit_code);
 		create_ast(&tree, token, env);
 		free(token);
 		token = get_next_token(src, 0);

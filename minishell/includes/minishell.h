@@ -89,7 +89,7 @@ char	*get_next_token(char *src, int reset);
 
 /* parser.c */
 //t_node	*parser(char *src);
-t_node	*parser(char *src, t_env *env);
+t_node	*parser(char *src, t_env *env, int exit_status);
 
 
 /* three.c */
@@ -101,22 +101,23 @@ void	print_tree(t_node *root);
 void	print2D(t_node *root);
 
 
-void	execution(t_node *tree, t_env *env);
+int	execution(t_node *tree, t_env *env);
 
 void	print_node1(t_node *node);
 
-/* utils_parser.c */
+/* parser/utils_parser.c */
 int		get_token_id(char *token);
 char	*token_join_str(char *s1, char *s2);
 char	*token_join_char(char *s, char c);
 int		is_permited_char_env_name(char c, int i);
 int		get_env_size(char *s);
 
-/* utils_parser2.c */
+/* parser/utils_parser2.c */
 int		get_quoted_seq_size(char *s);
 int		get_not_quoted_seq_size(char *s);
 int		get_seq_size(char *s);
 int		is_word_sequence(char *s);
+int		ft_exit_code(int status);
 
 /* utils.c */
 int		is_node_redir(t_node *node);
@@ -198,7 +199,7 @@ int	file_redir2(t_node node);
 
 
 /* parser/words_parser.c */
-char *token_parser(char *token, t_env *env);
+char	*token_parser(char *token, t_env *env, int exit_code);
 
 /* executor/hdoc.c */
 void	hdoc_exec(t_node *tree);

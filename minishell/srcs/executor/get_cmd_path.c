@@ -38,6 +38,8 @@ static char	*find_cmd_path(char *cmd, char **paths)
 	int		size;
 	int		i;
 
+	if(!ft_strlen(cmd))
+		return (NULL);
 	i = 0;
 	while (paths[i])
 	{
@@ -52,32 +54,31 @@ static char	*find_cmd_path(char *cmd, char **paths)
 			free(path);
 		i++;
 	}
-	return (0);
+	return (NULL);
 }
 
 static void	check_path(char *path, char *cmd)
 {
-	int			err;
 	struct stat	path_stat;
+	int			err;
 
-	if (!path)
-		sys_error2(-1, "command not found", cmd);
+	cmd_not_found_error(path, cmd);
 	err = access(path, X_OK);
 	if (err)
 	{
 		free(path);
-		sys_error2(err, strerror(errno), cmd);
+		cmd_path_error(err, strerror(errno), cmd);
 	}
 	err = stat(path, &path_stat);
 	if (err)
 	{
 		free(path);
-		sys_error2(err, strerror(errno), cmd);
+		cmd_path_error(err, strerror(errno), cmd);
 	}
 	if (!S_ISREG(path_stat.st_mode))
 	{
 		free(path);
-		sys_error2(-1, "Is a directory", cmd);
+		cmd_path_error(-1, "Is a directory", cmd);
 	}
 }
 

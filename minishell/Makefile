@@ -22,6 +22,7 @@ LIBFT			= libft/libft.a
 SRCS_OBJS		= $(SRCS:.c=.o)
 
 CC				= gcc 
+#CFLAGS			= -Wall -Wextra -Werror -I ./includes
 CFLAGS			= -I ./includes
 INCLUDE			= -I ~/.brew/opt/readline/include 
 LIBS			= -L ~/.brew/opt/readline/lib -lreadline

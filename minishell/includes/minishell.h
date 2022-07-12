@@ -43,6 +43,9 @@
 #define BGRN			"\e[1;32m"
 #define RESET			"\e[0m"
 
+#define EXIT_CMD_NFOUND 127
+#define EXIT_CMD_NEXEC	126
+
 typedef struct s_node
 {
 	int id;
@@ -182,6 +185,7 @@ int		sys_error(int err, char *file);
 int	sys_error2(int err, char *msg, char *file);
 int	file_error(int err, char *file);
 int	file_error3(int err, char *file);
+int	cmd_path_error(int err, char *msg, char *file);
 
 /* print_error.c */
 void	print_msg_error(char *error, char *str);

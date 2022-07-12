@@ -16,10 +16,43 @@ void tree_inorder_traversal(t_node *root, t_env *env);
 void exec(t_node *tree, t_env *env);
 void run_cmd(t_node node, t_env *env);
 
+
+int get_num_cmds(t_node *tree)
+{
+	t_node *node;
+	int i;
+	
+	node = tree;
+	if(!is_node_pipe(node))
+		return (1);
+	i = 1;
+	while (is_node_pipe(node))
+	{
+		node = node->left;
+		i++;
+	}
+	return (i);
+}
+
+int wait_cmds(int n_cmds)
+{
+	int status;
+	int exit_code;
+
+	while (n_cmds)
+	{
+		wait(&status);
+		if (WIFEXITED(status))
+			exit_code = WEXITSTATUS(status);
+		n_cmds--;
+	}
+	return (exit_code);
+}
+
 int execution(t_node *tree, t_env *env)
 {
 	char **cmd;
-	int status;
+	int exit_code;
 	
 	if(is_builtin_without_pipe(tree))
 	{
@@ -34,17 +67,9 @@ int execution(t_node *tree, t_env *env)
 		tree_inorder_traversal(tree, env);
 		close_pipes(tree);
 		hdoc_close(tree);
+		exit_code = wait_cmds(get_num_cmds(tree));
 	}
-
-
-	while ((wait(NULL)) > 0);
-	/*wait(&status);
-	if (WIFEXITED(status))
-	{
-		printf("wait status: %i\n", WEXITSTATUS(status));
-
-	}*/
-	return (127);
+	return (exit_code);
 }
 
 void tree_inorder_traversal(t_node *root, t_env *env)

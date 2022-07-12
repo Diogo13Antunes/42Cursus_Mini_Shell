@@ -66,7 +66,7 @@ int	ft_exit_code(int status)
 {
 	static int	st = 0;
 
-	if (status > 0)
+	if (status >= 0)
 		st = status;
 	return (st);
 }

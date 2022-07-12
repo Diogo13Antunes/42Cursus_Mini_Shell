@@ -36,7 +36,6 @@ int main (int argc, char **argv, char **env)
     sigaction(SIGINT, &sa, NULL);*/
 
 
-    int i = 0;
     exit_code = 0;
 	env_lst = get_env_list(env);
     while (1)

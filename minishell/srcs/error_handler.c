@@ -104,15 +104,6 @@ void	directory_error(char *path, char *file)
 	}
 }
 */
-void	cmd_not_found_error(char *cmd_path, char *cmd)
-{
-	if (!cmd_path || !cmd)
-	{
-		print_msg_error("command not found", cmd);
-		//free_alloc_mem();
-		exit(EXIT_FAILURE);
-	}
-}
 
 void	directory_error(char *path, char *file)
 {
@@ -175,6 +166,27 @@ int	file_error3(int err, char *file)
 		print_msg_error(strerror(errno), file);
 		//free_alloc_mem();
 		//exit(EXIT_FAILURE);
+	}
+	return (err);
+}
+
+void	cmd_not_found_error(char *cmd_path, char *cmd)
+{
+	if (!cmd_path || !cmd)
+	{
+		print_msg_error("command not found", cmd);
+		//free_alloc_mem();
+		exit(EXIT_CMD_NFOUND);
+	}
+}
+
+int	cmd_path_error(int err, char *msg, char *file)
+{
+	if (err == -1)
+	{
+		print_msg_error(msg, file);
+		//free_alloc_mem();
+		exit(EXIT_CMD_NEXEC);
 	}
 	return (err);
 }

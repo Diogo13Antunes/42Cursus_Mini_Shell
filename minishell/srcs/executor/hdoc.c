@@ -14,25 +14,25 @@
 
 static void	hdoc_exec2(t_node *node);
 
-void hdoc_exec(t_node *tree)
+void	hdoc_exec(t_node *tree)
 {
-	if (tree == NULL) 
-		return;
+	if (tree == NULL)
+		return ;
 	hdoc_exec(tree->left);
-    if (is_node_hdoc(tree))
-        hdoc_exec2(tree);
+	if (is_node_hdoc(tree))
+		hdoc_exec2(tree);
 	hdoc_exec(tree->rigth);
 }
 
 static void	hdoc_exec2(t_node *node)
 {
+	t_pipe	p;
 	t_hdoc	*h;
-    t_pipe  p;
 	char	*str;
 
 	h = (t_hdoc *)(node->data);
-    p = open_pipe();
-    h->p = p; 
+	p = open_pipe();
+	h->p = p;
 	while (1)
 	{
 		str = readline("heredoc> ");
@@ -45,24 +45,24 @@ static void	hdoc_exec2(t_node *node)
 	free(str);
 }
 
-void hdoc_close(t_node *tree)
+void	close_hdoc(t_node *tree)
 {
-    t_pipe p;
+	t_pipe	p;
 
-	if (tree == NULL) 
-		return;
+	if (tree == NULL)
+		return ;
 	p = ((t_hdoc *)(tree->data))->p;
-	hdoc_close(tree->left);
-    if (is_node_hdoc(tree))
-        close_pipe(p);   
-	hdoc_close(tree->rigth);
+	close_hdoc(tree->left);
+	if (is_node_hdoc(tree))
+		close_pipe(p);
+	close_hdoc(tree->rigth);
 }
 
-void hdoc_redir(t_node *node)
+void	hdoc_redir(t_node *node)
 {
-    t_pipe p;
+	t_pipe	p;
 
-    p = ((t_hdoc *)(node->data))->p;
-    dup2(p.r, STDIN_FILENO);
-    close_pipe(p);
+	p = ((t_hdoc *)(node->data))->p;
+	dup2(p.r, STDIN_FILENO);
+	close_pipe(p);
 }

@@ -95,7 +95,7 @@ static void	run_builtin_branch2(t_node *tree, t_env *env)
 		else if (is_node_redir(node) && !is_node_hdoc(node))
 		{
 			close_fd(fd);
-			fd = file_redir2(*node);
+			fd = get_file_fd(*node);
 			if (fd < 0)
 				return ;
 		}

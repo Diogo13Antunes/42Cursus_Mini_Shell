@@ -197,9 +197,11 @@ void	open_pipes(t_node *tree);
 void	close_pipes(t_node *tree);
 
 /* redirections.c */
-void file_redir(t_node node);
+//void file_redir(t_node node);
 void pipe_redir(t_node *node);
-int	file_redir2(t_node node);
+//int	file_redir2(t_node node);
+void	file_redir(t_node node);
+int	get_file_fd(t_node node);
 
 
 /* parser/words_parser.c */
@@ -207,7 +209,7 @@ char	*token_parser(char *token, t_env *env, int exit_code);
 
 /* executor/hdoc.c */
 void	hdoc_exec(t_node *tree);
-void	hdoc_close(t_node *tree);
+void	close_hdoc(t_node *tree);
 void	hdoc_redir(t_node *node);
 
 /* executor/exec_builtins.c*/
@@ -218,6 +220,7 @@ void run_builtin_branch(t_node *tree, t_env *env);
 
 /* executor/utils_executor.c */
 void close_fd(int fd);
+int get_num_cmds(t_node *tree);
 
 /* parser/update_node.c */
 t_node	*update_node(t_node *node, char *token);

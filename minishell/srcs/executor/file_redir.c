@@ -14,86 +14,47 @@
 
 void	file_redir(t_node node)
 {
-	int		fd;
-	int		fd2;
+	int		file_fd;
+	int		std_fd;
 	int		flag;
 	char	*file;
 
 	file = ((t_redir *)(node.data))->redir;
 	if (node.id == ID_IN_REDIR)
 	{
-		fd2 = STDIN_FILENO;
+		std_fd = STDIN_FILENO;
 		flag = O_RDONLY;
 	}
 	else
 	{
-		fd2 = STDOUT_FILENO;
+		std_fd = STDOUT_FILENO;
 		if (node.id == ID_OUT_REDIR)
 			flag = O_CREAT | O_WRONLY | O_TRUNC;
 		else if (node.id == ID_OUT_APPEND)
 			flag = O_CREAT | O_WRONLY | O_APPEND;
 	}
-	fd = file_error(open(file, flag, 0644), file);
-	dup2(fd, fd2);
-	close(fd);
+	file_fd = file_error(open(file, flag, 0644), file);
+	dup2(file_fd, std_fd);
+	close(file_fd);
 }
 
-int	file_redir2(t_node node)
+int	get_file_fd(t_node node)
 {
 	int		fd;
-	int		fd2;
 	int		flag;
 	char	*file;
 
 	fd = -1;
 	file = ((t_redir *)(node.data))->redir;
 	if (node.id == ID_IN_REDIR)
-	{
-		fd2 = STDIN_FILENO;
 		flag = O_RDONLY;
-	}
 	else
 	{
-		fd2 = STDOUT_FILENO;
 		if (node.id == ID_OUT_REDIR)
 			flag = O_CREAT | O_WRONLY | O_TRUNC;
 		else if (node.id == ID_OUT_APPEND)
 			flag = O_CREAT | O_WRONLY | O_APPEND;
 	}
 	fd = file_error3(open(file, flag, 0644), file);
-	if (fd < 0)
-		return (-1);
-	//close(fd);
 	return (fd);
-}
-
-
-
-void	pipe_redir(t_node *node)
-{
-	t_node	*buff;
-	t_pipe	*p;
-
-	buff = node;
-	while (node)
-	{
-		if (is_node_pipe(node))
-		{
-			p = (t_pipe *)(node->data);
-			if (node->left == buff)
-				dup2(p->w, STDOUT_FILENO);
-			else if (node->rigth == buff)
-			{
-				dup2(p->r, STDIN_FILENO);
-				if (node->prev)
-				{
-					p = (t_pipe *)(node->prev->data);
-					dup2(p->w, STDOUT_FILENO);
-				}
-			}
-			close_pipes(node);
-		}
-		buff = node;
-		node = node->prev;
-	}
 }

@@ -68,3 +68,32 @@ void	close_pipes(t_node *tree)
 		node = node->prev;
 	}
 }
+
+void	pipe_redir(t_node *node)
+{
+	t_node	*buff;
+	t_pipe	*p;
+
+	buff = node;
+	while (node)
+	{
+		if (is_node_pipe(node))
+		{
+			p = (t_pipe *)(node->data);
+			if (node->left == buff)
+				dup2(p->w, STDOUT_FILENO);
+			else if (node->rigth == buff)
+			{
+				dup2(p->r, STDIN_FILENO);
+				if (node->prev)
+				{
+					p = (t_pipe *)(node->prev->data);
+					dup2(p->w, STDOUT_FILENO);
+				}
+			}
+			close_pipes(node);
+		}
+		buff = node;
+		node = node->prev;
+	}
+}

@@ -12,53 +12,21 @@
 
 #include "minishell.h"
 
-void tree_inorder_traversal(t_node *root, t_env *env);
-void exec(t_node *tree, t_env *env);
-void run_cmd(t_node node, t_env *env);
+static void	tree_inorder_traversal(t_node *root, t_env *env);
+static void	exec(t_node *tree, t_env *env);
+static void	run_cmd(t_node node, t_env *env);
+static int	wait_cmds(int n_cmds);
 
-
-int get_num_cmds(t_node *tree)
+int	execution(t_node *tree, t_env *env)
 {
-	t_node *node;
-	int i;
-	
-	node = tree;
-	if(!is_node_pipe(node))
-		return (1);
-	i = 1;
-	while (is_node_pipe(node))
-	{
-		node = node->left;
-		i++;
-	}
-	return (i);
-}
+	char	**cmd;
+	int		exit_code;
 
-int wait_cmds(int n_cmds)
-{
-	int status;
-	int exit_code;
-
-	while (n_cmds)
-	{
-		wait(&status);
-		if (WIFEXITED(status))
-			exit_code = WEXITSTATUS(status);
-		n_cmds--;
-	}
-	return (exit_code);
-}
-
-int execution(t_node *tree, t_env *env)
-{
-	char **cmd;
-	int exit_code;
-	
-	if(is_builtin_without_pipe(tree))
+	if (is_builtin_without_pipe(tree))
 	{
 		hdoc_exec(tree);
 		run_builtin_branch(tree, env);
-		hdoc_close(tree);
+		close_hdoc(tree);
 	}
 	else
 	{
@@ -66,18 +34,18 @@ int execution(t_node *tree, t_env *env)
 		hdoc_exec(tree);
 		tree_inorder_traversal(tree, env);
 		close_pipes(tree);
-		hdoc_close(tree);
+		close_hdoc(tree);
 		exit_code = wait_cmds(get_num_cmds(tree));
 	}
 	return (exit_code);
 }
 
-void tree_inorder_traversal(t_node *root, t_env *env)
+static void	tree_inorder_traversal(t_node *root, t_env *env)
 {
-	int pid;
+	int	pid;
 
-	if (root == NULL) 
-		return;
+	if (root == NULL)
+		return ;
 	tree_inorder_traversal(root->left, env);
 	if (root->left == NULL)
 	{
@@ -91,10 +59,10 @@ void tree_inorder_traversal(t_node *root, t_env *env)
 	tree_inorder_traversal(root->rigth, env);
 }
 
-void exec(t_node *tree, t_env *env)
+static void	exec(t_node *tree, t_env *env)
 {
-	t_node *node;
-	
+	t_node	*node;
+
 	node = tree;
 	pipe_redir(node);
 	while (node && !is_node_pipe((node)))
@@ -109,17 +77,32 @@ void exec(t_node *tree, t_env *env)
 	}
 }
 
-void run_cmd(t_node node, t_env *env)
+static void	run_cmd(t_node node, t_env *env)
 {
-	char *full_path;
-	char **cmd;
-	
+	char	*full_path;
+	char	**cmd;
+
 	cmd = ((t_cmd *)(node.data))->cmd;
 	if (is_builtin(cmd[0]))
 		exec_builtin(cmd, env, STDOUT_FILENO);
-	else 
+	else
 	{
 		full_path = get_cmd_path(cmd[0], env);
-		execve(full_path, cmd, get_env_matrix(env));		
+		execve(full_path, cmd, get_env_matrix(env));
 	}
+}
+
+static int	wait_cmds(int n_cmds)
+{
+	int	status;
+	int	exit_code;
+
+	while (n_cmds)
+	{
+		wait(&status);
+		if (WIFEXITED(status))
+			exit_code = WEXITSTATUS(status);
+		n_cmds--;
+	}
+	return (exit_code);
 }

@@ -38,7 +38,7 @@ static char	*find_cmd_path(char *cmd, char **paths)
 	int		size;
 	int		i;
 
-	if(!ft_strlen(cmd))
+	if (!ft_strlen(cmd))
 		return (NULL);
 	i = 0;
 	while (paths[i])

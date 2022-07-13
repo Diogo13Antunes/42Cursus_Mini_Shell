@@ -16,11 +16,6 @@
 static void test_parser(char *src);
 
 
-/*void control_c(int sig)
-{
-   // printf("enviado sinal control C\n");
-}*/
-
 int main (int argc, char **argv, char **env)
 {
     char *str;
@@ -29,43 +24,30 @@ int main (int argc, char **argv, char **env)
 	char *prompt;
     int exit_code;
 
-    /*struct sigaction sa;
-    sa.sa_handler = &control_c;
-    //sa.sa_flags = SA_RESTART;
-
-    sigaction(SIGINT, &sa, NULL);*/
-
-
     exit_code = 0;
 	env_lst = get_env_list(env);
     while (1)
     {
-		prompt = get_prompt_str(env_lst);
+	    prompt = get_prompt_str(env_lst);
         str = readline(prompt);
-       /*
         if (str)
             add_history(str);
-        tree = parser(str, env_lst);
-        print2D(tree);
-        */
-        
-        if (str)
-            add_history(str);
-
 		free(prompt);		
         tree = parser(str, env_lst, exit_code);
         free(str);
-
-        // is_syntax_error tem de ser colocado no parser
-        // Aqui a verificação tem de ser se a tree é !NULL então executa os comandos
-        /*if(!is_syntax_error(tree))
-            execution(tree, env_lst);*/
         if (tree)
            exit_code = execution(tree, env_lst);
-        
-        //print2D(tree);   
-        
+        free_tree(tree);   
+        //print2D(tree);
     }
+
+    /*
+    //teste para verificar se a tree é corretamente limpa 
+    tree = parser("<in ls -la | cat | wc -l >out", NULL, exit_code);
+    print2D(tree);
+    free_tree(tree);
+    */
+
     return (0);
 }
 

@@ -12,9 +12,6 @@
 
 #include "minishell.h"
 
-#define LEFT 	0
-#define RIGHT 	1
-
 static void	add_new_redir(t_node **tree, t_node *node);
 static void	add_new_cmd(t_node **tree, t_node *node);
 static void	add_new_pipe(t_node **tree, t_node *node);

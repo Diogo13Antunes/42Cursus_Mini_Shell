@@ -44,7 +44,7 @@ static void	tree_inorder_traversal(t_node *root, t_env *env)
 {
 	int	pid;
 
-	if (root == NULL)
+	if (!root)
 		return ;
 	tree_inorder_traversal(root->left, env);
 	if (root->left == NULL)

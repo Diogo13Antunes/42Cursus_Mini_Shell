@@ -12,9 +12,6 @@
 
 #include "minishell.h"
 
-#define LEFT 	0
-#define RIGHT 	1
-
 t_node	*create_node(int id)
 {
 	t_node	*node;

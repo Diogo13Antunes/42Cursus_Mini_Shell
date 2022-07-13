@@ -97,6 +97,14 @@ t_node	*parser(char *src, t_env *env, int exit_status);
 
 /* three.c */
 t_node	*create_node(int id);
+void	add_node_after(t_node *node, t_node *new_node, int dir);
+void	add_node_after_on_left(t_node *node, t_node *new_node);
+void	add_node_after_on_right(t_node *node, t_node *new_node);
+void	add_node_on_top(t_node **tree, t_node *node);
+
+
+
+/* tree/add_new_node.c */
 void	add_new_node(t_node **tree, t_node *node);
 
 

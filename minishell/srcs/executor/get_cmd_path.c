@@ -17,7 +17,6 @@ static void	check_path(char *path, char *cmd);
 static char	**get_paths_matrix(t_env *path);
 static int	is_cmd_path(char *cmd);
 
-/*Tem de se fazer free dos paths */
 char	*get_cmd_path(char *cmd, t_env *env)
 {
 	char	*path;
@@ -25,9 +24,10 @@ char	*get_cmd_path(char *cmd, t_env *env)
 
 	paths = get_paths_matrix(exist_env_elem(env, "PATH"));
 	if (is_cmd_path(cmd))
-		path = ft_strdup(cmd);
+		path = oom_guard(ft_strdup(cmd));
 	else
 		path = find_cmd_path(cmd, paths);
+	free_matrix(paths);
 	check_path(path, cmd);
 	return (path);
 }
@@ -38,13 +38,13 @@ static char	*find_cmd_path(char *cmd, char **paths)
 	int		size;
 	int		i;
 
-	if (!ft_strlen(cmd))
+	if (!ft_strlen(cmd) || !paths)
 		return (NULL);
 	i = 0;
 	while (paths[i])
 	{
 		size = ft_strlen(paths[i]) + ft_strlen(cmd) + 1;
-		path = ft_calloc(size + 1, sizeof(char));
+		path = oom_guard(ft_calloc(size + 1, sizeof(char)));
 		ft_strcat(path, paths[i]);
 		ft_strcat(path, "/");
 		ft_strcat(path, cmd);
@@ -88,7 +88,7 @@ static char	**get_paths_matrix(t_env *path)
 
 	if (!path)
 		return (NULL);
-	paths = ft_split(path->content, ':');
+	paths = oom_guard(ft_split(path->content, ':'));
 	return (paths);
 }
 

@@ -25,7 +25,7 @@ char	*get_prompt_str(t_env *env)
 	user = get_user(exist_env_elem(env, "USER"));
 	dir = get_dir(exist_env_elem(env, "PWD"), env);
 	prompt_size = ft_strlen(user) + ft_strlen(dir) + 1;
-	prompt = ft_calloc(prompt_size, sizeof(char));
+	prompt = oom_guard(ft_calloc(prompt_size, sizeof(char)));
 	ft_strcat(prompt, user);
 	ft_strcat(prompt, dir);
 	free (user);
@@ -40,7 +40,7 @@ static char	*get_user(t_env *user_nd)
 
 	user_size = ft_strlen(user_nd->content);
 	user_size += ft_strlen(BRED) + ft_strlen(RESET) + 4;
-	user = ft_calloc(user_size, sizeof(char));
+	user = oom_guard(ft_calloc(user_size, sizeof(char)));
 	ft_strcat(user, "[");
 	ft_strcat(user, BRED);
 	ft_strcat(user, user_nd->content);
@@ -64,7 +64,7 @@ static char	*get_dir(t_env *dir_nd, t_env *env)
 		dir_name = dir_nd->content;
 	dir_size = ft_strlen(dir_name);
 	dir_size += ft_strlen(BGRN) + ft_strlen(RESET) + 4;
-	dir = ft_calloc(dir_size, sizeof(char));
+	dir = oom_guard(ft_calloc(dir_size, sizeof(char)));
 	ft_strcat(dir, BGRN);
 	if (!ft_strcmp(home_path, dir_nd->content))
 		ft_strcat(dir, "~");

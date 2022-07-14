@@ -239,4 +239,7 @@ int is_syntax_error(t_node *tree, char *token);
 
 char	*get_cmd_path(char *cmd, t_env *env);
 
+/* utils2.c */
+void free_matrix(char **m);
+
 #endif

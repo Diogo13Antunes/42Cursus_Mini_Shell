@@ -12,39 +12,25 @@
 
 #include "minishell.h"
 
-static void free_node(t_node *node);
-static void free_matrix(char **m);
+static void	free_node(t_node *node);
 
-void free_tree(t_node *tree)
+void	free_tree(t_node *tree)
 {
 	if (!tree)
 		return ;
 	free_tree(tree->left);
 	free_tree(tree->rigth);
-    free_node(tree);
+	free_node(tree);
 }
 
-static void free_node(t_node *node)
+static void	free_node(t_node *node)
 {
-    if (is_node_hdoc(node))
-        free(((t_hdoc *) node->data)->end);
-    else if (is_node_redir(node))
-        free(((t_redir *) node->data)->redir);
-    else if (is_node_cmd(node))
-        free_matrix(((t_cmd *) node->data)->cmd);
-    free(node->data);
-    free(node);
-}
-
-static void free_matrix(char **m)
-{
-    int i;
-
-    i = 0;
-    while (m[i])
-    {
-        free(m[i]);
-        i++;
-    }
-    free(m);
+	if (is_node_hdoc(node))
+		free(((t_hdoc *) node->data)->end);
+	else if (is_node_redir(node))
+		free(((t_redir *) node->data)->redir);
+	else if (is_node_cmd(node))
+		free_matrix(((t_cmd *) node->data)->cmd);
+	free(node->data);
+	free(node);
 }

@@ -30,7 +30,7 @@ char	*token_parser(char *token, t_env *env, int exit_code)
 		return (token);
 	ft_exit_code(exit_code);
 	i = 0;
-	dst = ft_calloc(1, sizeof(char));
+	dst = oom_guard(ft_calloc(1, sizeof(char)));
 	while (token[i])
 	{
 		dst = update_token(dst, token, &i, env);
@@ -72,7 +72,7 @@ static char	*update_token_env_var(char *s, t_env *env)
 	int		size;
 	int		i;
 
-	dst = ft_calloc(1, sizeof(char));
+	dst = oom_guard(ft_calloc(1, sizeof(char)));
 	i = 0;
 	while (s[i])
 	{

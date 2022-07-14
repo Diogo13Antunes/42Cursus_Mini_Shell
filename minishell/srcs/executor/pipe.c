@@ -40,7 +40,7 @@ void	open_pipes(t_node *tree)
 	if (is_node_pipe(tree))
 	{
 		pipe(fd_p);
-		p = malloc(sizeof(t_pipe));
+		p = oom_guard(malloc(sizeof(t_pipe)));
 		if (!p)
 			return ;
 		p->r = fd_p[0];

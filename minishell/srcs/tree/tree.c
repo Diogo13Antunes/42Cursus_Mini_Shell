@@ -16,7 +16,7 @@ t_node	*create_node(int id)
 {
 	t_node	*node;
 
-	node = malloc(sizeof(t_node));
+	node = oom_guard(malloc(sizeof(t_node)));
 	if (!node)
 		return (0);
 	node->id = id;

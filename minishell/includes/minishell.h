@@ -43,6 +43,9 @@
 #define BGRN			"\e[1;32m"
 #define RESET			"\e[0m"
 
+//invalid options or missing arguments.
+#define EXIT_BUILTIN	2
+#define EXIT_SYNTAX 	2
 #define EXIT_CMD_NFOUND 127
 #define EXIT_CMD_NEXEC	126
 
@@ -90,7 +93,7 @@ char	*get_next_token(char *src, int reset);
 
 /* parser.c */
 //t_node	*parser(char *src);
-t_node	*parser(char *src, t_env *env, int exit_status);
+t_node	*parser(char *src, t_env *env, int *exit_code);
 
 
 /* tree/three.c */

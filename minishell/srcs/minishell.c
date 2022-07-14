@@ -33,7 +33,7 @@ int main (int argc, char **argv, char **env)
         if (str)
             add_history(str);
 		free(prompt);		
-        tree = parser(str, env_lst, exit_code);
+        tree = parser(str, env_lst, &exit_code);
         free(str);
         if (tree)
            exit_code = execution(tree, env_lst);

@@ -12,39 +12,57 @@
 
 #include "minishell.h"
 
-static int	branch_analysis(t_node *node, char *token);
+static int	error_analysis(t_node *tree, char *token);
+static int	branch_analysis(t_node *node);
 static void	print_error(char *token);
 
 int	is_syntax_error(t_node *tree, char *token)
 {
 	int	status;
 
-	if (!tree)
-		return (0);
 	status = 0;
 	if (!token || get_token_id(token) != ID_WORD)
 	{
-		if (!is_node_pipe(tree))
-			status = branch_analysis(tree, token);
-		else
-			status = branch_analysis(tree->rigth, token);
+		status = error_analysis(tree, token);
 	}
 	return (status);
 }
 
-static int	branch_analysis(t_node *node, char *token)
+static int	error_analysis(t_node *tree, char *token)
 {
-	if (!token && !node)
-		print_error(token);
-	if (!node && get_token_id(token) == ID_PIPE)
-		print_error(token);
-	while (node)
+	t_node	*node;
+
+	if (!tree && token && get_token_id(token) == ID_PIPE)
 	{
-		if (!(node->data))
+		print_error(token);
+		return (1);
+	}
+	if (tree)
+	{
+		if (!token && is_node_pipe(tree) && !tree->rigth)
+		{
+			print_error(token);
+			return (1);
+		}		
+		if (is_node_pipe(tree))
+			node = tree->rigth;
+		else
+			node = tree;
+		if (branch_analysis(node))
 		{
 			print_error(token);
 			return (1);
 		}
+	}
+	return (0);
+}
+
+static int	branch_analysis(t_node *node)
+{
+	while (node)
+	{
+		if (!(node->data))
+			return (1);
 		node = node->left;
 	}
 	return (0);

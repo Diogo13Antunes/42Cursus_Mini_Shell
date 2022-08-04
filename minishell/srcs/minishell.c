@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsilveri <dsilveri@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: dsilveri <dsilveri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/29 18:42:18 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/07/09 20:11:18 by dsilveri         ###   ########.fr       */
+/*   Updated: 2022/08/04 14:11:25 by dsilveri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int main (int argc, char **argv, char **env)
     {
 	    prompt = get_prompt_str(env_lst);
         str = readline(prompt);
-        if (str)
+        if (str && str[0])
             add_history(str);
 		free(prompt);		
         tree = parser(str, env_lst, &exit_code);

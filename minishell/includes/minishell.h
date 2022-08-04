@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsilveri <dsilveri@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: dsilveri <dsilveri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 10:57:16 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/07/09 20:11:15 by dsilveri         ###   ########.fr       */
+/*   Updated: 2022/08/04 14:04:39 by dsilveri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@
 #define BGRN			"\e[1;32m"
 #define RESET			"\e[0m"
 
-//invalid options or missing arguments.
+//invalid options or missing arguments EXIT_BUILTIN.
 #define EXIT_BUILTIN	2
 #define EXIT_SYNTAX 	2
 #define EXIT_CMD_NFOUND 127

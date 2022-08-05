@@ -3,14 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   env_vars.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dcandeia <dcandeia@student.42.fr>          +#+  +:+       +#+        */
+/*   By: diogoantunes <diogoantunes@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 11:23:03 by dcandeia          #+#    #+#             */
-/*   Updated: 2022/06/23 16:04:41 by dcandeia         ###   ########.fr       */
+/*   Updated: 2022/08/05 11:51:56 by diogoantune      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	update_shlvl(t_env *shlvl)
+{
+	int		nlevel;
+
+	if (shlvl->content)
+		nlevel = ft_atoi(shlvl->content) + 1;
+	free(shlvl->content);
+	shlvl->content = ft_itoa(nlevel);
+	if (shlvl->full)
+		free(shlvl->full);
+	create_full_env(shlvl->variable, shlvl->content);
+}
 
 int	env_lst_size(t_env *env)
 {
@@ -147,7 +160,8 @@ t_env	*exist_env_elem(t_env *env, const char *elem_name)
 		*ptr = '\0';
 	while (temp)
 	{
-		if (!ft_strncmp(temp->variable, elem_name, size))
+		if (!ft_strncmp(temp->variable, elem_name, size) \
+		&& size == ft_strlen(temp->variable))
 		{
 			if (ptr)
 				*ptr = '=';
@@ -174,5 +188,27 @@ t_env	*get_env_list(char **env)
 	}
 	if (!exist_env_elem(list, "OLDPWD"))
 		ft_lstadd_back_env(&list, create_new_env_elem("OLDPWD", 0));
+	if (exist_env_elem(list, "SHLVL"))
+		update_shlvl(exist_env_elem(list, "SHLVL"));
 	return (list);
+}
+
+void	free_env_lst(t_env	**env)
+{
+	t_env	*next;
+
+	if (!(*env))
+		return ;
+	while (*env)
+	{
+		next = (*env)->next;
+		if ((*env)->variable)
+			free((*env)->variable);
+		if ((*env)->content)
+			free((*env)->content);
+		if ((*env)->full)
+			free((*env)->full);
+		free((*env));
+		*env = next;
+	}
 }

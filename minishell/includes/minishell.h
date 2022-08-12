@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsilveri <dsilveri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: diogoantunes <diogoantunes@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 10:57:16 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/08/04 14:04:39 by dsilveri         ###   ########.fr       */
+/*   Updated: 2022/08/12 15:37:23 by diogoantune      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,12 @@
 # include <string.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <signal.h>
+# include <dirent.h>
+# include <termios.h>
+# include <sys/ioctl.h>
+# include <stdbool.h>
+
 # include "../libft/libft.h"
 
 # define PROGRAM_NAME "minish"
@@ -39,39 +45,45 @@
 # define ID_PIPE		5
 # define ID_CMD			6
 
-#define BRED			"\e[1;31m"
-#define BGRN			"\e[1;32m"
-#define RESET			"\e[0m"
+# define BRED			"\e[1;31m"
+# define BGRN			"\e[1;32m"
+# define RESET			"\e[0m"
 
 //invalid options or missing arguments EXIT_BUILTIN.
-#define EXIT_BUILTIN	2
-#define EXIT_SYNTAX 	2
-#define EXIT_CMD_NFOUND 127
-#define EXIT_CMD_NEXEC	126
+# define EXIT_BUILTIN	2
+# define EXIT_SYNTAX 	2
+# define EXIT_CMD_NFOUND 127
+# define EXIT_CMD_NEXEC	126
+
+//Signals defines
+# define SG_IGN 0
+# define SG_HD 1
+# define SG_RDL 2
+# define SG_DFL 3
 
 typedef struct s_node
 {
-	int id;
-	void *data;
-	struct s_node *prev;
-	struct s_node *left;
-	struct s_node *rigth;
-}   t_node;
+	int				id;
+	void			*data;
+	struct s_node	*prev;
+	struct s_node	*left;
+	struct s_node	*rigth;
+}				t_node;
 
 typedef struct s_redir
 {
-	char *redir;
+	char	*redir;
 }	t_redir;
 
 typedef struct s_cmd
 {
-	char **cmd;
+	char	**cmd;
 }	t_cmd;
 
 typedef struct s_pipe
 {
-	int r;
-	int w;
+	int		r;
+	int		w;
 }	t_pipe;
 
 typedef struct s_hdoc
@@ -88,13 +100,15 @@ typedef struct s_env
 	struct s_env	*next;
 }				t_env;
 
+/* readline */
+void	rl_replace_line(const char *text, int clear_undo);
+
 /* get_next_token.c */
 char	*get_next_token(char *src, int reset);
 
 /* parser.c */
 //t_node	*parser(char *src);
 t_node	*parser(char *src, t_env *env, int *exit_code);
-
 
 /* tree/three.c */
 t_node	*create_node(int id);
@@ -106,14 +120,10 @@ void	add_node_on_top(t_node **tree, t_node *node);
 void	add_new_node(t_node **tree, t_node *node);
 
 /* tree/free_tree.c*/
-void free_tree(t_node *tree);
-
+void	free_tree(t_node *tree);
 void	print_tree(t_node *root);
 void	print2D(t_node *root);
-
-
-int	execution(t_node *tree, t_env *env);
-
+int		execution(t_node *tree, t_env *env);
 void	print_node1(t_node *node);
 
 /* parser/utils_parser.c */
@@ -185,15 +195,15 @@ void	cmd_not_found_error(char *cmd_path, char *cmd);
 void	cmd_not_found_error2(int err, char *cmd, char *str);
 int		file_error(int err, char *file);
 int		file_error2(int err, char *file);
-int	file_error3(int err, char *file, char *str);
+int		file_error3(int err, char *file, char *str);
 void	directory_error(char *path, char *file);*/
 void	cmd_not_found_error(char *cmd_path, char *cmd);
 void	directory_error(char *path, char *file);
 int		sys_error(int err, char *file);
-int	sys_error2(int err, char *msg, char *file);
-int	file_error(int err, char *file);
-int	file_error3(int err, char *file);
-int	cmd_path_error(int err, char *msg, char *file);
+int		sys_error2(int err, char *msg, char *file);
+int		file_error(int err, char *file);
+int		file_error3(int err, char *file);
+int		cmd_path_error(int err, char *msg, char *file);
 
 /* print_error.c */
 void	print_msg_error(char *error, char *str);
@@ -205,12 +215,11 @@ void	open_pipes(t_node *tree);
 void	close_pipes(t_node *tree);
 
 /* redirections.c */
-//void file_redir(t_node node);
-void pipe_redir(t_node *node);
+//void	file_redir(t_node node);
+void	pipe_redir(t_node *node);
 //int	file_redir2(t_node node);
 void	file_redir(t_node node);
-int	get_file_fd(t_node node);
-
+int		get_file_fd(t_node node);
 
 /* parser/words_parser.c */
 char	*token_parser(char *token, t_env *env, int exit_code);
@@ -221,25 +230,27 @@ void	close_hdoc(t_node *tree);
 void	hdoc_redir(t_node *node);
 
 /* executor/exec_builtins.c*/
-int is_builtin(char *cmd);
-int is_builtin_without_pipe(t_node *tree);
-void exec_builtin(char **cmd, t_env *env, int fd);
-void run_builtin_branch(t_node *tree, t_env *env);
+int		is_builtin(char *cmd);
+int		is_builtin_without_pipe(t_node *tree);
+void	exec_builtin(char **cmd, t_env *env, int fd);
+void	run_builtin_branch(t_node *tree, t_env *env);
 
 /* executor/utils_executor.c */
-void close_fd(int fd);
-int get_num_cmds(t_node *tree);
+void	close_fd(int fd);
+int		get_num_cmds(t_node *tree);
 
 /* parser/update_node.c */
 t_node	*update_node(t_node *node, char *token);
 
 /* parser/syntax_error.c */
-int is_syntax_error(t_node *tree, char *token);
-
+int		is_syntax_error(t_node *tree, char *token);
 
 char	*get_cmd_path(char *cmd, t_env *env);
 
 /* utils2.c */
-void free_matrix(char **m);
+void	free_matrix(char **m);
+
+/* signals_handler.c */
+int		signals_call(int choice);
 
 #endif

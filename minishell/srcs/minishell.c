@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsilveri <dsilveri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: diogoantunes <diogoantunes@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/29 18:42:18 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/08/04 14:11:25 by dsilveri         ###   ########.fr       */
+/*   Updated: 2022/08/12 15:18:39 by diogoantune      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../includes/minishell.h"
 #include <signal.h> 
 
 static void test_parser(char *src);
@@ -28,11 +28,13 @@ int main (int argc, char **argv, char **env)
 	env_lst = get_env_list(env);
     while (1)
     {
+        signals_call(SG_RDL);
 	    prompt = get_prompt_str(env_lst);
         str = readline(prompt);
+        signals_call(SG_IGN);
         if (str && str[0])
             add_history(str);
-		free(prompt);		
+		free(prompt);
         tree = parser(str, env_lst, &exit_code);
         free(str);
         if (tree)

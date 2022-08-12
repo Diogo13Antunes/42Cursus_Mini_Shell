@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_print_export.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dcandeia <dcandeia@student.42.fr>          +#+  +:+       +#+        */
+/*   By: diogoantunes <diogoantunes@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 15:05:15 by dcandeia          #+#    #+#             */
-/*   Updated: 2022/06/23 16:05:38 by dcandeia         ###   ########.fr       */
+/*   Updated: 2022/08/12 15:31:04 by diogoantune      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../includes/minishell.h"
 
 void	print_element(t_env	elem, int fd)
 {

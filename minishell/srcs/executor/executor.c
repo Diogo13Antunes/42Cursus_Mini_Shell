@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsilveri <dsilveri@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: diogoantunes <diogoantunes@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:52:46 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/07/09 20:10:24 by dsilveri         ###   ########.fr       */
+/*   Updated: 2022/08/12 15:32:33 by diogoantune      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../includes/minishell.h"
 
 static void	exec_cmd_forks(t_node *root, t_env *env, int *l_pid);
 static void	exec(t_node *tree, t_env *env);
@@ -52,9 +52,13 @@ static void	exec_cmd_forks(t_node *root, t_env *env, int *l_pid)
 	{
 		pid = fork();
 		if (pid)
+		{
 			*l_pid = pid;
+			signals_call(SG_IGN);
+		}
 		if (!(pid))
 		{
+			signals_call(SG_DFL);
 			exec(root, env);
 			exit(0);
 		}

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_check_export_elements.c                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dcandeia <dcandeia@student.42.fr>          +#+  +:+       +#+        */
+/*   By: diogoantunes <diogoantunes@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 15:19:39 by dcandeia          #+#    #+#             */
-/*   Updated: 2022/06/23 14:50:18 by dcandeia         ###   ########.fr       */
+/*   Updated: 2022/08/12 15:31:04 by diogoantune      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../includes/minishell.h"
 
 int	check_element_name(char *element)
 {

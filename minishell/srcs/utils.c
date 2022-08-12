@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dcandeia <dcandeia@student.42.fr>          +#+  +:+       +#+        */
+/*   By: diogoantunes <diogoantunes@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 12:39:55 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/06/23 10:35:44 by dcandeia         ###   ########.fr       */
+/*   Updated: 2022/08/12 15:31:04 by diogoantune      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../includes/minishell.h"
 
 int	is_node_redir(t_node *node)
 {
@@ -39,7 +39,7 @@ int	is_node_cmd(t_node *node)
 	return (0);
 }
 
-int is_node_hdoc(t_node *node)
+int	is_node_hdoc(t_node *node)
 {
 	if (!node)
 		return (0);

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_unset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dcandeia <dcandeia@student.42.fr>          +#+  +:+       +#+        */
+/*   By: diogoantunes <diogoantunes@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 11:38:02 by dcandeia          #+#    #+#             */
-/*   Updated: 2022/06/23 16:13:11 by dcandeia         ###   ########.fr       */
+/*   Updated: 2022/08/12 15:31:56 by diogoantune      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../includes/minishell.h"
 
 #define IN_TOP 1
 #define IN_MID 2
@@ -87,7 +87,7 @@ void	builtin_unset(t_env **env, char **elems)
 {
 	int		pos;
 	int		i;
-	
+
 	i = 1;
 	while (elems[i])
 	{

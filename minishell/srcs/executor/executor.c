@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: diogoantunes <diogoantunes@student.42.f    +#+  +:+       +#+        */
+/*   By: dsilveri <dsilveri@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:52:46 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/08/12 15:32:33 by diogoantune      ###   ########.fr       */
+/*   Updated: 2022/08/13 16:14:35 by dsilveri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,12 @@
 static void	exec_cmd_forks(t_node *root, t_env *env, int *l_pid);
 static void	exec(t_node *tree, t_env *env);
 static void	run_cmd(t_node node, t_env *env);
-static int	wait_cmds(int n_cmds, int l_pid);
+static t_exit_status	wait_cmds(int n_cmds, int l_pid);
 
-int	execution(t_node *tree, t_env *env)
+t_exit_status	execution(t_node *tree, t_env *env)
 {
 	char	**cmd;
-	int		exit_code;
+	t_exit_status exit_code;
 	int		l_pid;
 
 	if (is_builtin_without_pipe(tree))
@@ -54,11 +54,12 @@ static void	exec_cmd_forks(t_node *root, t_env *env, int *l_pid)
 		if (pid)
 		{
 			*l_pid = pid;
-			signals_call(SG_IGN);
+			//signals_call(SG_IGN);
 		}
 		if (!(pid))
 		{
-			signals_call(SG_DFL);
+			//signals_call(SG_DFL);
+			config_signal(SIG_DFL);
 			exec(root, env);
 			exit(0);
 		}
@@ -99,21 +100,30 @@ static void	run_cmd(t_node node, t_env *env)
 	}
 }
 
-static int	wait_cmds(int n_cmds, int l_pid)
+static t_exit_status	wait_cmds(int n_cmds, int l_pid)
 {
 	int	status;
-	int	exit_code;
+	t_exit_status	exit;
 
 	if (waitpid(l_pid, &status, 0))
 	{
 		if (WIFEXITED(status))
-			exit_code = WEXITSTATUS(status);
+			exit.code = WEXITSTATUS(status);
+		if (WIFSIGNALED(status))
+		{
+			exit.code = status + EXIT_FATAL_SIGNAL;
+			// Ter em atenção o e verificar como funciona para outro sinais
+			// pode precisar da verificação se é sinal CTRL-C
+			exit.signal = 1;	
+		}
 	}
 	n_cmds--;
 	while (n_cmds)
 	{
 		wait(&status);
+		if (WIFSIGNALED(status))
+			exit.signal = 1;
 		n_cmds--;
 	}
-	return (exit_code);
+	return (exit);
 }

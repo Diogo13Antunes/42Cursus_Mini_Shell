@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: diogoantunes <diogoantunes@student.42.f    +#+  +:+       +#+        */
+/*   By: dsilveri <dsilveri@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 10:57:16 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/08/12 15:37:23 by diogoantune      ###   ########.fr       */
+/*   Updated: 2022/08/13 16:16:34 by dsilveri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,12 @@
 # define EXIT_SYNTAX 	2
 # define EXIT_CMD_NFOUND 127
 # define EXIT_CMD_NEXEC	126
+# define EXIT_FATAL_SIGNAL 128
+# define EXIT_CTRLC_SIGNAL 130
 
 //Signals defines
 # define SG_IGN 0
-# define SG_HD 1
+# define SG_HD	1
 # define SG_RDL 2
 # define SG_DFL 3
 
@@ -92,6 +94,12 @@ typedef struct s_hdoc
 	char	*end;
 }	t_hdoc;
 
+typedef struct s_exit_status
+{
+	int code;
+	int signal;
+}	t_exit_status;
+
 typedef struct s_env
 {
 	char			*variable;
@@ -99,9 +107,6 @@ typedef struct s_env
 	char			*full;
 	struct s_env	*next;
 }				t_env;
-
-/* readline */
-void	rl_replace_line(const char *text, int clear_undo);
 
 /* get_next_token.c */
 char	*get_next_token(char *src, int reset);
@@ -123,7 +128,8 @@ void	add_new_node(t_node **tree, t_node *node);
 void	free_tree(t_node *tree);
 void	print_tree(t_node *root);
 void	print2D(t_node *root);
-int		execution(t_node *tree, t_env *env);
+//int		execution(t_node *tree, t_env *env);
+t_exit_status	execution(t_node *tree, t_env *env);
 void	print_node1(t_node *node);
 
 /* parser/utils_parser.c */
@@ -252,5 +258,9 @@ void	free_matrix(char **m);
 
 /* signals_handler.c */
 int		signals_call(int choice);
+
+/* signal_handler.c */
+//void config_signal(void (*f)(int));
+void config_signal(void (*f)());
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: diogoantunes <diogoantunes@student.42.f    +#+  +:+       +#+        */
+/*   By: dsilveri <dsilveri@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/29 18:42:18 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/08/12 15:18:39 by diogoantune      ###   ########.fr       */
+/*   Updated: 2022/08/13 16:18:29 by dsilveri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,16 @@
 
 static void test_parser(char *src);
 
+void get_new_prompt(int signum)
+{
+    if (signum == SIGINT)
+    {
+        rl_replace_line("", 0);
+        ft_putstr_fd("\n", STDOUT_FILENO);
+        rl_on_new_line();
+        rl_redisplay();
+    }
+}
 
 int main (int argc, char **argv, char **env)
 {
@@ -23,22 +33,30 @@ int main (int argc, char **argv, char **env)
 	t_env	*env_lst;
 	char *prompt;
     int exit_code;
+    t_exit_status ex;
 
     exit_code = 0;
 	env_lst = get_env_list(env);
     while (1)
     {
-        signals_call(SG_RDL);
+        //signals_call(SG_RDL);
+        config_signal(get_new_prompt);
 	    prompt = get_prompt_str(env_lst);
         str = readline(prompt);
-        signals_call(SG_IGN);
+        config_signal(SIG_IGN);
+        //signals_call(SG_IGN);
         if (str && str[0])
             add_history(str);
 		free(prompt);
         tree = parser(str, env_lst, &exit_code);
         free(str);
         if (tree)
-           exit_code = execution(tree, env_lst);
+        {
+           ex = execution(tree, env_lst);
+           exit_code = ex.code;
+        }
+        if (ex.signal)
+            ft_putstr_fd("\n", STDOUT_FILENO);
         free_tree(tree);   
         //print2D(tree);
     }

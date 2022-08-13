@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals_handler.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: diogoantunes <diogoantunes@student.42.f    +#+  +:+       +#+        */
+/*   By: dsilveri <dsilveri@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 11:51:29 by diogoantune       #+#    #+#             */
-/*   Updated: 2022/08/12 12:05:53 by diogoantune      ###   ########.fr       */
+/*   Updated: 2022/08/13 14:49:32 by dsilveri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,13 +56,13 @@ static void	signal_choice(struct sigaction *sig, int signal)
 	sig->sa_flags = SA_SIGINFO;
 	sigemptyset(&sig->sa_mask);
 	if (signal == SG_IGN)
-		(sig->__sigaction_u.__sa_handler) = SIG_IGN;
+		(sig->sa_handler) = SIG_IGN;
 	else if (signal == SG_HD)
-		(sig->__sigaction_u.__sa_handler) = signals_handler;
+		(sig->sa_sigaction) = signals_handler;
 	else if (signal == SG_RDL)
-		(sig->__sigaction_u.__sa_handler) = signals_heredoc;
+		(sig->sa_sigaction) = signals_heredoc;
 	else if (signal == SG_DFL)
-		(sig->__sigaction_u.__sa_handler) = SIG_DFL;
+		(sig->sa_handler) = SIG_DFL;
 	else
 		return ;
 }

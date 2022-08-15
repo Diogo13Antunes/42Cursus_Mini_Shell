@@ -76,6 +76,8 @@ int	signals_call(int choice)
 		|| sigaction(SIGINT, &sig, NULL) == -1)
 	{
 		printf("Error: Handling Signals!\n");
+		return (-1);
 		exit(1);
 	}
+	return (0);
 }

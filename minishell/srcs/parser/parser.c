@@ -6,11 +6,11 @@
 /*   By: diogoantunes <diogoantunes@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 19:19:12 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/08/12 15:31:04 by diogoantune      ###   ########.fr       */
+/*   Updated: 2022/08/15 12:48:29 by diogoantune      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "minishell.h"
 
 static void		create_ast(t_node **tree, char *token, t_env *env);
 static t_node	*get_node_to_update(t_node *tree);

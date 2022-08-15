@@ -6,11 +6,11 @@
 /*   By: diogoantunes <diogoantunes@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 11:38:02 by dcandeia          #+#    #+#             */
-/*   Updated: 2022/08/12 15:31:56 by diogoantune      ###   ########.fr       */
+/*   Updated: 2022/08/15 12:48:29 by diogoantune      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "minishell.h"
 
 #define IN_TOP 1
 #define IN_MID 2

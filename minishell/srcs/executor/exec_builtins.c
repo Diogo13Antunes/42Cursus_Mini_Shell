@@ -6,11 +6,11 @@
 /*   By: diogoantunes <diogoantunes@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 09:14:42 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/08/12 15:31:04 by diogoantune      ###   ########.fr       */
+/*   Updated: 2022/08/15 12:48:29 by diogoantune      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "minishell.h"
 
 static void	run_builtin_branch2(t_node *tree, t_env *env);
 

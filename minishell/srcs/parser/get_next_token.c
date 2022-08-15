@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_token.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsilveri <dsilveri@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: diogoantunes <diogoantunes@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 10:57:10 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/06/10 09:51:42 by dsilveri         ###   ########.fr       */
+/*   Updated: 2022/08/15 12:48:29 by diogoantune      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "minishell.h"
 
 static char	*get_operators(char *src, int *index);
 static char	*get_word(char *src, int *index);

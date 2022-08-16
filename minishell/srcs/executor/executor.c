@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: diogoantunes <diogoantunes@student.42.f    +#+  +:+       +#+        */
+/*   By: dsilveri <dsilveri@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:52:46 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/08/15 12:48:29 by diogoantune      ###   ########.fr       */
+/*   Updated: 2022/08/16 15:25:36 by dsilveri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,18 +103,21 @@ static void	run_cmd(t_node node, t_env *env)
 static t_exit_status	wait_cmds(int n_cmds, int l_pid)
 {
 	int	status;
+	int signal;
 	t_exit_status	exit;
 
+	signal = 0;
 	if (waitpid(l_pid, &status, 0))
 	{
+		
 		if (WIFEXITED(status))
-			exit.code = WEXITSTATUS(status);
+		{
+			set_exit_status(WEXITSTATUS(status));
+		}
 		if (WIFSIGNALED(status))
 		{
-			exit.code = status + EXIT_FATAL_SIGNAL;
-			// Ter em atenção o e verificar como funciona para outro sinais
-			// pode precisar da verificação se é sinal CTRL-C
-			exit.signal = 1;	
+			set_exit_status(status + EXIT_FATAL_SIGNAL);
+			signal = 1;
 		}
 	}
 	n_cmds--;
@@ -122,8 +125,10 @@ static t_exit_status	wait_cmds(int n_cmds, int l_pid)
 	{
 		wait(&status);
 		if (WIFSIGNALED(status))
-			exit.signal = 1;
+			signal = 1;
 		n_cmds--;
 	}
+	if (signal)
+		ft_putstr_fd("\n", STDOUT_FILENO);
 	return (exit);
 }

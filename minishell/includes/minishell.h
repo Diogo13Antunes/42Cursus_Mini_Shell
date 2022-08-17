@@ -6,7 +6,7 @@
 /*   By: dsilveri <dsilveri@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 10:57:16 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/08/16 15:09:26 by dsilveri         ###   ########.fr       */
+/*   Updated: 2022/08/16 19:21:45 by dsilveri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,8 +128,7 @@ void	add_new_node(t_node **tree, t_node *node);
 void	free_tree(t_node *tree);
 void	print_tree(t_node *root);
 void	print2D(t_node *root);
-//int		execution(t_node *tree, t_env *env);
-t_exit_status	execution(t_node *tree, t_env *env);
+int		execution(t_node *tree, t_env *env);
 void	print_node1(t_node *node);
 
 /* parser/utils_parser.c */

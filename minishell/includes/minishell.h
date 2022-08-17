@@ -6,7 +6,7 @@
 /*   By: dsilveri <dsilveri@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 10:57:16 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/08/16 19:21:45 by dsilveri         ###   ########.fr       */
+/*   Updated: 2022/08/17 11:26:05 by dsilveri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -260,7 +260,8 @@ int		signals_call(int choice);
 
 /* signal_handler.c */
 //void config_signal(void (*f)(int));
-void config_signal(void (*f)());
+//void config_signal(void (*f)());
+void config_signal(int signum, void (*f)());
 
 
 /* exit_status.c */

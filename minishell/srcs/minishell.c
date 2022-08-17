@@ -6,7 +6,7 @@
 /*   By: dsilveri <dsilveri@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/29 18:42:18 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/08/16 15:40:54 by dsilveri         ###   ########.fr       */
+/*   Updated: 2022/08/17 11:27:35 by dsilveri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,14 +36,15 @@ int main (int argc, char **argv, char **env)
     int exit_code;
     t_exit_status ex;
 
+    config_signal(SIGQUIT, SIG_IGN);
     exit_code = 0;
 	env_lst = get_env_list(env);
     while (1)
     {
-        config_signal(get_new_prompt);
+        config_signal(SIGINT, get_new_prompt);
 	    prompt = get_prompt_str(env_lst);
         str = readline(prompt);
-        config_signal(SIG_IGN);
+        config_signal(SIGINT, SIG_IGN);
         if (str && str[0])
             add_history(str);
 		free(prompt);

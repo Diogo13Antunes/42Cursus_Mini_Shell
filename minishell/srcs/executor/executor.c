@@ -6,7 +6,7 @@
 /*   By: dsilveri <dsilveri@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:52:46 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/08/17 09:28:00 by dsilveri         ###   ########.fr       */
+/*   Updated: 2022/08/17 11:54:53 by dsilveri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,45 +27,6 @@ void interrupt_hdoc_signal(int signum)
 	}
 }
 
-/*
-t_exit_status	execution(t_node *tree, t_env *env)
-{
-	char	**cmd;
-	t_exit_status exit_code;
-	int		l_pid;
-	int 	pid;
-
-	if (is_builtin_without_pipe(tree))
-	{
-		config_signal(interrupt_hdoc_signal);
-		hdoc_exec(tree);
-		config_signal(SIG_IGN);
-		if (get_exit_status() != EXIT_CTRLC_SIGNAL)
-		{
-			run_builtin_branch(tree, env);
-			close_hdoc(tree);
-		}
-	}
-	else
-	{
-		open_pipes(tree);
-		config_signal(interrupt_hdoc_signal);
-		hdoc_exec(tree);
-		config_signal(SIG_IGN);
-		if (get_exit_status() != EXIT_CTRLC_SIGNAL)
-		{	
-			exec_cmd_forks(tree, env, &l_pid);
-			close_pipes(tree);
-			close_hdoc(tree);
-			exit_code = wait_cmds(get_num_cmds(tree), l_pid);
-		}
-	}
-
-
-	return (exit_code);
-}
-*/
-
 int	execution(t_node *tree, t_env *env)
 {
 	char	**cmd;
@@ -78,9 +39,9 @@ int	execution(t_node *tree, t_env *env)
 		pid = fork();
 		if (!pid)
 		{
-			config_signal(interrupt_hdoc_signal);
+			config_signal(SIGINT ,interrupt_hdoc_signal);
 			hdoc_exec(tree);
-			config_signal(SIG_IGN);
+			config_signal(SIGINT, SIG_IGN);
 			close_hdoc(tree);
 			exit(get_exit_status());
 		}
@@ -89,8 +50,7 @@ int	execution(t_node *tree, t_env *env)
 			wait(&status);
 			if (WIFEXITED(status))
 				set_exit_status(WEXITSTATUS(status));
-			run_builtin_branch(tree, env);
-					
+			run_builtin_branch(tree, env);		
 		}
 	}
 	else
@@ -98,9 +58,9 @@ int	execution(t_node *tree, t_env *env)
 		pid = fork();
 		if (!pid)
 		{
-			config_signal(interrupt_hdoc_signal);
+			config_signal(SIGINT, interrupt_hdoc_signal);
 			hdoc_exec(tree);
-			config_signal(SIG_IGN);
+			config_signal(SIGINT, SIG_IGN);
 			if (get_exit_status() == EXIT_CTRLC_SIGNAL)
 			{
 				close_hdoc(tree);
@@ -138,7 +98,8 @@ static void	exec_cmd_forks(t_node *root, t_env *env, int *l_pid)
 			*l_pid = pid;
 		if (!(pid))
 		{
-			config_signal(SIG_DFL);
+			config_signal(SIGINT, SIG_DFL);
+			config_signal(SIGQUIT, SIG_DFL);
 			exec(root, env);
 			exit(0);
 		}
@@ -192,15 +153,23 @@ static t_exit_status	wait_cmds(int n_cmds, int l_pid)
 			set_exit_status(WEXITSTATUS(status));
 		if (WIFSIGNALED(status))
 		{
-			set_exit_status(status + EXIT_FATAL_SIGNAL);
-			signal = 1;
+			if (status < 130)
+			{
+				set_exit_status(status + EXIT_FATAL_SIGNAL);
+				signal = 1;
+			}	
+			else
+			{
+				ft_putstr_fd("Quit (core dumped)\n", STDOUT_FILENO);
+				set_exit_status(status);
+			}
 		}
 	}
 	n_cmds--;
 	while (n_cmds)
 	{
 		wait(&status);
-		if (WIFSIGNALED(status))
+		if (WIFSIGNALED(status) && status < 130)
 			signal = 1;
 		n_cmds--;
 	}

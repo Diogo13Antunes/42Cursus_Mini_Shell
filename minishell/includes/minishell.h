@@ -185,10 +185,10 @@ int		check_element(char *element);
 int		check_element_name(char *element);
 
 /* builtins/cmd_export.c */
-void	builtin_export(t_env *env, char **elems, int fd);
+int		builtin_export(t_env *env, char **elems, int fd);
 
 /* builtins/cmd_unset.c */
-void	builtin_unset(t_env **env, char **elem);
+int		builtin_unset(t_env **env, char **elem);
 
 /* builtins/cmd_exit.c */
 void	builtin_exit(void);

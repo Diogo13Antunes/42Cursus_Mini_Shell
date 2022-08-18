@@ -87,7 +87,7 @@ static void	rm_mid_bot_env_elem(t_env **env, const char *elem)
 	ft_lstdelenv(temp);
 }
 
-void	builtin_unset(t_env **env, char **elems)
+int	builtin_unset(t_env **env, char **elems)
 {
 	int		pos;
 	int		i;
@@ -96,7 +96,7 @@ void	builtin_unset(t_env **env, char **elems)
 	while (elems[i])
 	{
 		if (!elems[i] || ft_strlen(elems[i]) == 0)
-			return ;
+			return (0);
 		pos = elem_pos(*env, elems[i]);
 		if (pos == IN_TOP)
 			rm_top_env_elem(env);
@@ -106,4 +106,5 @@ void	builtin_unset(t_env **env, char **elems)
 			rm_mid_bot_env_elem(env, elems[i]);
 		i++;
 	}
+	return (0);
 }

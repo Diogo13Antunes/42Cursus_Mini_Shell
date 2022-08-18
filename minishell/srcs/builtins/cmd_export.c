@@ -34,7 +34,7 @@ void	ft_update_elem(t_env *elem, char *element)
 	elem->full = create_full_env(elem->variable, elem->content);
 }
 
-void	builtin_export(t_env *env, char **elems, int fd)
+int	builtin_export(t_env *env, char **elems, int fd)
 {
 	int		i;
 	t_env	*exist;
@@ -42,7 +42,7 @@ void	builtin_export(t_env *env, char **elems, int fd)
 	if (!elems[1])
 	{
 		print_export(env, fd);
-		return ;
+		return (0);
 	}
 	i = 1;
 	while (elems[i])
@@ -57,5 +57,5 @@ void	builtin_export(t_env *env, char **elems, int fd)
 		}
 		i++;
 	}
-	return ;
+	return (0);
 }

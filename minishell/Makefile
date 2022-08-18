@@ -23,7 +23,7 @@ LIBFT			= libft/libft.a
 SRCS_OBJS		= $(SRCS:.c=.o)
 
 CC				= gcc 
-#CFLAGS			= -Wall -Wextra -Werror -I ./includes
+#CFLAGS			= -Wall -Wextra -Werror -fsanitize=address -I ./includes
 CFLAGS			= -I ./includes
 LIBS			= -lreadline
 RM				= rm -f
@@ -37,7 +37,7 @@ all: $(NAME)
 
 $(NAME): $(SRCS_OBJS)
 	$(MAKE_LIBFT)
-	$(CC) $(SRCS_OBJS) $(LIBFT) -o $(NAME) $(LIBS)
+	$(CC) $(SRCS_OBJS) $(LIBFT) -o $(NAME) $(LIBS) 
 
 clean:
 	$(CLEAN_LIBFT)

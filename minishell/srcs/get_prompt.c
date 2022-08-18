@@ -24,12 +24,20 @@ char	*get_prompt_str(t_env *env)
 
 	user = get_user(exist_env_elem(env, "USER"));
 	dir = get_dir(exist_env_elem(env, "PWD"), env);
-	prompt_size = ft_strlen(user) + ft_strlen(dir) + 1;
-	prompt = oom_guard(ft_calloc(prompt_size, sizeof(char)));
-	ft_strcat(prompt, user);
-	ft_strcat(prompt, dir);
-	free (user);
-	free(dir);
+	if (!user || !dir)
+	{
+		prompt = oom_guard(ft_calloc(11, sizeof(char)));
+		ft_strcat(prompt, "minish > ");
+	}
+	else
+	{
+		prompt_size = ft_strlen(user) + ft_strlen(dir) + 1;
+		prompt = oom_guard(ft_calloc(prompt_size, sizeof(char)));
+		ft_strcat(prompt, user);
+		ft_strcat(prompt, dir);
+		free_str(user);
+		free_str(dir);
+	}
 	return (prompt);
 }
 
@@ -38,6 +46,8 @@ static char	*get_user(t_env *user_nd)
 	int		user_size;
 	char	*user;
 
+	if (!user_nd)
+		return (NULL);
 	user_size = ft_strlen(user_nd->content);
 	user_size += ft_strlen(BRED) + ft_strlen(RESET) + 4;
 	user = oom_guard(ft_calloc(user_size, sizeof(char)));
@@ -57,6 +67,8 @@ static char	*get_dir(t_env *dir_nd, t_env *env)
 	char	*home_path;
 	char	*dir;
 
+	if (!dir_nd)
+		return (NULL);
 	home_path = exist_env_elem(env, "HOME")->content;
 	if (ft_strlen(dir_nd->content) > 1)
 		dir_name = ft_strrchr(dir_nd->content, '/') + 1;

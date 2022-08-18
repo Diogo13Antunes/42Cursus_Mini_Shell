@@ -50,7 +50,7 @@ int	execution(t_node *tree, t_env *env)
 			wait(&status);
 			if (WIFEXITED(status))
 				set_exit_status(WEXITSTATUS(status));
-			run_builtin_branch(tree, env);		
+			run_builtin_branch(tree, env);
 		}
 	}
 	else
@@ -80,7 +80,6 @@ int	execution(t_node *tree, t_env *env)
 				set_exit_status(WEXITSTATUS(status));
 		}
 	}
-
 	return (get_exit_status());
 }
 

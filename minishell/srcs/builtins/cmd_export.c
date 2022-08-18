@@ -12,6 +12,13 @@
 
 #include "minishell.h"
 
+/*
+	export 1oi=10
+	bash: export: `1oi=10': not a valid identifier
+	$?
+	return (1);
+*/
+
 void	ft_update_elem(t_env *elem, char *element)
 {
 	int		i;

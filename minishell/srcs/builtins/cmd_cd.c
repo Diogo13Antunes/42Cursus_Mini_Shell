@@ -45,9 +45,25 @@ int	builtin_cd(char **args, t_env *env)
 	oldpwd = getcwd(NULL, 0);
 	if (oldpwd == NULL)
 		return (-1);
+	if (get_matrix_size(args) > 2)
+	{
+		printf("Too many args!\n");
+		return (1);
+	}
+	if (!args[1] || !ft_strcmp(args[1], "~"))
+	{
+		/*
+			Mudar para home dir
+		*/
+		printf("Nao tem porra de argumentos!\n");
+		return (0);
+	}
 	if (chdir(args[1]))
 	{
-		ft_putstr_fd("Error: ", STDERR_FILENO);
+		/*
+			Retornar 1 caso nao exista path
+		*/
+		ft_putstr_fd("cd: ", STDERR_FILENO);
 		perror(args[1]);
 		free_str(oldpwd);
 		return (-1);

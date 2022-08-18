@@ -50,7 +50,7 @@
 # define RESET			"\e[0m"
 
 //invalid options or missing arguments EXIT_BUILTIN.
-# define EXIT_BUILTIN	2
+# define EXIT_BUILTIN	1
 # define EXIT_SYNTAX 	2
 # define EXIT_CMD_NFOUND 127
 # define EXIT_CMD_NEXEC	126
@@ -150,7 +150,7 @@ int		is_node_redir(t_node *node);
 int		is_node_pipe(t_node *node);
 int		is_node_cmd(t_node *node);
 int		is_node_hdoc(t_node *node);
-int		get_size_string_array(char **str);
+int		get_matrix_size(char **str);
 
 /* env_vars.c */
 t_env	*get_env_list(char **env);
@@ -169,7 +169,7 @@ char	*get_prompt_str(t_env *env);
 int		builtin_cd(char **args, t_env *env);
 
 /* builtins/cmd_echo.c */
-void	builtin_echo(char **matriz, int fd);
+int		builtin_echo(char **matriz, int fd);
 
 /* builtins/cmd_env.c */
 void	builtin_env(t_env firt_elem, int fd);

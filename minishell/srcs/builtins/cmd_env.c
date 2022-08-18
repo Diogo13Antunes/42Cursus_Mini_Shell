@@ -12,6 +12,10 @@
 
 #include "minishell.h"
 
+/*
+	dar return de 0
+*/
+
 void	builtin_env(t_env firt_elem, int fd)
 {
 	t_env	elem;

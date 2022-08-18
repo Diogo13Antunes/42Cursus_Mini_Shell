@@ -48,14 +48,15 @@ int	is_node_hdoc(t_node *node)
 	return (0);
 }
 
-int	get_size_string_array(char **str)
+int	get_matrix_size(char **matrix)
 {
 	int	i;
 
-	if (!str)
-		return (0);
 	i = 0;
-	while (str[i])
-		i++;
+	if (matrix)
+	{
+		while (matrix[i])
+			i++;
+	}
 	return (i);
 }

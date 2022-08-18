@@ -88,7 +88,7 @@ static char	**update_string_array(char **str, char *token)
 	}
 	else
 	{
-		arr_size = get_size_string_array(str);
+		arr_size = get_matrix_size(str);
 		new_arr = oom_guard(malloc((arr_size + 2) * sizeof(char *)));
 		i = -1;
 		while (str[++i])

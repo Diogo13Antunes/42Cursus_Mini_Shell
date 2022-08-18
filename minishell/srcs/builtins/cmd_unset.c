@@ -16,6 +16,10 @@
 #define IN_MID 2
 #define IN_BOT 3
 
+/*
+	unset PWD = SEGV
+*/
+
 void	ft_lstdelenv(t_env *lst)
 {
 	if (!lst)

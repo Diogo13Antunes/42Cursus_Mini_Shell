@@ -12,13 +12,15 @@
 
 #include "minishell.h"
 
-void	builtin_echo(char **matriz, int fd)
+int	builtin_echo(char **matriz, int fd)
 {
 	int	i;
 	int	flag;
 
 	i = 1;
 	flag = 0;
+	if (get_matrix_size(matriz) == 1)
+		return (0);
 	if (ft_strncmp("-n", matriz[1], 3) == 0)
 	{
 		i++;
@@ -33,5 +35,5 @@ void	builtin_echo(char **matriz, int fd)
 	}
 	if (flag != 1)
 		ft_putstr_fd("\n", fd);
-	return ;
+	return (0);
 }

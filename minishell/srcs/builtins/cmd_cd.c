@@ -41,7 +41,7 @@ char	*get_elemet_content(t_env *env, char *elemt_name)
 
 int	set_directory(t_env *env, char *path)
 {
-	char 	*pwd;
+	char	*pwd;
 	char	*oldpwd;
 
 	oldpwd = getcwd(NULL, 0);

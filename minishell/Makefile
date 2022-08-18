@@ -6,7 +6,7 @@
 #    By: dsilveri <dsilveri@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/27 10:55:19 by dsilveri          #+#    #+#              #
-#    Updated: 2022/07/26 14:58:01 by dsilveri         ###   ########.fr        #
+#    Updated: 2022/08/18 16:48:00 by dcandeia         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,6 +38,9 @@ all: $(NAME)
 $(NAME): $(SRCS_OBJS)
 	$(MAKE_LIBFT)
 	$(CC) $(SRCS_OBJS) $(LIBFT) -o $(NAME) $(LIBS) 
+
+norminette:
+	@./norm.sh
 
 clean:
 	$(CLEAN_LIBFT)

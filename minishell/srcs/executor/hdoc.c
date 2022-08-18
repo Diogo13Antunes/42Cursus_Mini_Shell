@@ -19,7 +19,7 @@ void	hdoc_exec(t_node *tree)
 	if (tree == NULL)
 		return ;
 	hdoc_exec(tree->left);
-	if (get_exit_status() != EXIT_CTRLC_SIGNAL 
+	if (get_exit_status() != EXIT_CTRLC_SIGNAL
 		&& is_node_hdoc(tree))
 		hdoc_exec2(tree);
 	hdoc_exec(tree->rigth);
@@ -43,10 +43,9 @@ static void	hdoc_exec2(t_node *node)
 			break ;
 		ft_putstr_fd(str, p.w);
 		ft_putstr_fd("\n", p.w);
-		free(str);	
+		free_str(str);
 	}
-	if (str)
-		free(str);
+	free_str(str);
 }
 
 /*

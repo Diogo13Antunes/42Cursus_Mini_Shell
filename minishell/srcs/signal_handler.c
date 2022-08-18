@@ -20,5 +20,5 @@ void config_signal(int signum, void (*f)())
     sa.sa_flags = 0;
     sa.sa_handler = f;
     if (sigaction(signum, &sa, NULL) == -1)
-        printf("signation error\n");
+    printf("signation error\n");
 }

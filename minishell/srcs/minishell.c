@@ -13,8 +13,6 @@
 #include "minishell.h"
 #include <signal.h> 
 
-static void test_parser(char *src);
-
 void get_new_prompt(int signum)
 {
     if (signum == SIGINT)
@@ -58,7 +56,7 @@ int main (int argc, char **argv, char **env)
             exit_code = get_exit_status();
         }
         free_tree(tree);
-        //print2D(tree);
+        // print2D(tree);
     }
 
     /*
@@ -70,23 +68,3 @@ int main (int argc, char **argv, char **env)
 
     return (0);
 }
-
-/*
-static void test_parser(char *src)
-{
-    char *str;
-
-    if (!src)
-    {
-        printf("nothing to parse\n");
-        return ;
-    }
-    str = get_next_token(src);
-    while (str)
-    {
-        printf("%s\n",str);
-        str = get_next_token(src);
-    }
-	return ;
-}
-*/

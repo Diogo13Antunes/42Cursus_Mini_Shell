@@ -35,45 +35,55 @@ void	set_env_pwd(t_env *env, char *pwd, char *option)
 	temp->full = create_full_env(temp->variable, temp->content);
 }
 
-int	builtin_cd(char **args, t_env *env)
+char	*get_elemet_content(t_env *env, char *elemt_name)
 {
-	char	*pwd;
-	char	*oldpwd;
-	t_env	*temp;
+	t_env	*elemt;
+	char	*elemt_cont;
 
-	temp = env;
+	elemt = exist_env_elem(env, elemt_name);
+	elemt_cont = elemt->content;
+	return (elemt_cont);
+}
+
+int	set_directory(t_env *env, char *path)
+{
+	char 	*pwd;
+	char	*oldpwd;
+
 	oldpwd = getcwd(NULL, 0);
 	if (oldpwd == NULL)
-		return (-1);
-	if (get_matrix_size(args) > 2)
-	{
-		printf("Too many args!\n");
 		return (1);
-	}
-	if (!args[1] || !ft_strcmp(args[1], "~"))
+	if (chdir(path))
 	{
-		/*
-			Mudar para home dir
-		*/
-		printf("Nao tem porra de argumentos!\n");
-		return (0);
-	}
-	if (chdir(args[1]))
-	{
-		/*
-			Retornar 1 caso nao exista path
-		*/
-		ft_putstr_fd("cd: ", STDERR_FILENO);
-		perror(args[1]);
 		free_str(oldpwd);
-		return (-1);
+		ft_putstr_fd("cd: ", STDERR_FILENO);
+		perror(path);
+		return (1);
 	}
 	pwd = getcwd(NULL, 0);
 	if (pwd == NULL)
-		return (-1);
-	set_env_pwd(temp, pwd, "PWD");
-	set_env_pwd(temp, oldpwd, "OLDPWD");
+		return (1);
+	set_env_pwd(env, pwd, "PWD");
+	set_env_pwd(env, oldpwd, "OLDPWD");
 	free_str(pwd);
 	free_str(oldpwd);
+	return (0);
+}
+
+int	builtin_cd(char **args, t_env *env)
+{
+	char	*path;
+
+	if (get_matrix_size(args) > 2)
+	{
+		ft_putstr_fd("cd: too many arguments\n", STDERR_FILENO);
+		return (EXIT_BUILTIN);
+	}
+	if (get_matrix_size(args) == 1 || !ft_strcmp(args[1], "~"))
+		path = get_elemet_content(env, "HOME");
+	else
+		path = args[1];
+	if (set_directory(env, path))
+		return (EXIT_BUILTIN);
 	return (0);
 }

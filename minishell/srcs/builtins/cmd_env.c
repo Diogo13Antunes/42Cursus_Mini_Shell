@@ -16,7 +16,7 @@
 	dar return de 0
 */
 
-void	builtin_env(t_env firt_elem, int fd)
+int	builtin_env(t_env firt_elem, int fd)
 {
 	t_env	elem;
 
@@ -35,4 +35,5 @@ void	builtin_env(t_env firt_elem, int fd)
 		ft_putstr_fd(elem.full, fd);
 		ft_putstr_fd("\n", fd);
 	}
+	return (0);
 }

@@ -20,8 +20,11 @@ int	builtin_echo(char **matriz, int fd)
 	i = 1;
 	flag = 0;
 	if (get_matrix_size(matriz) == 1)
+	{
+		ft_putstr_fd("\n", fd);
 		return (0);
-	if (ft_strncmp("-n", matriz[1], 3) == 0)
+	}
+	if (!ft_strncmp("-n", matriz[1], 3))
 	{
 		i++;
 		flag = 1;
@@ -33,7 +36,7 @@ int	builtin_echo(char **matriz, int fd)
 			ft_putstr_fd(" ", fd);
 		i++;
 	}
-	if (flag != 1)
+	if (!flag)
 		ft_putstr_fd("\n", fd);
 	return (0);
 }

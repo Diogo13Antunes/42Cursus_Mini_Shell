@@ -172,7 +172,7 @@ int		builtin_cd(char **args, t_env *env);
 int		builtin_echo(char **matriz, int fd);
 
 /* builtins/cmd_env.c */
-void	builtin_env(t_env firt_elem, int fd);
+int		builtin_env(t_env firt_elem, int fd);
 
 /* builtins/cmd_pwd.c */
 int		builtin_pwd(int fd);

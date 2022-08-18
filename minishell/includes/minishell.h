@@ -166,7 +166,6 @@ void	ft_lstadd_back_env(t_env **lst, t_env *new);
 char	*get_prompt_str(t_env *env);
 
 /* builtins/cmd_cd.c */
-void	free_str(char *str);
 int		builtin_cd(char **args, t_env *env);
 
 /* builtins/cmd_echo.c */
@@ -255,6 +254,7 @@ char	*get_cmd_path(char *cmd, t_env *env);
 
 /* utils2.c */
 void	free_matrix(char **m);
+void	free_str(char *str);
 
 /* signals_handler.c */
 int		signals_call(int choice);

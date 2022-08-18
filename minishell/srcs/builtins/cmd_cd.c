@@ -12,12 +12,6 @@
 
 #include "minishell.h"
 
-void	free_str(char *str)
-{
-	if (str)
-		free(str);
-}
-
 void	set_env_pwd(t_env *env, char *pwd, char *option)
 {
 	t_env	*temp;

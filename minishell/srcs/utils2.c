@@ -21,9 +21,14 @@ void	free_matrix(char **m)
 	i = 0;
 	while (m[i])
 	{
-		if (m[i])
-			free(m[i]);
+		free_str(m[i]);
 		i++;
 	}
 	free(m);
+}
+
+void	free_str(char *str)
+{
+	if (str)
+		free(str);
 }

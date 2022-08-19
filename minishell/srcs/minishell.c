@@ -6,7 +6,7 @@
 /*   By: dsilveri <dsilveri@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/29 18:42:18 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/08/17 11:27:35 by dsilveri         ###   ########.fr       */
+/*   Updated: 2022/08/19 10:40:05 by dsilveri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ int main (int argc, char **argv, char **env)
         config_signal(SIGINT, get_new_prompt);
 	    prompt = get_prompt_str(env_lst);
         str = readline(prompt);
+        if (!str)
+            builtin_exit();
         config_signal(SIGINT, SIG_IGN);
         if (str && str[0])
             add_history(str);

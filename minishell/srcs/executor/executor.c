@@ -6,7 +6,7 @@
 /*   By: dsilveri <dsilveri@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:52:46 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/08/17 11:54:53 by dsilveri         ###   ########.fr       */
+/*   Updated: 2022/08/19 11:20:42 by dsilveri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ int	execution(t_node *tree, t_env *env)
 	int		l_pid;
 	int 	pid;
 	int status;
+	int exit_code;
 
 	if (is_builtin_without_pipe(tree))
 	{
@@ -43,14 +44,21 @@ int	execution(t_node *tree, t_env *env)
 			hdoc_exec(tree);
 			config_signal(SIGINT, SIG_IGN);
 			close_hdoc(tree);
-			exit(get_exit_status());
+			exit(1);
 		}
 		else 
 		{
 			wait(&status);
 			if (WIFEXITED(status))
-				set_exit_status(WEXITSTATUS(status));
-			run_builtin_branch(tree, env);
+			{
+				exit_code = WEXITSTATUS(status);
+				if (exit_code == 1 || exit_code == 0)
+					set_exit_status(0);
+				else 
+					set_exit_status(exit_code);
+			}
+			if (exit_code == 1)
+				run_builtin_branch(tree, env);
 		}
 	}
 	else

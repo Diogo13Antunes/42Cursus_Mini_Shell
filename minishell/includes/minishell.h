@@ -6,7 +6,7 @@
 /*   By: dsilveri <dsilveri@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 10:57:16 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/08/20 23:15:56 by dsilveri         ###   ########.fr       */
+/*   Updated: 2022/08/21 17:36:06 by dsilveri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -269,5 +269,8 @@ void config_signal(int signum, void (*f)());
 void set_exit_status(int exit_status);
 int get_exit_status(void);
 void clear_exit_status(void);
+
+/* wait_cmds.c */
+void wait_cmds(int last_pid, int n_cmds);
 
 #endif

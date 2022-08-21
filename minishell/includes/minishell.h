@@ -6,7 +6,7 @@
 /*   By: dsilveri <dsilveri@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 10:57:16 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/08/17 11:26:05 by dsilveri         ###   ########.fr       */
+/*   Updated: 2022/08/20 23:15:56 by dsilveri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,11 +57,10 @@
 # define EXIT_FATAL_SIGNAL 128
 # define EXIT_CTRLC_SIGNAL 130
 
-//Signals defines
-# define SG_IGN 0
-# define SG_HD	1
-# define SG_RDL 2
-# define SG_DFL 3
+#define HDOC_SUCCESS		0
+#define HDOC_STOP_CTRL_C	1
+#define HDOC_STOP_CTRL_D	2
+
 
 typedef struct s_node
 {
@@ -128,7 +127,7 @@ void	add_new_node(t_node **tree, t_node *node);
 void	free_tree(t_node *tree);
 void	print_tree(t_node *root);
 void	print2D(t_node *root);
-int		execution(t_node *tree, t_env *env);
+void		execution(t_node *tree, t_env *env);
 void	print_node1(t_node *node);
 
 /* parser/utils_parser.c */
@@ -230,7 +229,8 @@ int		get_file_fd(t_node node);
 char	*token_parser(char *token, t_env *env, int exit_code);
 
 /* executor/hdoc.c */
-void	hdoc_exec(t_node *tree);
+//void	hdoc_exec(t_node *tree);
+int	hdoc_exec(t_node *tree);
 void	close_hdoc(t_node *tree);
 void	hdoc_redir(t_node *node);
 

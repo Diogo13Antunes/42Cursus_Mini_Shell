@@ -6,7 +6,7 @@
 /*   By: dsilveri <dsilveri@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 17:33:43 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/08/22 10:01:13 by dsilveri         ###   ########.fr       */
+/*   Updated: 2022/08/22 14:04:56 by dsilveri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static void	wait_last_cmd(int pid)
 {
 	int	status;
 
-	waitpid(pid, &status, 0); // verificar erros do wait
+	waitpid(pid, &status, 0);
 	if (WIFEXITED(status))
 		set_exit_status(WEXITSTATUS(status));
 	if (WIFSIGNALED(status))

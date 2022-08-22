@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   file_redir.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: diogoantunes <diogoantunes@student.42.f    +#+  +:+       +#+        */
+/*   By: dsilveri <dsilveri@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 10:57:02 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/08/15 12:48:29 by diogoantune      ###   ########.fr       */
+/*   Updated: 2022/08/22 12:38:45 by dsilveri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,13 +48,10 @@ int	get_file_fd(t_node node)
 	file = ((t_redir *)(node.data))->redir;
 	if (node.id == ID_IN_REDIR)
 		flag = O_RDONLY;
-	else
-	{
-		if (node.id == ID_OUT_REDIR)
-			flag = O_CREAT | O_WRONLY | O_TRUNC;
-		else if (node.id == ID_OUT_APPEND)
-			flag = O_CREAT | O_WRONLY | O_APPEND;
-	}
+	else if (node.id == ID_OUT_REDIR)
+		flag = O_CREAT | O_WRONLY | O_TRUNC;
+	else if (node.id == ID_OUT_APPEND)
+		flag = O_CREAT | O_WRONLY | O_APPEND;
 	fd = file_error3(open(file, flag, 0644), file);
 	return (fd);
 }

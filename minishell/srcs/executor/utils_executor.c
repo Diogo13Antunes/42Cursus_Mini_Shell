@@ -6,7 +6,7 @@
 /*   By: dsilveri <dsilveri@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 14:05:02 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/08/22 09:10:01 by dsilveri         ###   ########.fr       */
+/*   Updated: 2022/08/22 14:04:39 by dsilveri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	get_num_cmds(t_node *tree)
 	return (i);
 }
 
-int convert_hdoc_stop_code(int code)
+int	convert_hdoc_stop_code(int code)
 {
 	if (code == HDOC_STOP_CTRL_C)
 		return (EXIT_CTRLC_SIGNAL);

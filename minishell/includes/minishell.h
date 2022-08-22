@@ -6,7 +6,7 @@
 /*   By: dsilveri <dsilveri@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 10:57:16 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/08/21 17:36:06 by dsilveri         ###   ########.fr       */
+/*   Updated: 2022/08/22 09:23:31 by dsilveri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -243,6 +243,7 @@ void	run_builtin_branch(t_node *tree, t_env *env);
 /* executor/utils_executor.c */
 void	close_fd(int fd);
 int		get_num_cmds(t_node *tree);
+int convert_hdoc_stop_code(int code);
 
 /* parser/update_node.c */
 t_node	*update_node(t_node *node, char *token);
@@ -260,9 +261,9 @@ void	free_str(char *str);
 int		signals_call(int choice);
 
 /* signal_handler.c */
-//void config_signal(void (*f)(int));
-//void config_signal(void (*f)());
-void config_signal(int signum, void (*f)());
+void set_signal(int signum, void (*f)());
+void hdoc_interrupt_handler(int signum);
+void new_prompt_handler(int signum);
 
 
 /* exit_status.c */

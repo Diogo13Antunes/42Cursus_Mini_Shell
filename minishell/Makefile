@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: dsilveri <dsilveri@student.42.fr>          +#+  +:+       +#+         #
+#    By: dsilveri <dsilveri@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/27 10:55:19 by dsilveri          #+#    #+#              #
-#    Updated: 2022/08/18 16:48:00 by dcandeia         ###   ########.fr        #
+#    Updated: 2022/08/22 09:21:51 by dsilveri         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,7 +37,7 @@ all: $(NAME)
 
 $(NAME): $(SRCS_OBJS)
 	$(MAKE_LIBFT)
-	$(CC) $(SRCS_OBJS) $(LIBFT) -o $(NAME) $(LIBS) 
+	$(CC) $(CFLAGS) $(SRCS_OBJS) $(LIBFT) -o $(NAME) $(LIBS) 
 
 norminette:
 	@./norm.sh

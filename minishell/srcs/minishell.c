@@ -6,24 +6,13 @@
 /*   By: dsilveri <dsilveri@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/29 18:42:18 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/08/19 10:40:05 by dsilveri         ###   ########.fr       */
+/*   Updated: 2022/08/22 09:23:54 by dsilveri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <signal.h> 
 
-void get_new_prompt(int signum)
-{
-    if (signum == SIGINT)
-    {
-        rl_replace_line("", 0);
-        ft_putstr_fd("\n", STDOUT_FILENO);
-        rl_on_new_line();
-        rl_redisplay();
-        set_exit_status(EXIT_CTRLC_SIGNAL);
-    }
-}
 
 int main (int argc, char **argv, char **env)
 {
@@ -34,17 +23,17 @@ int main (int argc, char **argv, char **env)
     int exit_code;
     t_exit_status ex;
 
-    config_signal(SIGQUIT, SIG_IGN);
+    set_signal(SIGQUIT, SIG_IGN);
     exit_code = 0;
 	env_lst = get_env_list(env);
     while (1)
     {
-        config_signal(SIGINT, get_new_prompt);
+        set_signal(SIGINT, new_prompt_handler);
 	    prompt = get_prompt_str(env_lst);
         str = readline(prompt);
         if (!str)
             builtin_exit();
-        config_signal(SIGINT, SIG_IGN);
+        set_signal(SIGINT, SIG_IGN);
         if (str && str[0])
             add_history(str);
 		free(prompt);

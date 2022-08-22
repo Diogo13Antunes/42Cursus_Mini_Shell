@@ -6,72 +6,26 @@
 /*   By: dsilveri <dsilveri@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:52:46 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/08/21 17:38:10 by dsilveri         ###   ########.fr       */
+/*   Updated: 2022/08/22 10:23:02 by dsilveri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	exec_cmd_forks(t_node *root, t_env *env, int *l_pid);
-static void	exec(t_node *tree, t_env *env);
+static void	exec_main_fork(t_node *tree, t_env *env);
+static void	exec_cmds(t_node *root, t_env *env, int *l_pid);
+static void	exec_cmd_brunch(t_node *tree, t_env *env);
 static void	run_cmd(t_node node, t_env *env);
-
-
-void interrupt_hdoc_signal(int signum)
-{
-    if (signum == SIGINT)
-    {
-		close(STDIN_FILENO);
-		set_exit_status(EXIT_CTRLC_SIGNAL);
-		ft_putstr_fd("\n", STDOUT_FILENO);
-	}
-}
-
-int convert_hdoc_stop_code(int code)
-{
-	if (code == HDOC_STOP_CTRL_C)
-		return (EXIT_CTRLC_SIGNAL);
-	else
-		return (EXIT_SUCCESS);
-}
-
-void main_fork_exec(t_node *tree, t_env *env)
-{
-	int	last_pid;
-	int hdoc_error;
-
-	config_signal(SIGINT, interrupt_hdoc_signal);
-	hdoc_error = hdoc_exec(tree);
-	config_signal(SIGINT, SIG_IGN);
-	if (hdoc_error != HDOC_SUCCESS)
-	{
-		if (!is_builtin_without_pipe(tree))
-			exit(get_exit_status());
-		else 
-			exit(hdoc_error);
-	}
-	else if (!is_builtin_without_pipe(tree))
-	{
-		open_pipes(tree);
-		exec_cmd_forks(tree, env, &last_pid);
-		close_pipes(tree);
-		close_hdoc(tree);
-		//wait_cmds(get_num_cmds(tree), last_pid);
-		wait_cmds(last_pid, get_num_cmds(tree));
-		exit(get_exit_status());
-	}
-	exit(HDOC_SUCCESS);
-}
 
 void	execution(t_node *tree, t_env *env)
 {
 	int	pid;
-	int status;
-	int exit_code;
+	int	status;
+	int	exit_code;
 
 	pid = fork();
 	if (!pid)
-		main_fork_exec(tree, env);
+		exec_main_fork(tree, env);
 	else
 	{
 		wait(&status);
@@ -85,33 +39,57 @@ void	execution(t_node *tree, t_env *env)
 	}
 }
 
-static void	exec_cmd_forks(t_node *root, t_env *env, int *l_pid)
+static void	exec_main_fork(t_node *tree, t_env *env)
+{
+	int	last_pid;
+	int	hdoc_error;
+
+	set_signal(SIGINT, hdoc_interrupt_handler);
+	hdoc_error = hdoc_exec(tree);
+	set_signal(SIGINT, SIG_IGN);
+	if (hdoc_error != HDOC_SUCCESS)
+	{
+		if (!is_builtin_without_pipe(tree))
+			exit(get_exit_status());
+		else
+			exit(hdoc_error);
+	}
+	else if (!is_builtin_without_pipe(tree))
+	{
+		open_pipes(tree);
+		exec_cmds(tree, env, &last_pid);
+		close_pipes(tree);
+		close_hdoc(tree);
+		wait_cmds(last_pid, get_num_cmds(tree));
+		exit(get_exit_status());
+	}
+	exit(HDOC_SUCCESS);
+}
+
+static void	exec_cmds(t_node *root, t_env *env, int *l_pid)
 {
 	int	pid;
 
 	if (!root)
 		return ;
-	exec_cmd_forks(root->left, env, l_pid);
+	exec_cmds(root->left, env, l_pid);
 	if (root->left == NULL)
 	{
 		pid = fork();
 		if (pid)
 			*l_pid = pid;
 		if (!(pid))
-		{
-			config_signal(SIGINT, SIG_DFL);
-			config_signal(SIGQUIT, SIG_DFL);
-			exec(root, env);
-			exit(0);
-		}
+			exec_cmd_brunch(root, env);
 	}
-	exec_cmd_forks(root->rigth, env, l_pid);
+	exec_cmds(root->rigth, env, l_pid);
 }
 
-static void	exec(t_node *tree, t_env *env)
+static void	exec_cmd_brunch(t_node *tree, t_env *env)
 {
 	t_node	*node;
 
+	set_signal(SIGINT, SIG_DFL);
+	set_signal(SIGQUIT, SIG_DFL);
 	node = tree;
 	pipe_redir(node);
 	while (node && !is_node_pipe((node)))
@@ -124,6 +102,7 @@ static void	exec(t_node *tree, t_env *env)
 			run_cmd(*node, env);
 		node = node->prev;
 	}
+	exit(EXIT_SUCCESS);
 }
 
 static void	run_cmd(t_node node, t_env *env)

@@ -61,9 +61,12 @@ static void	exec_main_fork(t_node *tree, t_env *env)
 		close_pipes(tree);
 		close_hdoc(tree);
 		wait_cmds(last_pid, get_num_cmds(tree));
+		free_tree(tree);
+		free_env_lst(env);
 		exit(get_exit_status());
 	}
 	free_tree(tree);
+	free_env_lst(env);
 	exit(HDOC_SUCCESS);
 }
 

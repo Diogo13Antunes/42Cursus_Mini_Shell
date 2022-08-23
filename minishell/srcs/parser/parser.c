@@ -19,16 +19,17 @@ t_node	*parser(char *src, t_env *env, int *exit_code)
 {
 	char	*token;
 	t_node	*tree;
-	int		i;
+	int		reset;
 
 	tree = NULL;
-	i = 1;
+	reset = 1;
 	while (1)
 	{
-		token = get_next_token(src, i);
+		token = get_next_token(src, reset);
 		if (is_syntax_error(tree, token))
 		{
-			// fazer free da tree
+			free_tree(tree);
+			free(token);
 			*exit_code = EXIT_SYNTAX;
 			return (NULL);
 		}
@@ -38,7 +39,7 @@ t_node	*parser(char *src, t_env *env, int *exit_code)
 			token = token_parser(token, env, *exit_code);
 		create_ast(&tree, token, env);
 		free(token);
-		i = 0;
+		reset = 0;
 	}
 	return (tree);
 }

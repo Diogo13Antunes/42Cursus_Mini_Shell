@@ -26,11 +26,21 @@ void	free_tree(t_node *tree)
 static void	free_node(t_node *node)
 {
 	if (is_node_hdoc(node))
-		free(((t_hdoc *) node->data)->end);
+	{
+		if (node->data)
+			free_str(((t_hdoc *) node->data)->end);
+	}
 	else if (is_node_redir(node))
-		free(((t_redir *) node->data)->redir);
+	{
+		if (node->data)
+			free_str(((t_redir *) node->data)->redir);
+	}
 	else if (is_node_cmd(node))
-		free_matrix(((t_cmd *) node->data)->cmd);
-	free(node->data);
+	{
+		if (node->data)
+			free_matrix(((t_cmd *) node->data)->cmd);
+	}
+	if (node->data)
+		free(node->data);
 	free(node);
 }

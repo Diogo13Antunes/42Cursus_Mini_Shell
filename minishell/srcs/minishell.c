@@ -58,6 +58,7 @@ int main (int argc, char **argv, char **env)
 }
 
 
+
 // teste free memory
 /*
 int main (int argc, char **argv, char **env)
@@ -74,15 +75,15 @@ int main (int argc, char **argv, char **env)
 	env_lst = get_env_list(env);
 
 
-    str = ft_calloc(sizeof(char), 3);
+    str = ft_calloc(sizeof(char), 20);
     ft_strcat(str, "ls");
 
 
     //set_signal(SIGINT, new_prompt_handler);
     //prompt = get_prompt_str(env_lst);
     //str = readline(prompt);
-    if (!str)
-        builtin_exit();
+    //if (!str)
+        //builtin_exit();
     //set_signal(SIGINT, SIG_IGN);
     //if (str && str[0])
     //    add_history(str);
@@ -95,12 +96,12 @@ int main (int argc, char **argv, char **env)
         clear_exit_status();
         execution(tree, env_lst);
         exit_code = get_exit_status();
+        free_tree(tree);
     }
-    free_tree(tree);
     free_env_lst(env_lst);
    
-
     return (0);
 }
 */
+
 

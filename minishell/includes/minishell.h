@@ -160,6 +160,7 @@ char	*create_full_env(char *var, char *cont);
 int		env_lst_size(t_env *env);
 int		find_char(char *str, char c);
 void	ft_lstadd_back_env(t_env **lst, t_env *new);
+void	free_env_lst(t_env	*env);
 
 /* get_prompt.c */
 char	*get_prompt_str(t_env *env);

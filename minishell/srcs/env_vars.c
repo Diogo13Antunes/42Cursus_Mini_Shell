@@ -17,12 +17,15 @@ void	update_shlvl(t_env *shlvl)
 	int		nlevel;
 
 	if (shlvl->content)
+	{
 		nlevel = ft_atoi(shlvl->content) + 1;
-	free(shlvl->content);
+		free(shlvl->content);
+	}
 	shlvl->content = ft_itoa(nlevel);
 	if (shlvl->full)
 		free(shlvl->full);
 	create_full_env(shlvl->variable, shlvl->content);
+	shlvl->full = create_full_env(shlvl->variable, shlvl->content);
 }
 
 int	env_lst_size(t_env *env)
@@ -82,7 +85,10 @@ char	*create_full_env(char *var, char *cont)
 	char	*final_str;
 	int		len;
 
-	len = ft_strlen(var) + ft_strlen(cont) + 2;
+	if (cont)
+		len = ft_strlen(var) + ft_strlen(cont) + 2;
+	else
+		len = ft_strlen(var) + 1;
 	final_str = ft_calloc(sizeof(char), len);
 	ft_strlcat(final_str, var, len);
 	if (cont)
@@ -177,38 +183,44 @@ t_env	*exist_env_elem(t_env *env, const char *elem_name)
 t_env	*get_env_list(char **env)
 {
 	int		i;
+	char	*old_pwd;
 	t_env	*list;
 
 	i = 0;
 	list = NULL;
 	while (env[i])
 	{
+		//printf(env[i]);
 		ft_lstadd_back_env(&list, get_new_env_elem(env[i]));
 		i++;
 	}
 	if (!exist_env_elem(list, "OLDPWD"))
-		ft_lstadd_back_env(&list, create_new_env_elem("OLDPWD", 0));
+	{
+		old_pwd = ft_calloc(sizeof(char), 7);
+		ft_strcat(old_pwd, "OLDPWD");
+		ft_lstadd_back_env(&list, create_new_env_elem(old_pwd, 0));
+	}
 	if (exist_env_elem(list, "SHLVL"))
 		update_shlvl(exist_env_elem(list, "SHLVL"));
 	return (list);
 }
 
-void	free_env_lst(t_env	**env)
+void	free_env_lst(t_env	*env)
 {
 	t_env	*next;
 
-	if (!(*env))
+	if (!env)
 		return ;
-	while (*env)
+	while (env)
 	{
-		next = (*env)->next;
-		if ((*env)->variable)
-			free((*env)->variable);
-		if ((*env)->content)
-			free((*env)->content);
-		if ((*env)->full)
-			free((*env)->full);
-		free((*env));
-		*env = next;
+		next = env->next;
+		if (env->variable)
+			free(env->variable);
+		if (env->content)
+			free(env->content);
+		if (env->full)
+			free(env->full);
+		free(env);
+		env = next;
 	}
 }

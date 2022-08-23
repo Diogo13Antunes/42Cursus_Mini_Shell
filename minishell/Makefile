@@ -24,7 +24,7 @@ SRCS_OBJS		= $(SRCS:.c=.o)
 
 CC				= gcc 
 #CFLAGS			= -Wall -Wextra -Werror -fsanitize=address -I ./includes
-CFLAGS			= -I ./includes
+CFLAGS			= -g -I ./includes
 LIBS			= -lreadline
 RM				= rm -f
 

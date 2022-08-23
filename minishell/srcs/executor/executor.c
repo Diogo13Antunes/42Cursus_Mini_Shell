@@ -63,6 +63,7 @@ static void	exec_main_fork(t_node *tree, t_env *env)
 		wait_cmds(last_pid, get_num_cmds(tree));
 		exit(get_exit_status());
 	}
+	free_tree(tree);
 	exit(HDOC_SUCCESS);
 }
 
@@ -102,6 +103,7 @@ static void	exec_cmd_brunch(t_node *tree, t_env *env)
 			run_cmd(*node, env);
 		node = node->prev;
 	}
+	free_tree(tree);
 	exit(EXIT_SUCCESS);
 }
 

@@ -6,7 +6,7 @@
 /*   By: dsilveri <dsilveri@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/29 18:42:18 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/08/23 15:28:44 by dsilveri         ###   ########.fr       */
+/*   Updated: 2022/08/23 15:41:27 by dsilveri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,6 @@ int main (int argc, char **argv, char **env)
 
     return (0);
 }
-
-
 
 // teste free memory
 /*

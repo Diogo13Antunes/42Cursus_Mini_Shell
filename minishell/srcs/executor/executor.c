@@ -6,7 +6,7 @@
 /*   By: dsilveri <dsilveri@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:52:46 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/08/23 15:20:52 by dsilveri         ###   ########.fr       */
+/*   Updated: 2022/08/23 17:13:45 by dsilveri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,10 @@ static void	run_cmd(t_node node, t_env *env)
 
 	cmd = ((t_cmd *)(node.data))->cmd;
 	if (is_builtin(cmd[0]))
-		exec_builtin(cmd, env, STDOUT_FILENO);
+	{
+		if (ft_strcmp("exit", cmd[0]))
+			exec_builtin(cmd, env, STDOUT_FILENO);
+	}	
 	else
 	{
 		full_path = get_cmd_path(cmd[0], env);

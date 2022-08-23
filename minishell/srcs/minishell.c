@@ -14,7 +14,6 @@
 #include <signal.h> 
 
 
-
 int main (int argc, char **argv, char **env)
 {
     char *str;
@@ -57,8 +56,6 @@ int main (int argc, char **argv, char **env)
 
     return (0);
 }
-
-
 
 
 // teste free memory
@@ -106,3 +103,4 @@ int main (int argc, char **argv, char **env)
     return (0);
 }
 */
+

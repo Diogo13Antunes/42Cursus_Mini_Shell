@@ -24,7 +24,6 @@ void	update_shlvl(t_env *shlvl)
 	shlvl->content = ft_itoa(nlevel);
 	if (shlvl->full)
 		free(shlvl->full);
-	create_full_env(shlvl->variable, shlvl->content);
 	shlvl->full = create_full_env(shlvl->variable, shlvl->content);
 }
 

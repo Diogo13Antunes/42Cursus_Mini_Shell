@@ -6,7 +6,7 @@
 /*   By: dsilveri <dsilveri@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:52:46 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/08/22 10:23:02 by dsilveri         ###   ########.fr       */
+/*   Updated: 2022/08/23 15:20:52 by dsilveri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,9 @@ static void	exec_main_fork(t_node *tree, t_env *env)
 	if (hdoc_error != HDOC_SUCCESS)
 	{
 		if (!is_builtin_without_pipe(tree))
-			exit(get_exit_status());
+			ft_exit(get_exit_status());
 		else
-			exit(hdoc_error);
+			ft_exit(hdoc_error);
 	}
 	else if (!is_builtin_without_pipe(tree))
 	{
@@ -61,13 +61,9 @@ static void	exec_main_fork(t_node *tree, t_env *env)
 		close_pipes(tree);
 		close_hdoc(tree);
 		wait_cmds(last_pid, get_num_cmds(tree));
-		free_tree(tree);
-		free_env_lst(env);
-		exit(get_exit_status());
+		ft_exit(get_exit_status());
 	}
-	free_tree(tree);
-	free_env_lst(env);
-	exit(HDOC_SUCCESS);
+	ft_exit(HDOC_SUCCESS);
 }
 
 static void	exec_cmds(t_node *root, t_env *env, int *l_pid)
@@ -106,8 +102,7 @@ static void	exec_cmd_brunch(t_node *tree, t_env *env)
 			run_cmd(*node, env);
 		node = node->prev;
 	}
-	free_tree(tree);
-	exit(EXIT_SUCCESS);
+	ft_exit(EXIT_SUCCESS);
 }
 
 static void	run_cmd(t_node node, t_env *env)

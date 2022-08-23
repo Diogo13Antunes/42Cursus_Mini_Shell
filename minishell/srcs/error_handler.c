@@ -3,16 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   error_handler.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: diogoantunes <diogoantunes@student.42.f    +#+  +:+       +#+        */
+/*   By: dsilveri <dsilveri@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 10:16:01 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/08/15 12:48:29 by diogoantune      ###   ########.fr       */
+/*   Updated: 2022/08/23 14:45:42 by dsilveri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 void	*oom_guard(void *p)
+{
+	if (!p)
+	{
+		ft_putstr_fd(PROGRAM_NAME, STDERR_FILENO);
+		ft_putstr_fd(": Out of memory!\n", STDERR_FILENO);
+		exit(EXIT_FAILURE);
+	}
+	return (p);
+}
+
+void	*oom_guard2(void *p)
 {
 	if (!p)
 	{

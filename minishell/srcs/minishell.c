@@ -6,7 +6,7 @@
 /*   By: dsilveri <dsilveri@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/29 18:42:18 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/08/22 09:23:54 by dsilveri         ###   ########.fr       */
+/*   Updated: 2022/08/23 15:28:44 by dsilveri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,11 @@ int main (int argc, char **argv, char **env)
     int exit_code;
     t_exit_status ex;
 
+    init_alloc_mem();
     set_signal(SIGQUIT, SIG_IGN);
     exit_code = 0;
 	env_lst = get_env_list(env);
+    save_alloc_mem(env_lst, TYPE_ENV);
     while (1)
     {
         set_signal(SIGINT, new_prompt_handler);
@@ -39,15 +41,17 @@ int main (int argc, char **argv, char **env)
 		free(prompt);
         exit_code = get_exit_status();
         tree = parser(str, env_lst, &exit_code);
+        save_alloc_mem(tree, TYPE_TREE);
         free(str);
         if (tree)
         {
             clear_exit_status();
             execution(tree, env_lst);
             exit_code = get_exit_status();
+            free_tree(tree);
         }
-        free_tree(tree);
     }
+    free_alloc_mem();
     
     //teste para verificar se a tree é corretamente limpa 
     //tree = parser("<in ls -la | cat | wc -l >out", NULL, exit_code);
@@ -70,13 +74,16 @@ int main (int argc, char **argv, char **env)
     int exit_code;
     t_exit_status ex;
 
+    init_alloc_mem();
+
     set_signal(SIGQUIT, SIG_IGN);
     exit_code = 0;
 	env_lst = get_env_list(env);
+    save_alloc_mem(env_lst, TYPE_ENV);
 
 
-    str = ft_calloc(sizeof(char), 20);
-    ft_strcat(str, "ls");
+    str = ft_calloc(sizeof(char), 100);
+    ft_strcat(str, "env | grep HOME");
 
 
     //set_signal(SIGINT, new_prompt_handler);
@@ -90,16 +97,21 @@ int main (int argc, char **argv, char **env)
     //free(prompt);
     exit_code = get_exit_status();
     tree = parser(str, env_lst, &exit_code);
+    save_alloc_mem(tree, TYPE_TREE);
     free(str);
     if (tree)
     {
         clear_exit_status();
         execution(tree, env_lst);
         exit_code = get_exit_status();
-        free_tree(tree);
+        //free_tree(tree);
     }
-    free_env_lst(env_lst);
-   
+    //free_env_lst(env_lst);
+
+    free_alloc_mem();
+
+   // --leak-check=full
+   // --leak-check=full --show-leak-kinds=all
     return (0);
 }
 */

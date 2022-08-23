@@ -6,7 +6,7 @@
 /*   By: dsilveri <dsilveri@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 10:57:16 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/08/22 09:23:31 by dsilveri         ###   ########.fr       */
+/*   Updated: 2022/08/23 15:07:56 by dsilveri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,9 @@
 #define HDOC_STOP_CTRL_C	1
 #define HDOC_STOP_CTRL_D	2
 
+#define NO_TYPE     0
+#define TYPE_TREE   1
+#define TYPE_ENV    2
 
 typedef struct s_node
 {
@@ -106,6 +109,12 @@ typedef struct s_env
 	char			*full;
 	struct s_env	*next;
 }				t_env;
+
+typedef struct s_alloc_mem
+{
+	t_env	*env;
+	t_node	*tree;
+}	t_alloc_mem;
 
 /* get_next_token.c */
 char	*get_next_token(char *src, int reset);
@@ -195,6 +204,7 @@ void	builtin_exit(void);
 
 /* error_handler.c */
 void	*oom_guard(void *p);
+void	*oom_guard2(void *p);
 /*
 void	cmd_not_found_error(char *cmd_path, char *cmd);
 void	cmd_not_found_error2(int err, char *cmd, char *str);
@@ -257,6 +267,7 @@ char	*get_cmd_path(char *cmd, t_env *env);
 /* utils2.c */
 void	free_matrix(char **m);
 void	free_str(char *str);
+void ft_exit(int status);
 
 /* signals_handler.c */
 int		signals_call(int choice);
@@ -274,5 +285,10 @@ void clear_exit_status(void);
 
 /* wait_cmds.c */
 void wait_cmds(int last_pid, int n_cmds);
+
+/* alloc_mem.c */
+void	init_alloc_mem(void);
+void	save_alloc_mem(void *mem, int type);
+void	free_alloc_mem(void);
 
 #endif

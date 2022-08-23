@@ -6,7 +6,7 @@
 /*   By: dsilveri <dsilveri@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 10:57:16 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/08/23 15:07:56 by dsilveri         ###   ########.fr       */
+/*   Updated: 2022/08/23 16:16:08 by dsilveri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -289,6 +289,6 @@ void wait_cmds(int last_pid, int n_cmds);
 /* alloc_mem.c */
 void	init_alloc_mem(void);
 void	save_alloc_mem(void *mem, int type);
-void	free_alloc_mem(void);
+void	free_all_alloc_mem(void);
 
 #endif

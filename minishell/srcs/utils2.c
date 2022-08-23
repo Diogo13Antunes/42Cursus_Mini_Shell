@@ -6,7 +6,7 @@
 /*   By: dsilveri <dsilveri@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 16:59:11 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/08/23 15:07:40 by dsilveri         ###   ########.fr       */
+/*   Updated: 2022/08/23 16:16:08 by dsilveri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	free_str(char *str)
 
 void ft_exit(int status)
 {
-	free_alloc_mem();
+	free_all_alloc_mem();
 	exit(status);
 }
 

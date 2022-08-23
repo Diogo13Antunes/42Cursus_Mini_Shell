@@ -6,7 +6,7 @@
 /*   By: dsilveri <dsilveri@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 14:27:16 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/08/23 14:46:46 by dsilveri         ###   ########.fr       */
+/*   Updated: 2022/08/23 16:15:47 by dsilveri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	save_alloc_mem(void *mem, int type)
 	alloc_mem(mem, type);
 }
 
-void	free_alloc_mem(void)
+void	free_all_alloc_mem(void)
 {
 	t_alloc_mem	*mem;
 
@@ -35,6 +35,7 @@ void	free_alloc_mem(void)
 		free_tree(mem->tree);
 	if (mem)
 		free(mem);
+	rl_clear_history();
 }
 
 static t_alloc_mem	*alloc_mem(void *elem, int type)

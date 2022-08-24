@@ -6,7 +6,7 @@
 /*   By: dsilveri <dsilveri@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 09:43:04 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/08/16 19:07:04 by dsilveri         ###   ########.fr       */
+/*   Updated: 2022/08/24 12:31:08 by dsilveri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ t_pipe	open_pipe(void)
 	t_pipe	p;
 	int		fd_p[2];
 
-	pipe(fd_p);
+	sys_error(pipe(fd_p), "pipe");
 	p.r = fd_p[0];
 	p.w = fd_p[1];
 	return (p);
@@ -39,7 +39,7 @@ void	open_pipes(t_node *tree)
 	open_pipes(tree->left);
 	if (is_node_pipe(tree))
 	{
-		pipe(fd_p);
+		sys_error(pipe(fd_p), "pipe");
 		p = oom_guard(malloc(sizeof(t_pipe)));
 		if (!p)
 			return ;
@@ -81,14 +81,14 @@ void	pipe_redir(t_node *node)
 		{
 			p = (t_pipe *)(node->data);
 			if (node->left == buff)
-				dup2(p->w, STDOUT_FILENO);
+				sys_error(dup2(p->w, STDOUT_FILENO), "dup2");
 			else if (node->rigth == buff)
 			{
-				dup2(p->r, STDIN_FILENO);
+				sys_error(dup2(p->r, STDIN_FILENO), "dup2");
 				if (node->prev)
 				{
 					p = (t_pipe *)(node->prev->data);
-					dup2(p->w, STDOUT_FILENO);
+					sys_error(dup2(p->w, STDOUT_FILENO), "dup2");
 				}
 			}
 			close_pipes(node);

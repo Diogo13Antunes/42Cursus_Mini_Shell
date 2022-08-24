@@ -6,7 +6,7 @@
 /*   By: dsilveri <dsilveri@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 10:57:16 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/08/23 16:16:08 by dsilveri         ###   ########.fr       */
+/*   Updated: 2022/08/24 10:02:56 by dsilveri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -214,8 +214,8 @@ int		file_error3(int err, char *file, char *str);
 void	directory_error(char *path, char *file);*/
 void	cmd_not_found_error(char *cmd_path, char *cmd);
 void	directory_error(char *path, char *file);
-int		sys_error(int err, char *file);
-int		sys_error2(int err, char *msg, char *file);
+int		sys_error(int err, char *resource);
+int		sys_error2(int err, char *resource);
 int		file_error(int err, char *file);
 int		file_error3(int err, char *file);
 int		cmd_path_error(int err, char *msg, char *file);

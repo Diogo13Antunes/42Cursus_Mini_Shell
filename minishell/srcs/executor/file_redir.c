@@ -6,7 +6,7 @@
 /*   By: dsilveri <dsilveri@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 10:57:02 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/08/22 12:38:45 by dsilveri         ###   ########.fr       */
+/*   Updated: 2022/08/24 10:15:46 by dsilveri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,9 @@ void	file_redir(t_node node)
 		else if (node.id == ID_OUT_APPEND)
 			flag = O_CREAT | O_WRONLY | O_APPEND;
 	}
-	file_fd = file_error(open(file, flag, 0644), file);
-	dup2(file_fd, std_fd);
-	close(file_fd);
+	file_fd = sys_error(open(file, flag, 0644), file);
+	sys_error(dup2(file_fd, std_fd), "dup2");
+	sys_error(close(file_fd), "close");
 }
 
 int	get_file_fd(t_node node)
@@ -51,7 +51,7 @@ int	get_file_fd(t_node node)
 	else if (node.id == ID_OUT_REDIR)
 		flag = O_CREAT | O_WRONLY | O_TRUNC;
 	else if (node.id == ID_OUT_APPEND)
-		flag = O_CREAT | O_WRONLY | O_APPEND;
-	fd = file_error3(open(file, flag, 0644), file);
+		flag = O_CREAT | O_WRONLY | O_APPEND;	
+	fd = sys_error2(open(file, flag, 0644), file);
 	return (fd);
 }

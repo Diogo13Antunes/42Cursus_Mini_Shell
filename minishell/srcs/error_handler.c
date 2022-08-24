@@ -6,7 +6,7 @@
 /*   By: dsilveri <dsilveri@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 10:16:01 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/08/23 15:47:05 by dsilveri         ###   ########.fr       */
+/*   Updated: 2022/08/24 10:03:16 by dsilveri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,43 +54,6 @@ void	directory_error(char *path, char *file)
 	}
 }
 
-int	sys_error(int err, char *file)
-{
-	if (err)
-	{
-		print_msg_error(strerror(errno), file);
-		ft_exit(EXIT_FAILURE);
-	}
-	return (err);
-}
-
-int	file_error(int err, char *file)
-{
-	if (err == -1)
-	{
-		print_msg_error(strerror(errno), file);
-		ft_exit(EXIT_FAILURE);
-	}
-	return (err);
-}
-
-int	sys_error2(int err, char *msg, char *file)
-{
-	if (err == -1)
-	{
-		print_msg_error(msg, file);
-		ft_exit(EXIT_FAILURE);
-	}
-	return (err);
-}
-
-int	file_error3(int err, char *file)
-{
-	if (err == -1)
-		print_msg_error(strerror(errno), file);
-	return (err);
-}
-
 void	cmd_not_found_error(char *cmd_path, char *cmd)
 {
 	if (!cmd_path || !cmd)
@@ -107,5 +70,45 @@ int	cmd_path_error(int err, char *msg, char *file)
 		print_msg_error(msg, file);
 		ft_exit(EXIT_CMD_NEXEC);
 	}
+	return (err);
+}
+
+
+
+
+
+
+int	file_error(int err, char *file)
+{
+	if (err == -1)
+	{
+		print_msg_error(strerror(errno), file);
+		ft_exit(EXIT_FAILURE);
+	}
+	return (err);
+}
+
+int	file_error3(int err, char *file)
+{
+	if (err == -1)
+		print_msg_error(strerror(errno), file);
+	return (err);
+}
+
+
+int	sys_error(int err, char *resource)
+{
+	if (err == -1)
+	{
+		print_msg_error(strerror(errno), resource);
+		ft_exit(EXIT_FAILURE);
+	}
+	return (err);
+}
+
+int	sys_error2(int err, char *resource)
+{
+	if (err == -1)
+		print_msg_error(strerror(errno), resource);
 	return (err);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print_error.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: diogoantunes <diogoantunes@student.42.f    +#+  +:+       +#+        */
+/*   By: dsilveri <dsilveri@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 10:47:19 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/08/15 12:48:29 by diogoantune      ###   ########.fr       */
+/*   Updated: 2022/08/24 09:06:33 by dsilveri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,11 @@ void	print_msg_error(char *error, char *str)
 	msg = oom_guard(ft_calloc(msg_size, sizeof(char)));
 	ft_strcat(msg, PROGRAM_NAME);
 	ft_strcat(msg, ": ");
-	ft_strcat(msg, str);
-	ft_strcat(msg, ": ");
+	if (str)
+	{
+		ft_strcat(msg, str);
+		ft_strcat(msg, ": ");
+	}
 	ft_strcat(msg, error);
 	ft_strcat(msg, "\n");
 	ft_putstr_fd(msg, STDERR_FILENO);

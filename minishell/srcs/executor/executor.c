@@ -6,7 +6,7 @@
 /*   By: dsilveri <dsilveri@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:52:46 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/08/23 17:13:45 by dsilveri         ###   ########.fr       */
+/*   Updated: 2022/08/24 09:13:03 by dsilveri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ void	execution(t_node *tree, t_env *env)
 	int	exit_code;
 
 	pid = fork();
+	if(pid == -1)
+		print_msg_error(strerror(errno), "fork");
 	if (!pid)
 		exec_main_fork(tree, env);
 	else

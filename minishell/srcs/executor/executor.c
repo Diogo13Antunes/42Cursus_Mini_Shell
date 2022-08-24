@@ -6,7 +6,7 @@
 /*   By: dsilveri <dsilveri@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:52:46 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/08/24 09:13:03 by dsilveri         ###   ########.fr       */
+/*   Updated: 2022/08/24 17:51:02 by dsilveri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,9 @@ static void	exec_main_fork(t_node *tree, t_env *env);
 static void	exec_cmds(t_node *root, t_env *env, int *l_pid);
 static void	exec_cmd_brunch(t_node *tree, t_env *env);
 static void	run_cmd(t_node node, t_env *env);
+
+
+//ls > out | ls | grep machi
 
 void	execution(t_node *tree, t_env *env)
 {
@@ -60,8 +63,9 @@ static void	exec_main_fork(t_node *tree, t_env *env)
 	{
 		open_pipes(tree);
 		exec_cmds(tree, env, &last_pid);
-		close_pipes(tree);
-		close_hdoc(tree);
+		//close_pipes(tree);
+		//close_hdoc(tree);
+		close_hdoc_and_pipe(tree);
 		wait_cmds(last_pid, get_num_cmds(tree));
 		ft_exit(get_exit_status());
 	}
@@ -97,7 +101,7 @@ static void	exec_cmd_brunch(t_node *tree, t_env *env)
 	while (node && !is_node_pipe((node)))
 	{
 		if (is_node_hdoc(node))
-			hdoc_redir(node);
+			hdoc_redir(node); // verificar se fecha os hdoc
 		else if (is_node_redir(node))
 			file_redir(*node);
 		else if (is_node_cmd(node))

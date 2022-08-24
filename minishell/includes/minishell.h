@@ -6,7 +6,7 @@
 /*   By: dsilveri <dsilveri@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 10:57:16 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/08/24 10:02:56 by dsilveri         ###   ########.fr       */
+/*   Updated: 2022/08/24 16:08:04 by dsilveri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -255,6 +255,7 @@ void	run_builtin_branch(t_node *tree, t_env *env);
 void	close_fd(int fd);
 int		get_num_cmds(t_node *tree);
 int convert_hdoc_stop_code(int code);
+void close_hdoc_and_pipe(t_node *tree);
 
 /* parser/update_node.c */
 t_node	*update_node(t_node *node, char *token);

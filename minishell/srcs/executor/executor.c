@@ -6,7 +6,7 @@
 /*   By: dsilveri <dsilveri@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:52:46 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/08/24 17:51:02 by dsilveri         ###   ########.fr       */
+/*   Updated: 2022/08/24 18:10:35 by dsilveri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ static void	exec_main_fork(t_node *tree, t_env *env)
 	set_signal(SIGINT, SIG_IGN);
 	if (hdoc_error != HDOC_SUCCESS)
 	{
+		close_hdoc(tree);
 		if (!is_builtin_without_pipe(tree))
 			ft_exit(get_exit_status());
 		else
@@ -63,9 +64,8 @@ static void	exec_main_fork(t_node *tree, t_env *env)
 	{
 		open_pipes(tree);
 		exec_cmds(tree, env, &last_pid);
-		//close_pipes(tree);
-		//close_hdoc(tree);
-		close_hdoc_and_pipe(tree);
+		close_pipes(tree);
+		close_hdoc(tree);
 		wait_cmds(last_pid, get_num_cmds(tree));
 		ft_exit(get_exit_status());
 	}

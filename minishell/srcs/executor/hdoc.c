@@ -6,7 +6,7 @@
 /*   By: dsilveri <dsilveri@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 18:41:07 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/08/24 12:13:27 by dsilveri         ###   ########.fr       */
+/*   Updated: 2022/08/24 18:39:17 by dsilveri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,10 @@ void	hdoc_redir(t_node *node)
 
 	p = ((t_hdoc *)(node->data))->p;
 	sys_error(dup2(p.r, STDIN_FILENO), "dup2");
-	close_pipe(p);
+	while (node->prev)
+		node = node->prev;
+	close_hdoc(node);
+	//close_pipe(p);
 }
 
 static int	hdoc_exec2(t_node *node)

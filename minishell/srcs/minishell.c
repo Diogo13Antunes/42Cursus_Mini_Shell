@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsilveri <dsilveri@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: dsilveri <dsilveri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/29 18:42:18 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/08/24 15:40:34 by dsilveri         ###   ########.fr       */
+/*   Updated: 2022/08/25 15:18:16 by dsilveri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <signal.h> 
 
+//valgrind --leak-check=full --show-leak-kinds=all  ./minishell
 
 int main (int argc, char **argv, char **env)
 {
@@ -34,7 +35,10 @@ int main (int argc, char **argv, char **env)
 	    prompt = get_prompt_str(env_lst);
         str = readline(prompt);
         if (!str)
+        {
+            free(prompt);
             builtin_exit();
+        }
         set_signal(SIGINT, SIG_IGN);
         if (str && str[0])
             add_history(str);

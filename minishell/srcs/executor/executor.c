@@ -6,7 +6,7 @@
 /*   By: dsilveri <dsilveri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:52:46 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/08/25 14:19:03 by dsilveri         ###   ########.fr       */
+/*   Updated: 2022/08/25 15:15:34 by dsilveri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,6 @@ static void	exec_main_fork(t_node *tree, t_env *env);
 static void	exec_cmds(t_node *root, t_env *env, int *l_pid);
 static void	exec_cmd_brunch(t_node *tree, t_env *env);
 static void	run_cmd(t_node node, t_env *env);
-
-
-//ls > out | ls | grep machi
 
 void	execution(t_node *tree, t_env *env)
 {

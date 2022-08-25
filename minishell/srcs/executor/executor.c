@@ -6,7 +6,7 @@
 /*   By: dsilveri <dsilveri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:52:46 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/08/25 15:15:34 by dsilveri         ###   ########.fr       */
+/*   Updated: 2022/08/25 16:29:49 by dsilveri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,8 @@ static void	exec_main_fork(t_node *tree, t_env *env)
 		wait_cmds(last_pid, get_num_cmds(tree));
 		ft_exit(get_exit_status());
 	}
-	ft_exit(HDOC_SUCCESS);
+	//ft_exit(HDOC_SUCCESS);
+	ft_exit(get_exit_status());
 }
 
 static void	exec_cmds(t_node *root, t_env *env, int *l_pid)
@@ -109,7 +110,8 @@ static void	exec_cmd_brunch(t_node *tree, t_env *env)
 		node = node->prev;
 	}
 	close_hdoc(tree);
-	ft_exit(EXIT_SUCCESS);
+	//ft_exit(EXIT_SUCCESS);
+	ft_exit(get_exit_status());
 }
 
 static void	run_cmd(t_node node, t_env *env)

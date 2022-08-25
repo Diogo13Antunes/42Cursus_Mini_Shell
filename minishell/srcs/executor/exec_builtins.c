@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_builtins.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsilveri <dsilveri@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: dsilveri <dsilveri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 09:14:42 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/08/24 10:00:07 by dsilveri         ###   ########.fr       */
+/*   Updated: 2022/08/25 15:59:53 by dsilveri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,20 +50,24 @@ int	is_builtin_without_pipe(t_node *tree)
 
 void	exec_builtin(char **cmd, t_env *env, int fd)
 {
+	int exit_status;
+
+	exit_status = 0;
 	if (!ft_strcmp("cd", cmd[0]))
-		builtin_cd(cmd, env);
+		exit_status = builtin_cd(cmd, env);
 	else if (!ft_strcmp("export", cmd[0]))
-		builtin_export(env, cmd, fd);
+		exit_status = builtin_export(env, cmd, fd);
 	else if (!ft_strcmp("unset", cmd[0]))
-		builtin_unset(&env, cmd);
+		exit_status = builtin_unset(&env, cmd);
 	else if (!ft_strcmp("exit", cmd[0]))
 		builtin_exit();
 	else if (!ft_strcmp("echo", cmd[0]))
-		builtin_echo(cmd, fd);
+		exit_status = builtin_echo(cmd, fd);
 	else if (!ft_strcmp("env", cmd[0]))
-		builtin_env(*env, fd);
+		exit_status = builtin_env(*env, fd);
 	else if (!ft_strcmp("pwd", cmd[0]))
-		builtin_pwd(fd);
+		exit_status = builtin_pwd(fd);
+	set_exit_status(exit_status);
 }
 
 void	run_builtin_branch(t_node *tree, t_env *env)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   update_node.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: diogoantunes <diogoantunes@student.42.f    +#+  +:+       +#+        */
+/*   By: dsilveri <dsilveri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 11:49:29 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/08/15 12:48:29 by diogoantune      ###   ########.fr       */
+/*   Updated: 2022/08/25 14:24:32 by dsilveri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,8 @@ static void	update_node_hdoc(t_node *node, char *token)
 		return ;
 	h = oom_guard(malloc(sizeof(t_hdoc)));
 	h->end = oom_guard(ft_strdup(token));
+	h->p.r = -1;
+	h->p.w = -1;
 	node->data = (void *) h;
 }
 

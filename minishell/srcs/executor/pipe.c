@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsilveri <dsilveri@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: dsilveri <dsilveri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 09:43:04 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/08/24 17:43:51 by dsilveri         ###   ########.fr       */
+/*   Updated: 2022/08/25 14:26:45 by dsilveri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ t_pipe	open_pipe(void)
 
 void	close_pipe(t_pipe pipe)
 {
-	close(pipe.r);
-	close(pipe.w);
+	close_fd(pipe.r);
+	close_fd(pipe.w);
 }
 
 void	open_pipes(t_node *tree)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsilveri <dsilveri@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: dsilveri <dsilveri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:52:46 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/08/24 18:10:35 by dsilveri         ###   ########.fr       */
+/*   Updated: 2022/08/25 14:19:03 by dsilveri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,13 +101,17 @@ static void	exec_cmd_brunch(t_node *tree, t_env *env)
 	while (node && !is_node_pipe((node)))
 	{
 		if (is_node_hdoc(node))
-			hdoc_redir(node); // verificar se fecha os hdoc
+			hdoc_redir(node);
 		else if (is_node_redir(node))
 			file_redir(*node);
 		else if (is_node_cmd(node))
+		{
+			close_hdoc(node);
 			run_cmd(*node, env);
+		}
 		node = node->prev;
 	}
+	close_hdoc(tree);
 	ft_exit(EXIT_SUCCESS);
 }
 

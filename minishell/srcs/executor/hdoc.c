@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hdoc.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsilveri <dsilveri@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: dsilveri <dsilveri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 18:41:07 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/08/24 18:39:17 by dsilveri         ###   ########.fr       */
+/*   Updated: 2022/08/25 14:35:40 by dsilveri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,17 +27,31 @@ int	hdoc_exec(t_node *tree)
 	return (status);
 }
 
-void	close_hdoc(t_node *tree)
+static void	close_hdoc2(t_node *tree)
 {
 	t_pipe	p;
 
 	if (tree == NULL)
 		return ;
-	p = ((t_hdoc *)(tree->data))->p;
-	close_hdoc(tree->left);
+	close_hdoc2(tree->left);
 	if (is_node_hdoc(tree))
+	{
+		p = ((t_hdoc *)(tree->data))->p;
 		close_pipe(p);
-	close_hdoc(tree->rigth);
+	}
+	close_hdoc2(tree->rigth);
+}
+
+void	close_hdoc(t_node *tree)
+{
+	t_node *node;
+
+	if (tree == NULL)
+		return ;
+	node = tree;
+	while (node->prev)
+		node = node->prev;
+	close_hdoc2(node);
 }
 
 void	hdoc_redir(t_node *node)
@@ -46,9 +60,6 @@ void	hdoc_redir(t_node *node)
 
 	p = ((t_hdoc *)(node->data))->p;
 	sys_error(dup2(p.r, STDIN_FILENO), "dup2");
-	while (node->prev)
-		node = node->prev;
-	close_hdoc(node);
 	//close_pipe(p);
 }
 

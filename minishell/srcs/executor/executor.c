@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsilveri <dsilveri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dsilveri <dsilveri@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:52:46 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/08/25 16:29:49 by dsilveri         ###   ########.fr       */
+/*   Updated: 2022/08/26 15:58:12 by dsilveri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,10 +92,11 @@ static void	exec_cmd_brunch(t_node *tree, t_env *env)
 {
 	t_node	*node;
 
+	node = tree;
+	//ft_putstr_fd("pipe_redir\n", STDERR_FILENO);
+	pipe_redir(node);
 	set_signal(SIGINT, SIG_DFL);
 	set_signal(SIGQUIT, SIG_DFL);
-	node = tree;
-	pipe_redir(node);
 	while (node && !is_node_pipe((node)))
 	{
 		if (is_node_hdoc(node))

@@ -6,7 +6,7 @@
 /*   By: dsilveri <dsilveri@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 17:33:43 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/08/22 14:04:56 by dsilveri         ###   ########.fr       */
+/*   Updated: 2022/08/26 15:54:47 by dsilveri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,18 +26,19 @@ static void	wait_last_cmd(int pid)
 	int	status;
 
 	waitpid(pid, &status, 0);
+	//printf("valor do status last: %i \n", status);
 	if (WIFEXITED(status))
 		set_exit_status(WEXITSTATUS(status));
 	if (WIFSIGNALED(status))
 	{
 		if (status < 130)
 		{
-			ft_putstr_fd("\n", STDOUT_FILENO);
+			ft_putstr_fd("\n", STDERR_FILENO);
 			set_exit_status(status + EXIT_FATAL_SIGNAL);
 		}
 		else
 		{
-			ft_putstr_fd("Quit (core dumped)\n", STDOUT_FILENO);
+			ft_putstr_fd("Quit (core dumped)\n", STDERR_FILENO);
 			set_exit_status(status);
 		}
 	}		
@@ -47,13 +48,16 @@ static void	wait_missing_cmds(int n_cmds)
 {
 	int	status;
 	int	signal;
+	int pid;
 
 	signal = 0;
 	n_cmds--;
 	while (n_cmds)
 	{
-		wait(&status);
-		if (WIFSIGNALED(status) && status < 130)
+		pid = wait(&status);
+		//printf("pid: %i \n", pid);
+		//printf("valor do status missing: %i \n", status);
+		if (WIFSIGNALED(status) && status == SIGINT)
 			signal = 1;
 		n_cmds--;
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_prompt.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: diogoantunes <diogoantunes@student.42.f    +#+  +:+       +#+        */
+/*   By: dsilveri <dsilveri@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 14:15:03 by dcandeia          #+#    #+#             */
-/*   Updated: 2022/08/15 12:48:29 by diogoantune      ###   ########.fr       */
+/*   Updated: 2022/08/26 18:00:42 by dsilveri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 static char	*get_user(t_env *user_nd);
 static char	*get_dir(t_env *dir_nd, t_env *env);
+static char *get_simple_prompt(void);
 
 char	*get_prompt_str(t_env *env)
 {
@@ -22,13 +23,12 @@ char	*get_prompt_str(t_env *env)
 	char	*user;
 	char	*dir;
 
+	if (!env)
+		return (get_simple_prompt());
 	user = get_user(exist_env_elem(env, "USER"));
 	dir = get_dir(exist_env_elem(env, "PWD"), env);
 	if (!user || !dir)
-	{
-		prompt = oom_guard(ft_calloc(11, sizeof(char)));
-		ft_strcat(prompt, "minish > ");
-	}
+		return (get_simple_prompt());
 	else
 	{
 		prompt_size = ft_strlen(user) + ft_strlen(dir) + 1;
@@ -64,12 +64,11 @@ static char	*get_dir(t_env *dir_nd, t_env *env)
 {
 	int		dir_size;
 	char	*dir_name;
-	char	*home_path;
+	t_env	*home_path;
 	char	*dir;
 
 	if (!dir_nd)
 		return (NULL);
-	home_path = exist_env_elem(env, "HOME")->content;
 	if (ft_strlen(dir_nd->content) > 1)
 		dir_name = ft_strrchr(dir_nd->content, '/') + 1;
 	else
@@ -78,11 +77,21 @@ static char	*get_dir(t_env *dir_nd, t_env *env)
 	dir_size += ft_strlen(BGRN) + ft_strlen(RESET) + 4;
 	dir = oom_guard(ft_calloc(dir_size, sizeof(char)));
 	ft_strcat(dir, BGRN);
-	if (!ft_strcmp(home_path, dir_nd->content))
+	home_path = exist_env_elem(env, "HOME");
+	if (home_path && !ft_strcmp(home_path->content, dir_nd->content))
 		ft_strcat(dir, "~");
 	else
 		ft_strcat(dir, dir_name);
 	ft_strcat(dir, RESET);
 	ft_strcat(dir, " > ");
 	return (dir);
+}
+
+static char *get_simple_prompt(void)
+{
+	char	*prompt;
+
+	prompt = oom_guard(ft_calloc(11, sizeof(char)));
+	ft_strcat(prompt, "minish > ");
+	return (prompt);
 }

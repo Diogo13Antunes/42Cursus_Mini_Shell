@@ -6,7 +6,7 @@
 /*   By: dsilveri <dsilveri@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 14:48:55 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/08/16 15:26:01 by dsilveri         ###   ########.fr       */
+/*   Updated: 2022/08/27 17:59:30 by dsilveri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@
 #define OP_GET_CODE     2
 #define OP_CLEAR_CODE	3
 
-static int exit_status_controler(int exit_status, int op)
+static int	exit_status_controler(int exit_status, int op)
 {
-	static int exit_code = 0;
+	static int	exit_code = 0;
 
 	if (op == OP_SET_CODE)
 		exit_code = exit_status;
@@ -27,17 +27,17 @@ static int exit_status_controler(int exit_status, int op)
 	return (exit_code);
 }
 
-void set_exit_status(int exit_status)
+void	set_exit_status(int exit_status)
 {
 	exit_status_controler(exit_status, OP_SET_CODE);
 }
 
-int get_exit_status(void)
+int	get_exit_status(void)
 {
 	return (exit_status_controler(0, OP_GET_CODE));
 }
 
-void clear_exit_status(void)
+void	clear_exit_status(void)
 {
 	exit_status_controler(0, OP_CLEAR_CODE);
 }

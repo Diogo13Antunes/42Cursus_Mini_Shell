@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_builtins.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsilveri <dsilveri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dsilveri <dsilveri@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 09:14:42 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/08/25 15:59:53 by dsilveri         ###   ########.fr       */
+/*   Updated: 2022/08/27 17:18:08 by dsilveri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	is_builtin_without_pipe(t_node *tree)
 
 void	exec_builtin(char **cmd, t_env *env, int fd)
 {
-	int exit_status;
+	int	exit_status;
 
 	exit_status = 0;
 	if (!ft_strcmp("cd", cmd[0]))

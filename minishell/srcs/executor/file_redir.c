@@ -6,7 +6,7 @@
 /*   By: dsilveri <dsilveri@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 10:57:02 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/08/24 10:15:46 by dsilveri         ###   ########.fr       */
+/*   Updated: 2022/08/27 17:21:06 by dsilveri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	get_file_fd(t_node node)
 	else if (node.id == ID_OUT_REDIR)
 		flag = O_CREAT | O_WRONLY | O_TRUNC;
 	else if (node.id == ID_OUT_APPEND)
-		flag = O_CREAT | O_WRONLY | O_APPEND;	
+		flag = O_CREAT | O_WRONLY | O_APPEND;
 	fd = sys_error2(open(file, flag, 0644), file);
 	return (fd);
 }

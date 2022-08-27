@@ -6,7 +6,7 @@
 /*   By: dsilveri <dsilveri@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:52:46 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/08/26 15:58:12 by dsilveri         ###   ########.fr       */
+/*   Updated: 2022/08/27 17:26:28 by dsilveri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	execution(t_node *tree, t_env *env)
 	int	exit_code;
 
 	pid = fork();
-	if(pid == -1)
+	if (pid == -1)
 		print_msg_error(strerror(errno), "fork");
 	if (!pid)
 		exec_main_fork(tree, env);
@@ -66,7 +66,6 @@ static void	exec_main_fork(t_node *tree, t_env *env)
 		wait_cmds(last_pid, get_num_cmds(tree));
 		ft_exit(get_exit_status());
 	}
-	//ft_exit(HDOC_SUCCESS);
 	ft_exit(get_exit_status());
 }
 
@@ -93,8 +92,8 @@ static void	exec_cmd_brunch(t_node *tree, t_env *env)
 	t_node	*node;
 
 	node = tree;
-	//ft_putstr_fd("pipe_redir\n", STDERR_FILENO);
 	pipe_redir(node);
+	close_pipes(node);
 	set_signal(SIGINT, SIG_DFL);
 	set_signal(SIGQUIT, SIG_DFL);
 	while (node && !is_node_pipe((node)))
@@ -111,7 +110,6 @@ static void	exec_cmd_brunch(t_node *tree, t_env *env)
 		node = node->prev;
 	}
 	close_hdoc(tree);
-	//ft_exit(EXIT_SUCCESS);
 	ft_exit(get_exit_status());
 }
 

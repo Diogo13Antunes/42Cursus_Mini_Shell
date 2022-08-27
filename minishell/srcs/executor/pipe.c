@@ -6,7 +6,7 @@
 /*   By: dsilveri <dsilveri@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 09:43:04 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/08/26 14:44:28 by dsilveri         ###   ########.fr       */
+/*   Updated: 2022/08/27 17:27:18 by dsilveri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,34 +59,10 @@ void	close_pipes(t_node *tree)
 	while (node)
 	{
 		if (is_node_pipe(node))
-		{
-			//ft_putstr_fd("close pipe\n", STDERR_FILENO);
-			close_pipe(*((t_pipe *)(node->data)));
-		}
-		node = node->left;
-	}
-}
-/*
-void	close_pipes(t_node *tree)
-{
-	t_node	*node;
-
-	node = tree;
-	while (node)
-	{
-		if (is_node_pipe(node))
 			close_pipe(*((t_pipe *)(node->data)));
 		node = node->left;
 	}
-	node = tree;
-	while (node)
-	{
-		if (is_node_pipe(node))
-			close_pipe(*((t_pipe *)(node->data)));
-		node = node->prev;
-	}
 }
-*/
 
 void	pipe_redir(t_node *node)
 {
@@ -110,7 +86,6 @@ void	pipe_redir(t_node *node)
 					sys_error(dup2(p->w, STDOUT_FILENO), "dup2");
 				}
 			}
-			close_pipes(node);
 			break ;
 		}
 		buff = node;

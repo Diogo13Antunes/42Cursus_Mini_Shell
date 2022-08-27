@@ -6,13 +6,14 @@
 /*   By: dsilveri <dsilveri@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 18:41:07 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/08/27 15:11:30 by dsilveri         ###   ########.fr       */
+/*   Updated: 2022/08/27 17:28:46 by dsilveri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 static int	hdoc_exec2(t_node *node);
+static void	close_hdoc2(t_node *tree);
 
 int	hdoc_exec(t_node *tree)
 {
@@ -27,24 +28,9 @@ int	hdoc_exec(t_node *tree)
 	return (status);
 }
 
-static void	close_hdoc2(t_node *tree)
-{
-	t_pipe	p;
-
-	if (tree == NULL)
-		return ;
-	close_hdoc2(tree->left);
-	if (is_node_hdoc(tree))
-	{
-		p = ((t_hdoc *)(tree->data))->p;
-		close_pipe(p);
-	}
-	close_hdoc2(tree->rigth);
-}
-
 void	close_hdoc(t_node *tree)
 {
-	t_node *node;
+	t_node	*node;
 
 	if (tree == NULL)
 		return ;
@@ -60,7 +46,6 @@ void	hdoc_redir(t_node *node)
 
 	p = ((t_hdoc *)(node->data))->p;
 	sys_error(dup2(p.r, STDIN_FILENO), "dup2");
-	//close_pipe(p);
 }
 
 static int	hdoc_exec2(t_node *node)
@@ -90,4 +75,19 @@ static int	hdoc_exec2(t_node *node)
 	}
 	free_str(str);
 	return (HDOC_SUCCESS);
+}
+
+static void	close_hdoc2(t_node *tree)
+{
+	t_pipe	p;
+
+	if (tree == NULL)
+		return ;
+	close_hdoc2(tree->left);
+	if (is_node_hdoc(tree))
+	{
+		p = ((t_hdoc *)(tree->data))->p;
+		close_pipe(p);
+	}
+	close_hdoc2(tree->rigth);
 }

@@ -6,14 +6,14 @@
 /*   By: dsilveri <dsilveri@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 17:33:43 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/08/26 15:54:47 by dsilveri         ###   ########.fr       */
+/*   Updated: 2022/08/27 17:20:19 by dsilveri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	wait_missing_cmds(int n_cmds);
 static void	wait_last_cmd(int pid);
+static void	wait_missing_cmds(int n_cmds);
 
 void	wait_cmds(int last_pid, int n_cmds)
 {
@@ -26,7 +26,6 @@ static void	wait_last_cmd(int pid)
 	int	status;
 
 	waitpid(pid, &status, 0);
-	//printf("valor do status last: %i \n", status);
 	if (WIFEXITED(status))
 		set_exit_status(WEXITSTATUS(status));
 	if (WIFSIGNALED(status))
@@ -48,15 +47,13 @@ static void	wait_missing_cmds(int n_cmds)
 {
 	int	status;
 	int	signal;
-	int pid;
+	int	pid;
 
 	signal = 0;
 	n_cmds--;
 	while (n_cmds)
 	{
 		pid = wait(&status);
-		//printf("pid: %i \n", pid);
-		//printf("valor do status missing: %i \n", status);
 		if (WIFSIGNALED(status) && status == SIGINT)
 			signal = 1;
 		n_cmds--;

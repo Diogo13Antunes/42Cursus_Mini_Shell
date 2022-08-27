@@ -6,7 +6,7 @@
 /*   By: dsilveri <dsilveri@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/13 13:31:32 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/08/22 09:23:10 by dsilveri         ###   ########.fr       */
+/*   Updated: 2022/08/27 15:13:33 by dsilveri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void hdoc_interrupt_handler(int signum)
     {
 		close(STDIN_FILENO);
 		set_exit_status(EXIT_CTRLC_SIGNAL);
-		ft_putstr_fd("\n", STDOUT_FILENO);
+		//ft_putstr_fd("\n", STDOUT_FILENO);
 	}
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hdoc.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsilveri <dsilveri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dsilveri <dsilveri@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 18:41:07 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/08/25 14:35:40 by dsilveri         ###   ########.fr       */
+/*   Updated: 2022/08/27 15:11:30 by dsilveri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ static int	hdoc_exec2(t_node *node)
 		str = readline("heredoc> ");
 		if (!str)
 		{
+			ft_putstr_fd("\n", STDOUT_FILENO);
 			if (get_exit_status() == EXIT_CTRLC_SIGNAL)
 				return (HDOC_STOP_CTRL_C);
 			else

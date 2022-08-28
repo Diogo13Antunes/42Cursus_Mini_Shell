@@ -6,45 +6,14 @@
 /*   By: dsilveri <dsilveri@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 14:10:13 by dcandeia          #+#    #+#             */
-/*   Updated: 2022/08/28 12:13:05 by dsilveri         ###   ########.fr       */
+/*   Updated: 2022/08/28 16:29:00 by dsilveri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	invalid_identifier_msg(char *identifier)
-{
-	ft_putstr_fd("export: \'", STDERR_FILENO);
-	ft_putstr_fd(identifier, STDERR_FILENO);
-	ft_putstr_fd("\': not a valid identifier\n", STDERR_FILENO);
-	return (EXIT_BUILTIN);
-}
-
-int	ft_update_elem(t_env *env, char *element)
-{
-	char	*var;
-	int		i;
-	t_env	*elem;
-
-	i = get_char_index(element, '=');
-	var = ft_substr(element, 0, i);
-	elem = exist_env_elem(env, var);
-	if (!elem)
-	{
-		free(var);
-		return (0);
-	}
-	if (i < 0)
-		return (0);
-	if (elem->content)
-		free(elem->content);
-	if (elem->full)
-		free(elem->full);
-	elem->content = ft_substr(element, i + 1, ft_strlen(element));
-	elem->full = create_full_env(elem->variable, elem->content);
-	free(var);
-	return (1);
-}
+static int	ft_update_elem(t_env *env, char *element);
+static int	invalid_identifier_msg(char *identifier);
 
 int	builtin_export(t_env *env, char **elems, int fd)
 {
@@ -71,4 +40,36 @@ int	builtin_export(t_env *env, char **elems, int fd)
 		i++;
 	}
 	return (return_value);
+}
+
+static int	ft_update_elem(t_env *env, char *element)
+{
+	char	*var;
+	int		i;
+	t_env	*elem;
+
+	i = get_char_index(element, '=');
+	var = ft_substr(element, 0, i);
+	elem = exist_env_elem(env, var);
+	if (!elem)
+	{
+		free_str(var);
+		return (0);
+	}
+	if (i < 0)
+		return (0);
+	free_str(elem->content);
+	free_str(elem->full);
+	elem->content = ft_substr(element, i + 1, ft_strlen(element));
+	elem->full = create_full_env(elem->variable, elem->content);
+	free_str(var);
+	return (1);
+}
+
+static int	invalid_identifier_msg(char *identifier)
+{
+	ft_putstr_fd("export: \'", STDERR_FILENO);
+	ft_putstr_fd(identifier, STDERR_FILENO);
+	ft_putstr_fd("\': not a valid identifier\n", STDERR_FILENO);
+	return (EXIT_BUILTIN);
 }

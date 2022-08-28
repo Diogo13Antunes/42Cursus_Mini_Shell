@@ -6,7 +6,7 @@
 /*   By: dsilveri <dsilveri@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 10:57:16 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/08/28 12:11:37 by dsilveri         ###   ########.fr       */
+/*   Updated: 2022/08/28 17:03:25 by dsilveri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,7 +192,7 @@ void	print_export(t_env *env, int fd);
 
 /* builtins/builtin_check_export_elements.c */
 int		check_element(char *element);
-int		check_element_name(char *element);
+//int		check_element_name(char *element);
 
 /* builtins/cmd_export.c */
 int		builtin_export(t_env *env, char **elems, int fd);

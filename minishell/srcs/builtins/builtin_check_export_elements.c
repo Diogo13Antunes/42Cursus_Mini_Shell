@@ -3,16 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_check_export_elements.c                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: diogoantunes <diogoantunes@student.42.f    +#+  +:+       +#+        */
+/*   By: dsilveri <dsilveri@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 15:19:39 by dcandeia          #+#    #+#             */
-/*   Updated: 2022/08/15 12:48:29 by diogoantune      ###   ########.fr       */
+/*   Updated: 2022/08/28 17:01:59 by dsilveri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	check_element_name(char *element)
+static int	check_element_name(char *element);
+
+int	check_element(char *element)
+{
+	if (check_element_name(element))
+		return (1);
+	return (0);
+}
+
+static int	check_element_name(char *element)
 {
 	char	c;
 
@@ -29,11 +38,4 @@ int	check_element_name(char *element)
 		c = *(++element);
 	}
 	return (1);
-}
-
-int	check_element(char *element)
-{
-	if (check_element_name(element))
-		return (1);
-	return (0);
 }

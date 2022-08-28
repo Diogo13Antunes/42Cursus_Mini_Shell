@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_unset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: diogoantunes <diogoantunes@student.42.f    +#+  +:+       +#+        */
+/*   By: dsilveri <dsilveri@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 11:38:02 by dcandeia          #+#    #+#             */
-/*   Updated: 2022/08/15 12:48:29 by diogoantune      ###   ########.fr       */
+/*   Updated: 2022/08/28 16:13:19 by dsilveri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,21 +16,31 @@
 #define IN_MID 2
 #define IN_BOT 3
 
-/*
-	unset PWD = SEGV
-*/
+static int	elem_pos(t_env *env, const char *elem);
+static void	rm_top_env_elem(t_env **env);
+static void	rm_mid_bot_env_elem(t_env **env, const char *elem);
+static void	ft_lstdelenv(t_env *lst);
 
-void	ft_lstdelenv(t_env *lst)
+int	builtin_unset(t_env **env, char **elems)
 {
-	if (!lst)
-		return ;
-	if (lst->variable)
-		free(lst->variable);
-	if (lst->content)
-		free(lst->content);
-	if (lst->full)
-		free(lst->full);
-	free(lst);
+	int		pos;
+	int		i;
+
+	i = 1;
+	while (elems[i])
+	{
+		if (!elems[i] || ft_strlen(elems[i]) == 0)
+			return (0);
+		pos = elem_pos(*env, elems[i]);
+		if (pos == IN_TOP)
+			rm_top_env_elem(env);
+		else if (pos == IN_MID)
+			rm_mid_bot_env_elem(env, elems[i]);
+		else if (pos == IN_BOT)
+			rm_mid_bot_env_elem(env, elems[i]);
+		i++;
+	}
+	return (0);
 }
 
 static int	elem_pos(t_env *env, const char *elem)
@@ -87,24 +97,12 @@ static void	rm_mid_bot_env_elem(t_env **env, const char *elem)
 	ft_lstdelenv(temp);
 }
 
-int	builtin_unset(t_env **env, char **elems)
+static void	ft_lstdelenv(t_env *lst)
 {
-	int		pos;
-	int		i;
-
-	i = 1;
-	while (elems[i])
-	{
-		if (!elems[i] || ft_strlen(elems[i]) == 0)
-			return (0);
-		pos = elem_pos(*env, elems[i]);
-		if (pos == IN_TOP)
-			rm_top_env_elem(env);
-		else if (pos == IN_MID)
-			rm_mid_bot_env_elem(env, elems[i]);
-		else if (pos == IN_BOT)
-			rm_mid_bot_env_elem(env, elems[i]);
-		i++;
-	}
-	return (0);
+	if (!lst)
+		return ;
+	free_str(lst->variable);
+	free_str(lst->content);
+	free_str(lst->full);
+	free(lst);
 }

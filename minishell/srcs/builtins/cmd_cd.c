@@ -3,33 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_cd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: diogoantunes <diogoantunes@student.42.f    +#+  +:+       +#+        */
+/*   By: dsilveri <dsilveri@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 10:37:42 by dcandeia          #+#    #+#             */
-/*   Updated: 2022/08/15 12:48:29 by diogoantune      ###   ########.fr       */
+/*   Updated: 2022/08/28 16:50:39 by dsilveri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	set_env_pwd(t_env *env, char *pwd, char *option)
-{
-	t_env	*temp;
+static char	*get_elemet_content(t_env *env, char *elemt_name);
+static int	set_directory(t_env *env, char *path);
+static void	set_env_pwd(t_env *env, char *pwd, char *option);
 
-	temp = env;
-	while (temp->next != NULL)
+int	builtin_cd(char **args, t_env *env)
+{
+	char	*path;
+
+	if (get_matrix_size(args) > 2)
 	{
-		if (!ft_strncmp(temp->variable, option, ft_strlen(option) + 1))
-			break ;
-		temp = temp->next;
+		ft_putstr_fd("cd: too many arguments\n", STDERR_FILENO);
+		return (EXIT_BUILTIN);
 	}
-	free_str(temp->full);
-	free_str(temp->content);
-	temp->content = ft_substr(pwd, 0, ft_strlen(pwd));
-	temp->full = create_full_env(temp->variable, temp->content);
+	if (get_matrix_size(args) == 1 || !ft_strcmp(args[1], "~"))
+		path = get_elemet_content(env, "HOME");
+	else
+		path = args[1];
+	if (set_directory(env, path))
+		return (EXIT_BUILTIN);
+	return (0);
 }
 
-char	*get_elemet_content(t_env *env, char *elemt_name)
+static char	*get_elemet_content(t_env *env, char *elemt_name)
 {
 	t_env	*elemt;
 	char	*elemt_cont;
@@ -39,7 +44,7 @@ char	*get_elemet_content(t_env *env, char *elemt_name)
 	return (elemt_cont);
 }
 
-int	set_directory(t_env *env, char *path)
+static int	set_directory(t_env *env, char *path)
 {
 	char	*pwd;
 	char	*oldpwd;
@@ -64,20 +69,19 @@ int	set_directory(t_env *env, char *path)
 	return (0);
 }
 
-int	builtin_cd(char **args, t_env *env)
+static void	set_env_pwd(t_env *env, char *pwd, char *option)
 {
-	char	*path;
+	t_env	*temp;
 
-	if (get_matrix_size(args) > 2)
+	temp = env;
+	while (temp->next != NULL)
 	{
-		ft_putstr_fd("cd: too many arguments\n", STDERR_FILENO);
-		return (EXIT_BUILTIN);
+		if (!ft_strncmp(temp->variable, option, ft_strlen(option) + 1))
+			break ;
+		temp = temp->next;
 	}
-	if (get_matrix_size(args) == 1 || !ft_strcmp(args[1], "~"))
-		path = get_elemet_content(env, "HOME");
-	else
-		path = args[1];
-	if (set_directory(env, path))
-		return (EXIT_BUILTIN);
-	return (0);
+	free_str(temp->full);
+	free_str(temp->content);
+	temp->content = ft_substr(pwd, 0, ft_strlen(pwd));
+	temp->full = create_full_env(temp->variable, temp->content);
 }

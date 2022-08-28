@@ -6,7 +6,7 @@
 /*   By: dsilveri <dsilveri@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 10:57:16 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/08/24 18:12:36 by dsilveri         ###   ########.fr       */
+/*   Updated: 2022/08/28 12:11:37 by dsilveri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,7 +167,8 @@ char	**get_env_matrix(t_env *list);
 t_env	*get_new_env_elem(char *env_str);
 char	*create_full_env(char *var, char *cont);
 int		env_lst_size(t_env *env);
-int		find_char(char *str, char c);
+//int		find_char(char *str, char c);
+int		get_char_index(char *str, char c);
 void	ft_lstadd_back_env(t_env **lst, t_env *new);
 void	free_env_lst(t_env	*env);
 

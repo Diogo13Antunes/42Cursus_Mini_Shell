@@ -1,56 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils2.c                                           :+:      :+:    :+:   */
+/*   free_env_lst.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dsilveri <dsilveri@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/14 16:59:11 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/08/28 12:14:06 by dsilveri         ###   ########.fr       */
+/*   Created: 2022/08/28 11:55:48 by dsilveri          #+#    #+#             */
+/*   Updated: 2022/08/28 11:56:20 by dsilveri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	free_matrix(char **m)
+void	free_env_lst(t_env	*env)
 {
-	int	i;
+	t_env	*next;
 
-	if (!m)
+	if (!env)
 		return ;
-	i = 0;
-	while (m[i])
+	while (env)
 	{
-		free_str(m[i]);
-		i++;
+		next = env->next;
+		free_str(env->variable);
+		free_str(env->content);
+		free_str(env->full);
+		free(env);
+		env = next;
 	}
-	free(m);
-}
-
-void	free_str(char *str)
-{
-	if (str)
-		free(str);
-}
-
-void	ft_exit(int status)
-{
-	free_all_alloc_mem();
-	exit(status);
-}
-
-int	get_char_index(char *str, char c)
-{
-	int	i;
-
-	i = 0;
-	if (!str || !c)
-		return (-1);
-	while (str[i])
-	{
-		if (str[i] == c)
-			return (i);
-		i++;
-	}
-	return (-1);
 }

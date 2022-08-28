@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_export.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: diogoantunes <diogoantunes@student.42.f    +#+  +:+       +#+        */
+/*   By: dsilveri <dsilveri@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 14:10:13 by dcandeia          #+#    #+#             */
-/*   Updated: 2022/08/15 12:48:29 by diogoantune      ###   ########.fr       */
+/*   Updated: 2022/08/28 12:13:05 by dsilveri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	ft_update_elem(t_env *env, char *element)
 	int		i;
 	t_env	*elem;
 
-	i = find_char(element, '=');
+	i = get_char_index(element, '=');
 	var = ft_substr(element, 0, i);
 	elem = exist_env_elem(env, var);
 	if (!elem)

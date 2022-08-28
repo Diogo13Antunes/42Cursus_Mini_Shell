@@ -6,7 +6,7 @@
 #    By: dsilveri <dsilveri@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/27 10:55:19 by dsilveri          #+#    #+#              #
-#    Updated: 2022/08/27 19:18:50 by dsilveri         ###   ########.fr        #
+#    Updated: 2022/08/27 19:59:06 by dsilveri         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,8 @@ SRCS			= $(wildcard srcs/*.c) \
 				  $(wildcard srcs/parser/*.c) \
 				  $(wildcard srcs/executor/*.c) \
 				  $(wildcard srcs/tree/*.c) \
-				  $(wildcard srcs/error_handler/*.c)
+				  $(wildcard srcs/error_handler/*.c) \
+				  $(wildcard srcs/env_vars/*.c)
 
 LIBFT			= libft/libft.a
 

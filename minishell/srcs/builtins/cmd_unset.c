@@ -6,7 +6,7 @@
 /*   By: dcandeia <dcandeia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 11:38:02 by dcandeia          #+#    #+#             */
-/*   Updated: 2022/08/29 16:17:16 by dcandeia         ###   ########.fr       */
+/*   Updated: 2022/08/29 16:27:18 by dcandeia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	builtin_unset(t_env **env, char **elems)
 	i = 1;
 	while (elems[i])
 	{
-		if (!elems[i])
+		if (!elems[i] || !ft_strlen(elems[i]))
 			return (0);
 		if (!check_element(elems[i]))
 		{

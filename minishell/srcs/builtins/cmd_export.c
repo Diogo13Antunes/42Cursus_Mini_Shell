@@ -6,7 +6,7 @@
 /*   By: dcandeia <dcandeia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 14:10:13 by dcandeia          #+#    #+#             */
-/*   Updated: 2022/08/29 16:16:53 by dcandeia         ###   ########.fr       */
+/*   Updated: 2022/08/29 16:31:16 by dcandeia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,15 @@ int	builtin_export(t_env *env, char **elems, int fd)
 	return_value = 0;
 	while (elems[i])
 	{
-		if (check_element(elems[i]))
-			make_elemt_chages(elems[i], env);
-		else
-		{
-			print_msg_error2(elems[i], "not a valid identifier", "export");
-			return_value = EXIT_BUILTIN;
+		if (ft_strlen(elems[i]))
+		{	
+			if (check_element(elems[i]))
+				make_elemt_chages(elems[i], env);
+			else
+			{
+				print_msg_error2(elems[i], "not a valid identifier", "export");
+				return_value = EXIT_BUILTIN;
+			}
 		}
 		i++;
 	}

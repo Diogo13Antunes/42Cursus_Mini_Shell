@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: dsilveri <dsilveri@student.42lisboa.com    +#+  +:+       +#+         #
+#    By: dcandeia <dcandeia@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/27 10:55:19 by dsilveri          #+#    #+#              #
-#    Updated: 2022/08/29 09:35:10 by dcandeia         ###   ########.fr        #
+#    Updated: 2022/08/29 15:41:04 by dcandeia         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,6 @@ MAKE_LIBFT		= make bonus -C libft/
 CLEAN_LIBFT		= make clean -C libft/
 FCLEAN_LIBFT	= make fclean -C libft/
 
-
 all: $(NAME)
 
 $(NAME): $(SRCS_OBJS)
@@ -48,7 +47,7 @@ norminette:
 clean:
 	$(CLEAN_LIBFT)
 	$(RM) $(SRCS_OBJS)
-	
+
 fclean: clean
 	$(FCLEAN_LIBFT)
 	$(RM) $(NAME)

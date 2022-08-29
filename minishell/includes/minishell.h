@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsilveri <dsilveri@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: dcandeia <dcandeia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 10:57:16 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/08/28 18:36:17 by dsilveri         ###   ########.fr       */
+/*   Updated: 2022/08/29 16:13:49 by dcandeia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,6 +168,7 @@ void	*oom_guard2(void *p);
 
 /* error_handler/print_error.c */
 void	print_msg_error(char *error, char *str);
+void	print_msg_error2(char *err1, char *err2, char *str);
 
 /* executor/exec_builtins.c*/
 int		is_builtin(char *cmd);

@@ -6,7 +6,7 @@
 /*   By: dcandeia <dcandeia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 14:15:03 by dcandeia          #+#    #+#             */
-/*   Updated: 2022/08/29 15:33:42 by dcandeia         ###   ########.fr       */
+/*   Updated: 2022/08/29 16:21:45 by dcandeia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,8 @@ static char	*get_dir(t_env *dir_nd, t_env *env)
 
 	if (!dir_nd || !dir_nd->content)
 		return (NULL);
-	if (ft_strlen(dir_nd->content) > 1 && get_char_index(dir_nd->content, '/') != -1)
+	if (ft_strlen(dir_nd->content) > 1
+		&& get_char_index(dir_nd->content, '/') != -1)
 		dir_name = ft_strrchr(dir_nd->content, '/') + 1;
 	else
 		dir_name = dir_nd->content;

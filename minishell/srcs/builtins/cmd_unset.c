@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_unset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsilveri <dsilveri@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: dcandeia <dcandeia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 11:38:02 by dcandeia          #+#    #+#             */
-/*   Updated: 2022/08/28 16:13:19 by dsilveri         ###   ########.fr       */
+/*   Updated: 2022/08/29 16:17:16 by dcandeia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,13 @@ int	builtin_unset(t_env **env, char **elems)
 	i = 1;
 	while (elems[i])
 	{
-		if (!elems[i] || ft_strlen(elems[i]) == 0)
+		if (!elems[i])
 			return (0);
+		if (!check_element(elems[i]))
+		{
+			print_msg_error2(elems[i], "not a valid identifier", "unset");
+			return (EXIT_BUILTIN);
+		}
 		pos = elem_pos(*env, elems[i]);
 		if (pos == IN_TOP)
 			rm_top_env_elem(env);

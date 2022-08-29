@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_prompt.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsilveri <dsilveri@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: dcandeia <dcandeia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 14:15:03 by dcandeia          #+#    #+#             */
-/*   Updated: 2022/08/27 10:23:43 by dsilveri         ###   ########.fr       */
+/*   Updated: 2022/08/29 15:33:42 by dcandeia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static char	*get_user(t_env *user_nd)
 	int		user_size;
 	char	*user;
 
-	if (!user_nd)
+	if (!user_nd || !user_nd->content)
 		return (NULL);
 	user_size = ft_strlen(user_nd->content);
 	user_size += ft_strlen(BRED) + ft_strlen(RESET) + 4;
@@ -60,23 +60,22 @@ static char	*get_dir(t_env *dir_nd, t_env *env)
 {
 	int		dir_size;
 	char	*dir_name;
-	t_env	*home_path;
+	t_env	*h_ph;
 	char	*dir;
 
-	if (!dir_nd)
+	if (!dir_nd || !dir_nd->content)
 		return (NULL);
-	if (ft_strlen(dir_nd->content) > 1)
+	if (ft_strlen(dir_nd->content) > 1 && get_char_index(dir_nd->content, '/') != -1)
 		dir_name = ft_strrchr(dir_nd->content, '/') + 1;
 	else
 		dir_name = dir_nd->content;
-	dir_size = ft_strlen(dir_name);
-	dir_size += ft_strlen(BGRN) + ft_strlen(RESET) + 4;
+	dir_size = ft_strlen(dir_name) + ft_strlen(BGRN) + ft_strlen(RESET) + 4;
 	dir = ft_calloc(dir_size, sizeof(char));
 	if (!dir)
 		return (NULL);
 	ft_strcat(dir, BGRN);
-	home_path = exist_env_elem(env, "HOME");
-	if (home_path && !ft_strcmp(home_path->content, dir_nd->content))
+	h_ph = exist_env_elem(env, "HOME");
+	if (h_ph && h_ph->content && !ft_strcmp(h_ph->content, dir_nd->content))
 		ft_strcat(dir, "~");
 	else
 		ft_strcat(dir, dir_name);

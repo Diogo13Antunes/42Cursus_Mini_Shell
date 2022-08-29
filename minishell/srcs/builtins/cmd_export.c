@@ -3,22 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_export.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsilveri <dsilveri@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: dcandeia <dcandeia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 14:10:13 by dcandeia          #+#    #+#             */
-/*   Updated: 2022/08/28 16:29:00 by dsilveri         ###   ########.fr       */
+/*   Updated: 2022/08/29 15:10:25 by dcandeia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	ft_update_elem(t_env *env, char *element);
+#define TYPE_NAME 1
+#define TYPE_CONTENT 2
+
+static int	update_elem(t_env *elem, char *cont);
 static int	invalid_identifier_msg(char *identifier);
+static char	*get_elem_str_data(char *data, int type);
+static void	make_elemt_chages(char *data, t_env *env);
 
 int	builtin_export(t_env *env, char **elems, int fd)
 {
 	int		i;
-	t_env	*exist;
 	int		return_value;
 
 	if (get_matrix_size(elems) == 1)
@@ -31,10 +35,7 @@ int	builtin_export(t_env *env, char **elems, int fd)
 	while (elems[i])
 	{
 		if (check_element(elems[i]))
-		{
-			if (!ft_update_elem(env, elems[i]))
-				ft_lstadd_back_env(&env, get_new_env_elem(elems[i]));
-		}
+			make_elemt_chages(elems[i], env);
 		else
 			return_value = invalid_identifier_msg(elems[i]);
 		i++;
@@ -42,28 +43,62 @@ int	builtin_export(t_env *env, char **elems, int fd)
 	return (return_value);
 }
 
-static int	ft_update_elem(t_env *env, char *element)
+static void	make_elemt_chages(char *data, t_env *env)
 {
-	char	*var;
-	int		i;
-	t_env	*elem;
+	t_env	*element;
+	char	*name;
 
-	i = get_char_index(element, '=');
-	var = ft_substr(element, 0, i);
-	elem = exist_env_elem(env, var);
-	if (!elem)
+	name = get_elem_str_data(data, TYPE_NAME);
+	element = exist_env_elem(env, name);
+	free_str(name);
+	if (element)
+		update_elem(element, get_elem_str_data(data, TYPE_CONTENT));
+	else
+		ft_lstadd_back_env(&env, get_new_env_elem(data));
+}
+
+static int	update_elem(t_env *elem, char *cont)
+{
+	int	i;
+
+	if (!elem || !cont)
 	{
-		free_str(var);
+		free_str(cont);
 		return (0);
 	}
-	if (i < 0)
-		return (0);
 	free_str(elem->content);
 	free_str(elem->full);
-	elem->content = ft_substr(element, i + 1, ft_strlen(element));
+	elem->content = cont;
 	elem->full = create_full_env(elem->variable, elem->content);
-	free_str(var);
 	return (1);
+}
+
+static char	*get_elem_str_data(char *data, int type)
+{
+	char	*name;
+	char	*cont;
+	int		i;
+
+	if (!data)
+		return (NULL);
+	i = get_char_index(data, '=');
+	if (i == -1)
+	{
+		name = ft_substr(data, 0, ft_strlen(data));
+		cont = NULL;
+	}
+	else
+	{
+		name = ft_substr(data, 0, i);
+		cont = ft_substr(data, i + 1, ft_strlen(data));
+	}
+	if (type == TYPE_NAME)
+	{
+		free_str(cont);
+		return (name);
+	}
+	free_str(name);
+	return (cont);
 }
 
 static int	invalid_identifier_msg(char *identifier)

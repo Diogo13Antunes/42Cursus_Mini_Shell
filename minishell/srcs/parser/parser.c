@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: diogoantunes <diogoantunes@student.42.f    +#+  +:+       +#+        */
+/*   By: dsilveri <dsilveri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 19:19:12 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/08/15 12:48:29 by diogoantune      ###   ########.fr       */
+/*   Updated: 2022/08/29 17:20:32 by dsilveri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void		create_ast(t_node **tree, char *token, t_env *env);
+static int		sytax_error(t_node *tree, char *token);
+static void		create_ast(t_node **tree, char *token, t_env *env, int t_id);
 static t_node	*get_node_to_update(t_node *tree);
 
 t_node	*parser(char *src, t_env *env, int *exit_code)
@@ -20,37 +21,45 @@ t_node	*parser(char *src, t_env *env, int *exit_code)
 	char	*token;
 	t_node	*tree;
 	int		reset;
+	int		token_id;
 
 	tree = NULL;
 	reset = 1;
 	while (1)
 	{
 		token = get_next_token(src, reset);
-		if (is_syntax_error(tree, token))
-		{
-			free_tree(tree);
-			free(token);
-			*exit_code = EXIT_SYNTAX;
+		*exit_code = sytax_error(tree, token);
+		if (*exit_code)
 			return (NULL);
-		}
 		if (!token)
 			break ;
-		if (get_token_id(token) == ID_WORD)
+		token_id = get_token_id(token);
+		if (token_id == ID_WORD)
 			token = token_parser(token, env, *exit_code);
-		create_ast(&tree, token, env);
-		free(token);
+		create_ast(&tree, token, env, token_id);
+		free_str(token);
 		reset = 0;
 	}
 	return (tree);
 }
 
-static void	create_ast(t_node **tree, char *token, t_env *env)
+static int	sytax_error(t_node *tree, char *token)
+{
+	if (is_syntax_error(tree, token))
+	{
+		free_tree(tree);
+		free_str(token);
+		return (EXIT_SYNTAX);
+	}
+	return (0);
+}
+
+static void	create_ast(t_node **tree, char *token, t_env *env, int t_id)
 {
 	int		id;
 	t_node	*node;
 
-	id = get_token_id(token);
-	if (id == ID_WORD)
+	if (t_id == ID_WORD)
 	{
 		node = get_node_to_update(*tree);
 		if (node)
@@ -59,7 +68,7 @@ static void	create_ast(t_node **tree, char *token, t_env *env)
 			add_new_node(tree, update_node(create_node(ID_CMD), token));
 	}
 	else
-		add_new_node(tree, create_node(id));
+		add_new_node(tree, create_node(t_id));
 }
 
 static t_node	*get_node_to_update(t_node *tree)

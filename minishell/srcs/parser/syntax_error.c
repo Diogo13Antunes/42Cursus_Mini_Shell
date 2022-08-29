@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax_error.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: diogoantunes <diogoantunes@student.42.f    +#+  +:+       +#+        */
+/*   By: dsilveri <dsilveri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 12:10:43 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/08/15 12:48:29 by diogoantune      ###   ########.fr       */
+/*   Updated: 2022/08/29 17:13:01 by dsilveri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,7 @@ int	is_syntax_error(t_node *tree, char *token)
 
 	status = 0;
 	if (!token || get_token_id(token) != ID_WORD)
-	{
 		status = error_analysis(tree, token);
-	}
 	return (status);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dcandeia <dcandeia@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dsilveri <dsilveri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/29 18:42:18 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/08/30 11:55:24 by dcandeia         ###   ########.fr       */
+/*   Updated: 2022/08/30 12:01:57 by dsilveri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,16 @@
 //valgrind --leak-check=full --show-leak-kinds=all  ./minishell
 
 static char	*get_user_input(t_env *env_lst);
-static void	*executor(char *str, t_env *env_lst, int *exit_code);
+static void	*executor(char *str, t_env *env_lst);
 static int	check_void_input(char *input);
 
 int	main(int argc, char **argv, char **env)
 {
 	char			*str;
 	t_env			*env_lst;
-	int				exit_code;
 
 	init_alloc_mem();
 	set_signal(SIGQUIT, SIG_IGN);
-	exit_code = 0;
 	env_lst = get_env_list(env);
 	save_alloc_mem(env_lst, TYPE_ENV);
 	while (1)
@@ -35,14 +33,13 @@ int	main(int argc, char **argv, char **env)
 		set_signal(SIGINT, new_prompt_handler);
 		str = get_user_input(env_lst);
 		set_signal(SIGINT, SIG_IGN);
-		exit_code = get_exit_status();
-		executor(str, env_lst, &exit_code);
+		executor(str, env_lst);
 	}
 	free_all_alloc_mem();
 	return (0);
 }
 
-static void	*executor(char *str, t_env *env_lst, int *exit_code)
+static void	*executor(char *str, t_env *env_lst)
 {
 	t_node	*tree;
 
@@ -53,7 +50,6 @@ static void	*executor(char *str, t_env *env_lst, int *exit_code)
 	{
 		clear_exit_status();
 		execution(tree, env_lst);
-		*exit_code = get_exit_status();
 		free_tree(tree);
 		save_alloc_mem(NULL, TYPE_TREE);
 	}

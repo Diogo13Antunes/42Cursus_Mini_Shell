@@ -6,7 +6,7 @@
 /*   By: dcandeia <dcandeia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 10:37:42 by dcandeia          #+#    #+#             */
-/*   Updated: 2022/08/30 12:21:10 by dcandeia         ###   ########.fr       */
+/*   Updated: 2022/08/30 16:59:26 by dcandeia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,11 @@ int	builtin_cd(char **args, t_env *env)
 		path = get_elemet_content(env, "HOME");
 	else
 		path = args[1];
+	if (!path)
+	{
+		print_msg_error("HOME not set", "cd");
+		return (0);
+	}
 	if (set_directory(env, path))
 		return (EXIT_BUILTIN);
 	return (0);
@@ -40,6 +45,8 @@ static char	*get_elemet_content(t_env *env, char *elemt_name)
 	char	*elemt_cont;
 
 	elemt = exist_env_elem(env, elemt_name);
+	if (!elemt || !elemt->content)
+		return (NULL);
 	elemt_cont = elemt->content;
 	return (elemt_cont);
 }

@@ -6,7 +6,7 @@
 #    By: dcandeia <dcandeia@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/27 10:55:19 by dsilveri          #+#    #+#              #
-#    Updated: 2022/08/30 17:00:58 by dcandeia         ###   ########.fr        #
+#    Updated: 2022/08/30 17:31:59 by dcandeia         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -59,7 +59,7 @@ LIBFT			= libft/libft.a
 SRCS_OBJS		= $(SRCS:.c=.o)
 
 CC				= gcc 
-CFLAGS			= -Wall -Wextra -Werror -fsanitize=address -I ./includes
+CFLAGS			= -Wall -Wextra -Werror -I ./includes
 # CFLAGS			= -g -I ./includes
 LIBS			= -lreadline
 RM				= rm -f

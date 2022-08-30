@@ -6,7 +6,7 @@
 /*   By: dcandeia <dcandeia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 12:39:51 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/08/30 12:48:39 by dcandeia         ###   ########.fr       */
+/*   Updated: 2022/08/30 16:33:45 by dcandeia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,9 @@ char	*token_join_str(char *s1, char *s2)
 {
 	char	*dst;
 
-	if (!s1 || !s2)
-		return (0);
-	dst = ft_strjoin(s1, s2);
+	dst = NULL;
+	if (s1 && s2)
+		dst = ft_strjoin(s1, s2);
 	free_str(s1);
 	free_str(s2);
 	return (dst);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsilveri <dsilveri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dcandeia <dcandeia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 10:57:16 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/08/30 15:51:08 by dsilveri         ###   ########.fr       */
+/*   Updated: 2022/08/30 16:37:36 by dcandeia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -236,7 +236,7 @@ int		is_word_sequence(char *s);
 int		ft_exit_code(int status);
 
 /* parser/home_expand.c */
-char *home_expand(t_env *env, char *token);
+char	*home_expand(t_env *env, char *token);
 
 /* tree/add_new_node.c */
 void	add_new_node(t_node **tree, t_node *node);

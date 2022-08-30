@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsilveri <dsilveri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dcandeia <dcandeia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 19:19:12 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/08/30 11:49:04 by dsilveri         ###   ########.fr       */
+/*   Updated: 2022/08/30 11:55:09 by dcandeia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ t_node	*parser(char *src, t_env *env)
 		token = get_next_token(src, reset);
 		if (sytax_error(tree, token))
 		{
-			//*exit_code = EXIT_SYNTAX;
 			set_exit_status(EXIT_SYNTAX);
 			return (NULL);
 		}	

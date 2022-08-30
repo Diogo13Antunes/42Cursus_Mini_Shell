@@ -6,7 +6,7 @@
 /*   By: dsilveri <dsilveri@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 10:16:01 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/08/27 19:00:28 by dsilveri         ###   ########.fr       */
+/*   Updated: 2022/08/30 21:23:53 by dsilveri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	cmd_path_error(int err, char *msg, char *file)
 	if (err == -1)
 	{
 		print_msg_error(msg, file);
-		ft_exit(EXIT_CMD_NEXEC);
+		ft_exit(EXIT_CMD_NFOUND);
 	}
 	return (err);
 }

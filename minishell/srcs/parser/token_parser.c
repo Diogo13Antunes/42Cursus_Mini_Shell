@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_parser.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dcandeia <dcandeia@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dsilveri <dsilveri@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 10:23:32 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/08/30 17:07:36 by dcandeia         ###   ########.fr       */
+/*   Updated: 2022/08/30 21:18:45 by dsilveri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,16 @@ static int	token_needs_parse(char *token);
 char	*token_parser(char *token, t_env *env, int exit_code)
 {
 	char	*dst;
+	char	*home;
 	int		i;
 
 	if (!token)
 		return (0);
-	dst = home_expand(env, token);
-	if (dst)
+	home = home_expand(env, token);
+	if (home)
 	{
 		free_str(token);
-		return (dst);
+		token = home;
 	}
 	if (!token_needs_parse(token))
 		return (token);
@@ -40,7 +41,7 @@ char	*token_parser(char *token, t_env *env, int exit_code)
 		dst = update_token(dst, token, &i, env);
 		i++;
 	}	
-	free(token);
+	free_str(token);
 	return (dst);
 }
 
@@ -61,7 +62,10 @@ static char	*update_token(char *dst, char *token, int *index, t_env *env)
 				str = update_token_env_var(str, env);
 		}
 		else
-			str = update_token_env_var(ft_substr(&token[i], 0, size), env);
+		{
+			str = oom_guard(ft_substr(&token[i], 0, size));
+			str = update_token_env_var(str, env);
+		}
 		dst = token_join_str(dst, str);
 		*index += size - 1;
 	}
@@ -95,6 +99,7 @@ static char	*update_token_env_var(char *s, t_env *env)
 			dst = add_env_var_to_token(env, s, dst, &i);
 		i++;
 	}
+	free_str(s);
 	return (dst);
 }
 

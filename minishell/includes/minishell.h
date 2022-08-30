@@ -6,7 +6,7 @@
 /*   By: dcandeia <dcandeia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 10:57:16 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/08/29 16:13:49 by dcandeia         ###   ########.fr       */
+/*   Updated: 2022/08/30 10:23:28 by dcandeia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@
 
 # define PROGRAM_NAME "minish"
 
-# define WHITE_SPACES   " \t\r\n\v"
+# define WHITE_SPACES   " \t\r\n\v\f"
 # define OPERATORS      "<>|"
 
 # define ID_WORD		0

@@ -6,19 +6,52 @@
 #    By: dcandeia <dcandeia@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/27 10:55:19 by dsilveri          #+#    #+#              #
-#    Updated: 2022/08/29 15:41:04 by dcandeia         ###   ########.fr        #
+#    Updated: 2022/08/30 09:06:12 by dcandeia         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME			= minishell
 
-SRCS			= $(wildcard srcs/*.c) \
-				  $(wildcard srcs/builtins/*.c) \
-				  $(wildcard srcs/parser/*.c) \
-				  $(wildcard srcs/executor/*.c) \
-				  $(wildcard srcs/tree/*.c) \
-				  $(wildcard srcs/error_handler/*.c) \
-				  $(wildcard srcs/env_vars/*.c)
+SRCS			= ./srcs/signal_handler.c							\
+				  ./srcs/utils.c									\
+				  ./srcs/tree/add_new_node.c						\
+				  ./srcs/tree/tree.c								\
+				  ./srcs/tree/free_tree.c							\
+				  ./srcs/get_prompt.c								\
+				  ./srcs/utils2.c									\
+				  ./srcs/alloc_mem.c								\
+				  ./srcs/env_vars/env_lst.c							\
+				  ./srcs/env_vars/env_vars.c						\
+				  ./srcs/env_vars/free_env_lst.c					\
+				  ./srcs/minishell.c								\
+				  ./srcs/exit_status.c								\
+				  ./srcs/parser/syntax_error.c						\
+				  ./srcs/parser/parser.c							\
+				  ./srcs/parser/token_parser.c						\
+				  ./srcs/parser/update_node.c						\
+				  ./srcs/parser/utils_parser.c						\
+				  ./srcs/parser/utils_parser2.c						\
+				  ./srcs/parser/get_next_token.c					\
+				  ./srcs/error_handler/error_handler.c				\
+				  ./srcs/error_handler/print_error.c				\
+				  ./srcs/error_handler/error_handler2.c				\
+				  ./srcs/builtins/cmd_pwd.c							\
+				  ./srcs/builtins/builtin_print_export.c			\
+				  ./srcs/builtins/cmd_unset.c						\
+				  ./srcs/builtins/cmd_env.c							\
+				  ./srcs/builtins/cmd_echo.c						\
+				  ./srcs/builtins/cmd_export.c						\
+				  ./srcs/builtins/builtin_check_export_elements.c	\
+				  ./srcs/builtins/cmd_exit.c						\
+				  ./srcs/builtins/cmd_cd.c							\
+				  ./srcs/executor/exec_builtins.c					\
+				  ./srcs/executor/get_cmd_path.c					\
+				  ./srcs/executor/executor.c						\
+				  ./srcs/executor/utils_executor.c					\
+				  ./srcs/executor/pipe.c							\
+				  ./srcs/executor/hdoc.c							\
+				  ./srcs/executor/file_redir.c						\
+				  ./srcs/executor/wait_cmds.c
 
 LIBFT			= libft/libft.a
 

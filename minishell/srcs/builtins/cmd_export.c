@@ -6,7 +6,7 @@
 /*   By: dcandeia <dcandeia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 14:10:13 by dcandeia          #+#    #+#             */
-/*   Updated: 2022/08/29 16:31:16 by dcandeia         ###   ########.fr       */
+/*   Updated: 2022/08/30 17:11:10 by dcandeia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 #define TYPE_CONTENT 2
 
 static int	update_elem(t_env *elem, char *cont);
-static int	invalid_identifier_msg(char *identifier);
 static char	*get_elem_str_data(char *data, int type);
 static void	make_elemt_chages(char *data, t_env *env);
 
@@ -65,8 +64,6 @@ static void	make_elemt_chages(char *data, t_env *env)
 
 static int	update_elem(t_env *elem, char *cont)
 {
-	int	i;
-
 	if (!elem || !cont)
 	{
 		free_str(cont);

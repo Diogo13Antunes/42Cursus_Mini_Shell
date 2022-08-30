@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_builtins.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsilveri <dsilveri@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: dcandeia <dcandeia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 09:14:42 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/08/27 17:18:08 by dsilveri         ###   ########.fr       */
+/*   Updated: 2022/08/30 17:11:45 by dcandeia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,6 @@ void	run_builtin_branch(t_node *tree, t_env *env)
 static void	run_builtin_branch2(t_node *tree, t_env *env)
 {
 	t_node	*node;
-	int		err;
 	int		fd;
 
 	fd = -1;

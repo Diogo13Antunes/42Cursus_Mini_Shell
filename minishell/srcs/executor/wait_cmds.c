@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wait_cmds.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsilveri <dsilveri@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: dcandeia <dcandeia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 17:33:43 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/08/27 17:20:19 by dsilveri         ###   ########.fr       */
+/*   Updated: 2022/08/30 17:12:32 by dcandeia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,13 +47,12 @@ static void	wait_missing_cmds(int n_cmds)
 {
 	int	status;
 	int	signal;
-	int	pid;
 
 	signal = 0;
 	n_cmds--;
 	while (n_cmds)
 	{
-		pid = wait(&status);
+		wait(&status);
 		if (WIFSIGNALED(status) && status == SIGINT)
 			signal = 1;
 		n_cmds--;

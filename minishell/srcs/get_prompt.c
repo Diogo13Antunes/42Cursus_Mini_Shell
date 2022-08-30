@@ -6,7 +6,7 @@
 /*   By: dcandeia <dcandeia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 14:15:03 by dcandeia          #+#    #+#             */
-/*   Updated: 2022/08/29 16:21:45 by dcandeia         ###   ########.fr       */
+/*   Updated: 2022/08/30 17:03:58 by dcandeia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,7 @@ static void	clean_strs(char *s1, char *s2);
 
 char	*get_prompt_str(t_env *env)
 {
-	int		prompt_size;
 	char	*prompt;
-	char	*user;
-	char	*dir;
 
 	prompt = create_prompt(env);
 	if (!prompt)

@@ -6,7 +6,7 @@
 /*   By: dcandeia <dcandeia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/29 18:42:18 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/08/30 16:44:32 by dcandeia         ###   ########.fr       */
+/*   Updated: 2022/08/30 17:30:00 by dcandeia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 //valgrind --leak-check=full --show-leak-kinds=all  ./minishell
 
 static char	*get_user_input(t_env *env_lst);
-static void	*executor(char *str, t_env *env_lst);
+static void	executor(char *str, t_env *env_lst);
 static int	check_void_input(char *input);
 
 int	main(int argc, char **argv, char **env)
@@ -24,6 +24,13 @@ int	main(int argc, char **argv, char **env)
 	char			*str;
 	t_env			*env_lst;
 
+	if (argc != 1 && argv[1])
+	{
+		ft_putstr_fd("The program do not accept arguments\n", STDERR_FILENO);
+		return (EXIT_FAILURE);
+	}
+	if (!env)
+		return (EXIT_FAILURE);
 	init_alloc_mem();
 	set_signal(SIGQUIT, SIG_IGN);
 	env_lst = get_env_list(env);
@@ -39,7 +46,7 @@ int	main(int argc, char **argv, char **env)
 	return (0);
 }
 
-static void	*executor(char *str, t_env *env_lst)
+static void	executor(char *str, t_env *env_lst)
 {
 	t_node	*tree;
 

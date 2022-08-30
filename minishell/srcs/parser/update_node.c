@@ -6,7 +6,7 @@
 /*   By: dcandeia <dcandeia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 11:49:29 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/08/30 15:59:03 by dcandeia         ###   ########.fr       */
+/*   Updated: 2022/08/30 17:08:36 by dcandeia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,6 @@ static char	**update_string_array(char **str, char *token);
 
 t_node	*update_node(t_node *node, char *token)
 {
-	int		size;
-	t_redir	*r;
-	t_cmd	*c;
-
 	if (!node || !token)
 		return (NULL);
 	if (is_node_hdoc(node))
@@ -78,7 +74,6 @@ static void	update_node_hdoc(t_node *node, char *token)
 static char	**update_string_array(char **str, char *token)
 {
 	char	**new_arr;
-	char	**buff;
 	int		arr_size;
 	int		i;
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_vars.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsilveri <dsilveri@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: dcandeia <dcandeia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 11:23:03 by dcandeia          #+#    #+#             */
-/*   Updated: 2022/08/28 12:21:34 by dsilveri         ###   ########.fr       */
+/*   Updated: 2022/08/30 17:04:43 by dcandeia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ t_env	*exist_env_elem(t_env *env, const char *elem_name)
 	while (temp)
 	{
 		if (!ft_strncmp(temp->variable, elem_name, size) \
-		&& size == ft_strlen(temp->variable))
+		&& size == (int)ft_strlen(temp->variable))
 		{
 			if (ptr)
 				*ptr = '=';

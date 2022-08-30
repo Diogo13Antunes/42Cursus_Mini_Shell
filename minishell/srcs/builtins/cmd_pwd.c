@@ -6,7 +6,7 @@
 /*   By: dcandeia <dcandeia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 13:02:20 by dcandeia          #+#    #+#             */
-/*   Updated: 2022/08/30 16:20:45 by dcandeia         ###   ########.fr       */
+/*   Updated: 2022/08/30 17:09:03 by dcandeia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,7 @@
 int	builtin_pwd(int fd)
 {
 	char	*address;
-	int		i;
 
-	i = 0;
 	address = getcwd(NULL, 0);
 	if (!address)
 		return (-1);

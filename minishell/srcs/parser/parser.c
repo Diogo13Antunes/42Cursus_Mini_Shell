@@ -6,14 +6,14 @@
 /*   By: dcandeia <dcandeia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 19:19:12 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/08/30 11:55:09 by dcandeia         ###   ########.fr       */
+/*   Updated: 2022/08/30 17:07:06 by dcandeia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 static int		sytax_error(t_node *tree, char *token);
-static void		create_ast(t_node **tree, char *token, t_env *env, int t_id);
+static void		create_ast(t_node **tree, char *token, int t_id);
 static t_node	*get_node_to_update(t_node *tree);
 
 t_node	*parser(char *src, t_env *env)
@@ -38,7 +38,7 @@ t_node	*parser(char *src, t_env *env)
 		token_id = get_token_id(token);
 		if (token_id == ID_WORD)
 			token = token_parser(token, env, get_exit_status());
-		create_ast(&tree, token, env, token_id);
+		create_ast(&tree, token, token_id);
 		free_str(token);
 		reset = 0;
 	}
@@ -56,9 +56,8 @@ static int	sytax_error(t_node *tree, char *token)
 	return (0);
 }
 
-static void	create_ast(t_node **tree, char *token, t_env *env, int t_id)
+static void	create_ast(t_node **tree, char *token, int t_id)
 {
-	int		id;
 	t_node	*node;
 
 	if (t_id == ID_WORD)

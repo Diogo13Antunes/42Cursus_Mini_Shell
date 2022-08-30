@@ -6,7 +6,7 @@
 /*   By: dcandeia <dcandeia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 10:23:32 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/08/30 16:30:12 by dcandeia         ###   ########.fr       */
+/*   Updated: 2022/08/30 17:07:36 by dcandeia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ static int	token_needs_parse(char *token);
 char	*token_parser(char *token, t_env *env, int exit_code)
 {
 	char	*dst;
-	char	*s;
 	int		i;
 
 	if (!token)

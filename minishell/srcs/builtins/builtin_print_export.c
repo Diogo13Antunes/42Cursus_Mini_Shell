@@ -6,7 +6,7 @@
 /*   By: dcandeia <dcandeia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 15:05:15 by dcandeia          #+#    #+#             */
-/*   Updated: 2022/08/30 16:13:38 by dcandeia         ###   ########.fr       */
+/*   Updated: 2022/08/30 17:09:57 by dcandeia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,12 +72,10 @@ static char	**sorter_env_vars(t_env	*env)
 static void	get_variables(t_env *env, char **vars)
 {
 	t_env	*temp;
-	int		size_list;
 	int		i;
 
 	i = 0;
 	temp = env;
-	size_list = env_lst_size(temp);
 	while (temp)
 	{
 		vars[i] = temp->variable;

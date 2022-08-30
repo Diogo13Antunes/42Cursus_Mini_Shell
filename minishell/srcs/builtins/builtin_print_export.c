@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_print_export.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsilveri <dsilveri@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: dcandeia <dcandeia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 15:05:15 by dcandeia          #+#    #+#             */
-/*   Updated: 2022/08/28 16:59:33 by dsilveri         ###   ########.fr       */
+/*   Updated: 2022/08/30 16:13:38 by dcandeia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	print_export(t_env *env, int fd)
 			temp = temp->next;
 		}
 	}
-	free(sort_vars);
+	free_matrix(sort_vars);
 }
 
 static char	**sorter_env_vars(t_env	*env)

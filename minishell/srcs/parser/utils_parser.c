@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_parser.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsilveri <dsilveri@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: dcandeia <dcandeia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 12:39:51 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/08/28 18:14:19 by dsilveri         ###   ########.fr       */
+/*   Updated: 2022/08/30 12:48:39 by dcandeia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,8 @@ char	*token_join_str(char *s1, char *s2)
 	if (!s1 || !s2)
 		return (0);
 	dst = ft_strjoin(s1, s2);
-	free(s1);
-	free(s2);
+	free_str(s1);
+	free_str(s2);
 	return (dst);
 }
 
@@ -58,7 +58,7 @@ char	*token_join_char(char *s, char c)
 	src[0] = c;
 	src[1] = '\0';
 	dst = ft_strjoin(s, src);
-	free(s);
+	free_str(s);
 	return (dst);
 }
 

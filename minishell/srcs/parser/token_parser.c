@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_parser.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsilveri <dsilveri@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: dcandeia <dcandeia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 10:23:32 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/08/28 18:12:01 by dsilveri         ###   ########.fr       */
+/*   Updated: 2022/08/30 13:02:44 by dcandeia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static char	*update_token(char *dst, char *token, int *index, t_env *env)
 	{
 		if (ft_strchr("\'\"", token[i]))
 		{
-			str = ft_substr(&token[i + 1], 0, size - 2);
+			str = oom_guard(ft_substr(&token[i + 1], 0, size - 2));
 			if (token[i] == '\"')
 				str = update_token_env_var(str, env);
 		}
@@ -108,7 +108,7 @@ static char	*add_env_var_to_token(t_env *env, char *s, char *dst, int *i)
 		elm = exist_env_elem(env, env_name);
 		if (elm && elm->content)
 			dst = token_join_str(dst, ft_strdup(elm->content));
-		free(env_name);
+		free_str(env_name);
 		*i += size;
 	}
 	return (dst);

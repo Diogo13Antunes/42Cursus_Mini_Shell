@@ -6,7 +6,7 @@
 /*   By: dsilveri <dsilveri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 19:19:12 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/08/29 17:20:32 by dsilveri         ###   ########.fr       */
+/*   Updated: 2022/08/30 11:42:56 by dsilveri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,11 @@ t_node	*parser(char *src, t_env *env, int *exit_code)
 	while (1)
 	{
 		token = get_next_token(src, reset);
-		*exit_code = sytax_error(tree, token);
-		if (*exit_code)
+		if (sytax_error(tree, token))
+		{
+			*exit_code = EXIT_SYNTAX;
 			return (NULL);
+		}	
 		if (!token)
 			break ;
 		token_id = get_token_id(token);

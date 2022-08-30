@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dcandeia <dcandeia@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dsilveri <dsilveri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/29 18:42:18 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/08/30 11:05:20 by dcandeia         ###   ########.fr       */
+/*   Updated: 2022/08/30 11:50:13 by dsilveri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static void	*executor(char *str, t_env *env_lst, int *exit_code)
 {
 	t_node	*tree;
 
-	tree = parser(str, env_lst, exit_code);
+	tree = parser(str, env_lst);
 	save_alloc_mem(tree, TYPE_TREE);
 	free_str(str);
 	if (tree)

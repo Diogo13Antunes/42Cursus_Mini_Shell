@@ -6,7 +6,7 @@
 /*   By: dsilveri <dsilveri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 19:19:12 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/08/30 11:42:56 by dsilveri         ###   ########.fr       */
+/*   Updated: 2022/08/30 11:49:04 by dsilveri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static int		sytax_error(t_node *tree, char *token);
 static void		create_ast(t_node **tree, char *token, t_env *env, int t_id);
 static t_node	*get_node_to_update(t_node *tree);
 
-t_node	*parser(char *src, t_env *env, int *exit_code)
+t_node	*parser(char *src, t_env *env)
 {
 	char	*token;
 	t_node	*tree;
@@ -30,14 +30,15 @@ t_node	*parser(char *src, t_env *env, int *exit_code)
 		token = get_next_token(src, reset);
 		if (sytax_error(tree, token))
 		{
-			*exit_code = EXIT_SYNTAX;
+			//*exit_code = EXIT_SYNTAX;
+			set_exit_status(EXIT_SYNTAX);
 			return (NULL);
 		}	
 		if (!token)
 			break ;
 		token_id = get_token_id(token);
 		if (token_id == ID_WORD)
-			token = token_parser(token, env, *exit_code);
+			token = token_parser(token, env, get_exit_status());
 		create_ast(&tree, token, env, token_id);
 		free_str(token);
 		reset = 0;

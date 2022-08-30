@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dcandeia <dcandeia@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dsilveri <dsilveri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 10:57:16 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/08/30 10:23:28 by dcandeia         ###   ########.fr       */
+/*   Updated: 2022/08/30 11:49:31 by dsilveri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -210,7 +210,7 @@ void	wait_cmds(int last_pid, int n_cmds);
 char	*get_next_token(char *src, int reset);
 
 /* parser/parser.c */
-t_node	*parser(char *src, t_env *env, int *exit_code);
+t_node	*parser(char *src, t_env *env);
 
 /* parser/syntax_error.c */
 int		is_syntax_error(t_node *tree, char *token);

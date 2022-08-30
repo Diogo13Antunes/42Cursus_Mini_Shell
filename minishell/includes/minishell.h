@@ -6,7 +6,7 @@
 /*   By: dsilveri <dsilveri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 10:57:16 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/08/30 11:49:31 by dsilveri         ###   ########.fr       */
+/*   Updated: 2022/08/30 15:51:08 by dsilveri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -234,6 +234,9 @@ int		get_not_quoted_seq_size(char *s);
 int		get_seq_size(char *s);
 int		is_word_sequence(char *s);
 int		ft_exit_code(int status);
+
+/* parser/home_expand.c */
+char *home_expand(t_env *env, char *token);
 
 /* tree/add_new_node.c */
 void	add_new_node(t_node **tree, t_node *node);

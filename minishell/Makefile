@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: dcandeia <dcandeia@student.42.fr>          +#+  +:+       +#+         #
+#    By: dsilveri <dsilveri@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/27 10:55:19 by dsilveri          #+#    #+#              #
-#    Updated: 2022/08/30 09:06:12 by dcandeia         ###   ########.fr        #
+#    Updated: 2022/08/30 16:06:07 by dsilveri         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,6 +32,7 @@ SRCS			= ./srcs/signal_handler.c							\
 				  ./srcs/parser/utils_parser.c						\
 				  ./srcs/parser/utils_parser2.c						\
 				  ./srcs/parser/get_next_token.c					\
+				  ./srcs/parser/home_expand.c						\
 				  ./srcs/error_handler/error_handler.c				\
 				  ./srcs/error_handler/print_error.c				\
 				  ./srcs/error_handler/error_handler2.c				\
@@ -51,7 +52,7 @@ SRCS			= ./srcs/signal_handler.c							\
 				  ./srcs/executor/pipe.c							\
 				  ./srcs/executor/hdoc.c							\
 				  ./srcs/executor/file_redir.c						\
-				  ./srcs/executor/wait_cmds.c
+				  ./srcs/executor/wait_cmds.c						\
 
 LIBFT			= libft/libft.a
 

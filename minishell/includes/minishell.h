@@ -6,7 +6,7 @@
 /*   By: dcandeia <dcandeia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 10:57:16 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/08/30 16:37:36 by dcandeia         ###   ########.fr       */
+/*   Updated: 2022/08/31 09:29:26 by dcandeia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -216,7 +216,7 @@ t_node	*parser(char *src, t_env *env);
 int		is_syntax_error(t_node *tree, char *token);
 
 /* parser/token_parser.c */
-char	*token_parser(char *token, t_env *env, int exit_code);
+char	*token_parser(char *token, t_env *env);
 
 /* parser/update_node.c */
 t_node	*update_node(t_node *node, char *token);
@@ -233,7 +233,6 @@ int		get_quoted_seq_size(char *s);
 int		get_not_quoted_seq_size(char *s);
 int		get_seq_size(char *s);
 int		is_word_sequence(char *s);
-int		ft_exit_code(int status);
 
 /* parser/home_expand.c */
 char	*home_expand(t_env *env, char *token);

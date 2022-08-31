@@ -6,7 +6,7 @@
 /*   By: dcandeia <dcandeia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 19:19:12 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/08/30 17:07:06 by dcandeia         ###   ########.fr       */
+/*   Updated: 2022/08/31 09:29:32 by dcandeia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ t_node	*parser(char *src, t_env *env)
 			break ;
 		token_id = get_token_id(token);
 		if (token_id == ID_WORD)
-			token = token_parser(token, env, get_exit_status());
+			token = token_parser(token, env);
 		create_ast(&tree, token, token_id);
 		free_str(token);
 		reset = 0;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_parser.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsilveri <dsilveri@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: dcandeia <dcandeia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 10:23:32 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/08/30 21:18:45 by dsilveri         ###   ########.fr       */
+/*   Updated: 2022/08/31 09:28:23 by dcandeia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static char	*update_token_env_var(char *s, t_env *env);
 static char	*add_env_var_to_token(t_env *env, char *s, char *dst, int *i);
 static int	token_needs_parse(char *token);
 
-char	*token_parser(char *token, t_env *env, int exit_code)
+char	*token_parser(char *token, t_env *env)
 {
 	char	*dst;
 	char	*home;
@@ -33,7 +33,6 @@ char	*token_parser(char *token, t_env *env, int exit_code)
 	}
 	if (!token_needs_parse(token))
 		return (token);
-	ft_exit_code(exit_code);
 	i = 0;
 	dst = oom_guard(ft_calloc(1, sizeof(char)));
 	while (token[i])
@@ -92,7 +91,7 @@ static char	*update_token_env_var(char *s, t_env *env)
 		}
 		else if (s[i] == '$' && s[i + 1] == '?')
 		{
-			dst = token_join_str(dst, ft_itoa(ft_exit_code(-1)));
+			dst = token_join_str(dst, ft_itoa(get_exit_status()));
 			i += 1;
 		}
 		else if (s[i] == '$')

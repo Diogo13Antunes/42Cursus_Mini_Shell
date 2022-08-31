@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_parser2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsilveri <dsilveri@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: dcandeia <dcandeia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 12:47:25 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/08/16 11:27:39 by dsilveri         ###   ########.fr       */
+/*   Updated: 2022/08/31 09:28:43 by dcandeia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,13 +60,4 @@ int	is_word_sequence(char *s)
 		i++;
 	}
 	return (i);
-}
-
-int	ft_exit_code(int status)
-{
-	static int	st = 0;
-
-	if (status >= 0)
-		st = status;
-	return (st);
 }

@@ -6,7 +6,7 @@
 /*   By: dcandeia <dcandeia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 15:05:15 by dcandeia          #+#    #+#             */
-/*   Updated: 2022/08/30 17:09:57 by dcandeia         ###   ########.fr       */
+/*   Updated: 2022/08/31 11:33:09 by dcandeia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	print_export(t_env *env, int fd)
 			temp = temp->next;
 		}
 	}
-	free_matrix(sort_vars);
+	free(sort_vars);
 }
 
 static char	**sorter_env_vars(t_env	*env)

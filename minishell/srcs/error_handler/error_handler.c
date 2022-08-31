@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_handler.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsilveri <dsilveri@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: dsilveri <dsilveri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 10:16:01 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/08/30 21:23:53 by dsilveri         ###   ########.fr       */
+/*   Updated: 2022/08/31 10:06:02 by dsilveri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	cmd_path_error(int err, char *msg, char *file)
 	if (err == -1)
 	{
 		print_msg_error(msg, file);
-		ft_exit(EXIT_CMD_NFOUND);
+		ft_exit(EXIT_CMD_NEXEC);
 	}
 	return (err);
 }

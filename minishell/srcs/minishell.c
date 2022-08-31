@@ -3,17 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dcandeia <dcandeia@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dsilveri <dsilveri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/29 18:42:18 by dsilveri          #+#    #+#             */
-/*   Updated: 2022/08/30 17:30:00 by dcandeia         ###   ########.fr       */
+/*   Updated: 2022/08/31 10:18:01 by dsilveri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <signal.h> 
-
-//valgrind --leak-check=full --show-leak-kinds=all  ./minishell
 
 static char	*get_user_input(t_env *env_lst);
 static void	executor(char *str, t_env *env_lst);

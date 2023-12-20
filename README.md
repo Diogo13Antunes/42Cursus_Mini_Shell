@@ -1,5 +1,14 @@
 # 42Cursus_Mini_Shell
 
+This project is an integral part of the 42Lisboa curriculum and aims to create a shell written in C, incorporating the essential features expected from a shell.
+
+## Table of Content
+
+* [MiniShell Example](#MiniShell-Example)
+* [Installation / Usage](#installation--usage)
+* [License](#license)
+* [Contact](#contact)
+
 ## MiniShell Example
 
 ![MiniShell](https://github.com/Diogo13Antunes/42Cursus_Mini_Shell/blob/main/imgs/minishell_example.png)

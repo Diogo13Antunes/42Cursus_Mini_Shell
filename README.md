@@ -1,5 +1,9 @@
 # 42Cursus_Mini_Shell
 
+## MiniShell Example
+
+![MiniShell](https://github.com/Diogo13Antunes/42Cursus_Mini_Shell/blob/main/imgs/minishell_example.png)
+
 ## Installation / Usage
 
 This project is designed to work on Linux and macOS.

@@ -6,7 +6,7 @@ This project is designed to work on Linux and macOS.
 
 Clone repo:
 ```shell
-git clone https://github.com/Diogo13Antunes/42Cursus_Mini_Shell.git minishell
+git clone git@github.com:Diogo13Antunes/42Cursus_Mini_Shell.git minishell && cd minishell
 ```
 Build:
 ```shell

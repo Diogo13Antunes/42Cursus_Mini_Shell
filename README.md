@@ -17,6 +17,11 @@ This project is an integral part of the 42Lisboa curriculum and aims to create a
 
 This project is designed to work on Linux and macOS.
 
+This project uses `libreadline` as a dependency, which provides functions for command line input. You need to install this library. Below is an example for Debian:
+```shell
+sudo apt update && sudo apt install libreadline-dev
+```
+
 Clone repo:
 ```shell
 git clone git@github.com:Diogo13Antunes/42Cursus_Mini_Shell.git minishell && cd minishell
